@@ -156,6 +156,7 @@ def fromUnivariateToFirstBranch(structure, neighbour):
 
 # inizia qui
 population = createPopulation(6)
+
 matrix = matrixForThePopulation(population)
 
 

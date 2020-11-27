@@ -3,6 +3,7 @@ from numpy.random import randint
 from numpy.random import rand
 import numpy as np
 
+
 import inputBids as auction
 # Constants
 E = 0.4  # is the ratio of elite
