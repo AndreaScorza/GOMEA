@@ -8,7 +8,8 @@ from numpy.random import seed
 def createKeysForElement(dimension):
     keys = []
     for x in range(0, dimension):
-        keys.append([x, float(rand())])
+        #keys.append([x, float(rand())])
+        keys.append(float(rand()))
     return keys
 
 

@@ -42,16 +42,11 @@ def matrixForOneElement(element):
 
 
 def delta(p):
-    if p == 0:
-        return 0
+    if p == 0 or p == 1:
+        return 1
     else:
         a = p * math.log(p, 2)
-        if p >= 1:
-            b = 0
-            # can't do logarithm of 0, it happens when P = 1 (it is the biggest number)
-        else:
-            b = (1 - p) * math.log((1 - p), 2)
-
+        b = (1 - p) * math.log((1 - p), 2)
         return 1 + (a + b)
 
 # apply the delta to the all matrix
