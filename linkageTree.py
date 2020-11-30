@@ -56,16 +56,15 @@ def getDependenciesForBranch(dependencyMatrix, branch):
     dependency = []
     for i in range(0, len(branch)):
         dep = 0
+        stored = []
         for j in range(0, len(branch)):
             if j != i:
                 x = clustersDependencies(branch[i], branch[j], dependencyMatrix)
                 if x == dep:
-                    # stored.append([dep, j])
                     stored.append(j)
                 if x > dep:
                     dep = x
                     stored = [j]
-                    # stored.append([dep, j])
 
         dependency.append(stored)
     return dependency
@@ -94,34 +93,30 @@ def isInList(elem, list):
 def translateDependency(branch, dependency):
     newDep = []
     for x in range(0, len(dependency)):
-        #for y in branch[dependency[x][0]]:
-        #    print(y)
-        print(branch[dependency[x][0]])
         newDep.append(branch[dependency[x][0]])
     return newDep
 
 # based on the branch and the dependecy, it creates the next branch
 def createNextBranch(branch, dependency):
     dependency = translateDependency(branch, dependency)
-    print("translated ", dependency)
     nextBranch = []
     for x in range(0, len(branch)):
-        if not isInList(branch[x][0], nextBranch):
-            toAdd = []
-            for y in dependency[x]:
-                if not isInList(y, nextBranch):
-                    toAdd.append(y)
-            if toAdd != []:
-                new = []
-                new.append(branch[x][0])
-                print(branch[x])
-                print(branch[x][0])
-                if isinstance(toAdd, int):
-                    new.append(toAdd)
-                else:
-                    for j in toAdd:
+        new = []
+        for z in range(0, len(branch[x])):
+            if not isInList(branch[x][z], nextBranch):
+                toAdd = []
+                for y in dependency[x]:
+                    if not isInList(y, nextBranch):
+                        toAdd.append(y)
+                if toAdd != []:
+                    for j in branch[x]:
                         new.append(j)
-                nextBranch.append(new)
+                    if isinstance(toAdd, int):
+                        new.append(toAdd)
+                    else:
+                        for j in toAdd:
+                            new.append(j)
+                    nextBranch.append(new)
     return nextBranch
 
 # it returns the branch with the single element that were not included in any clusters
@@ -130,8 +125,11 @@ def branchWithUnary(oldbranch, newbranch):
     unaryBranch = newbranch.copy()
     for x in oldbranch:
         for y in x:
-            if not isInList(y, newbranch):
-                unaryBranch.append([y])
+            flag = False
+            if isInList(y, newbranch):
+                flag = True
+        if flag == False:
+            unaryBranch.append(x)
     return unaryBranch
 
 
@@ -146,46 +144,32 @@ def getUnivariateAndRoot(population):
 
     return univariate, [root]
 
-'''def getLinkageTree(population):
+# check if the univariate is the same of the root, undependently of the order of the element
+def rootSameUni(root, univariate):
+    univ = univariate.copy()
+    univ[0].sort()
+    return univ == root
+
+def getLinkageTree(population):
+    tree = []
     univariate, root = getUnivariateAndRoot(population)
-    nextBranch = []
     unaryBranch = univariate.copy()
-    while nextBranch != root:
-        print("unary branch ", unaryBranch)
+    tree.append(unaryBranch)
+    while not rootSameUni(root, unaryBranch):
+
+        #print("unary branch ", unaryBranch)
         dependencyMatrix = createDependencyMatrix(population)
         dependencies = getDependenciesForBranch(dependencyMatrix, unaryBranch)
-        print("dependencies ", dependencies)
+        #print("dependencies ", dependencies)
         nextBranch = createNextBranch(unaryBranch, dependencies)
-        print("next Branch ", nextBranch)
+        tree.append(nextBranch)
+        #print("next Branch ", nextBranch)
         unaryBranch = branchWithUnary(unaryBranch, nextBranch)
-    return 0'''
+    #print("fine")
+    return tree
 
-#getLinkageTree(population)
-
-
-# parameters (population size, file, and seed() )
-population = pop.population(5, "L4-5-5.txt", 1)
-dependencyMatrix = createDependencyMatrix(population)
-
-branch = [[0],[1],[2],[3],[4]]
-# dependencyMatrix[0][1] = dependencyMatrix[0][2]
-print(dependencyMatrix)
-
-dependencies = getDependenciesForBranch(dependencyMatrix, branch)
-print(branch)
-#dependencies[3] = [4]
-print("dependency", dependencies)
-
-# from the branch and the branch dependencies it returns the next branch
-nextBranch = createNextBranch(branch, dependencies)
+population = pop.population(10, "L4-5-5.txt", 1)
+tree = getLinkageTree(population)
+print(tree)
 
 
-print("next", nextBranch)
-unaryBranch = branchWithUnary(branch, nextBranch)
-
-dependencies = getDependenciesForBranch(dependencyMatrix, unaryBranch)
-print("unary", unaryBranch)
-print("depend", dependencies)
-
-next = createNextBranch(unaryBranch, dependencies)
-print("next", next)
