@@ -168,8 +168,8 @@ def getLinkageTree(population):
     #print("fine")
     return tree
 
-population = pop.population(10, "L4-5-5.txt", 1)
-tree = getLinkageTree(population)
-print(tree)
+#population = pop.population(10, "L4-5-5.txt", 1)
+#tree = getLinkageTree(population)
+#print(tree)
 
 

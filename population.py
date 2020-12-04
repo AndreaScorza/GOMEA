@@ -14,17 +14,16 @@ def createKeysForElement(dimension):
 
 
 # create the population from the random keys of defined size
-def createPopulation(size, bids):
+def createPopulation(size, values):
     population = []
     for elem in range(0, size):
-        population.append(createKeysForElement(len(bids)))
-    return population
+        population.append(createKeysForElement(len(values[4])))
+    return population, values
 
 
 def population(size, filename, sEed):
     if sEed >= 0:
         seed(sEed)
     values = auction.getAuction(filename)
-    bids = values[4]
-    return createPopulation(size, bids)
+    return createPopulation(size, values)
 
