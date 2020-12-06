@@ -23,7 +23,7 @@ def createDependencyMatrix(population):
             # is this condition true ? yes : no
             # (p==0)||(p==1)?0:-(p*log2(p) + (1.0-p)*log2(1.0-p));
             if p == 0 or p == 1:
-                print("this case")
+                #print("this case")
                 entropy = 0
             else:
                 entropy = -(p*(math.log(p, 2)) + (1.0-p)*(math.log((1.0-p), 2)))
@@ -37,7 +37,6 @@ def createDependencyMatrix(population):
 
             # creating the symmetric matrix
             dependencyMatrix[j][i] = dependencyMatrix[i][j]
-
     return dependencyMatrix
 
 

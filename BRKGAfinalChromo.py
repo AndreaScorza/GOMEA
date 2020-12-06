@@ -2,6 +2,7 @@ from numpy.random import seed
 from numpy.random import randint
 from numpy.random import rand
 import numpy as np
+import time
 
 # importing the file for the auction input
 import inputBids as auction
@@ -13,7 +14,7 @@ P = 0.6 # probability of selecting key from elite for crossover
 # 0.7 462 238640
 # 0.6 437 238640
 
-values = auction.getAuction('L2-50-100.txt')
+values = auction.getAuction('L1-250-1000.txt')
 goods = values[0]
 bidsValue = values[3]
 bids = values[4]
@@ -36,7 +37,7 @@ def createPopulation(size):
     return population
 
 
-def decoder(element, discourage):
+def decoder2(element, discourage):
     element.sort(reverse=True, key=lambda x: x[1])
     markedGoods = np.zeros(goods)
     fitness = 0
@@ -55,9 +56,28 @@ def decoder(element, discourage):
                 markedGoods[y] = 1
                 fitness += bidsValue[x[0]]
             solution.append(x)
-
     element.sort(key=lambda x:x[0])
+    return element, fitness
 
+def decoder(element, discourage):
+
+    element.sort(reverse=True, key=lambda x: x[1])
+
+    markedGoods = np.zeros(goods)
+    fitness = 0
+    for x in element:
+        flag = False
+        for y in bids[x[0]]:
+            if markedGoods[y] == 1:
+                flag = True
+                if discourage:
+                    if x[1] > 0.5:
+                        x[1] = 1 - x[1]
+        if not flag:
+            fitness += bidsValue[x[0]]
+            for y in bids[x[0]]:
+                markedGoods[y] = 1
+    element.sort(key=lambda x: x[0])
     return element, fitness
 
 def crossOver(sortedPop, nOfElite):
@@ -131,36 +151,35 @@ def BRKGAchromo(populationSize):
     bestFitness = 0
     fitNotIncrease = 0
     generationCount = 0
-
-
+    startTime = time.time()
     storedPop = []
 
-    while fitNotIncrease < 100 and generationCount < 100:
+    while fitNotIncrease < 10 and generationCount < 20:
         population, fitness = generation(population)
 
         if bestFitness == 0:
             bestFitness = fitness
             storedPop = population
-            print(generationCount, ": ", fitness)
+            print(generationCount, ": ", fitness, " time: ", round(time.time()-startTime, 2))
         else:
             if fitness <= bestFitness:
                 fitNotIncrease += 1
-                print(generationCount, ": ", bestFitness)
+                print(generationCount, ": ", bestFitness, " time: ", round(time.time()-startTime, 2))
 
             else:
                 bestFitness = fitness
                 fitNotIncrease = 0
                 storedPop = population
-                print(generationCount, ": ", bestFitness, " -> ", fitness)
+                print(generationCount, ": ", bestFitness, " -> ", fitness, " time: ", round(time.time()-startTime, 2))
 
         generationCount += 1
 
-    return bestFitness, storedPop, population
+    return bestFitness, storedPop, population, time.time()-startTime
 
 
 
-bestFitness, storedPop, lastPopulation = BRKGAchromo(10)
-print("best fitness = ", bestFitness)
+bestFitness, storedPop, lastPopulation, totalTime = BRKGAchromo(10)
+print("best fitness = ", bestFitness, " time: ", round(totalTime, 2))
 '''for x in range(0, len(storedPop)):
     a,b = decoder(storedPop[x], False)
     c,d = decoder(lastPopulation[x], False)
