@@ -1,0 +1,42 @@
+L4-5-5
+population = 10, gen = 1000
+
+BRKGA
+best fitness =  3380.123  time:  0.29
+
+GOMEA
+(3380.123, 5.89)
+
+Both algorithm converged to the best result at the first generation (population= 10 in this case is too much)
+
+---------------------------------------------------------
+
+L3-20-20
+population = 10, gen = 1000
+
+BRKGA
+best fitness =  3082.78  time:  0.99
+Converged at 18th generation (in a second try it converged at 36th generation)
+
+GOMEA
+(3082.78, 152.54)
+Converged at 1st generation (in a second try it converged at 3rd generation)
+
+---------------------------------------------------------
+
+L2-50-100
+population = 10, gen = 1000
+
+BRKGA
+best fitness =  48932.9  time:  21.24
+Converged at 3rd generation (in a second try it converged at 13th generation)
+
+GOMEA
+- with population 10 it is stuck inside a local optima witout possibility to grow
+- with population 30
+First try
+1  :  48932.9  time:  56.02
+second try
+1  :  48932.9  time:  52.5
+- with population 15
+

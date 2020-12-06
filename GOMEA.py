@@ -30,10 +30,12 @@ def greedyRecomb(sol, donor, subset, values):
                 print("new", newSol)
                 print("solFit", solFit)
                 print("newFit", newSolFit)'''
+
+                # cazzo fa qui solFit al posto di BestFit ?
     return sol, solFit
 
 def terminated(counter):
-    if counter >= 10:
+    if counter > 1000:
         return True
     return False
 
@@ -60,7 +62,7 @@ def GOMEA():
                     print("sol had changed")'''
         counter += 1
         #pbar.update(1)
-        print(bestFit, " time: ", round(time.time()-startTime, 2))
+        print(counter, " : ", bestFit, " time: ", round(time.time()-startTime, 2))
     #pbar.close()
     return bestFit, round(time.time()-startTime, 2)
 
