@@ -13,7 +13,7 @@ def getDonor(population):
     return population[donorIndex]
 
 
-def greedyRecomb(sol, donor, subset, values):
+def greedyRecomb(sol, donor, subset, values, population):
     for cluster in subset:
         # print(cluster)
         for element in cluster:
@@ -24,18 +24,21 @@ def greedyRecomb(sol, donor, subset, values):
             newSolFit = dc.getFitness(newSol, values[3], values[1], values[4])
             bestFit = solFit
             if newSolFit > solFit:
-                sol = newSol
-                bestFit = newSolFit
-                '''print("sol", sol)
-                print("new", newSol)
-                print("solFit", solFit)
-                print("newFit", newSolFit)'''
+                if not pop.checkIfElemInPopulation(newSol, population):
+                    sol = newSol
+                    bestFit = newSolFit
+                    '''print("sol", sol)
+                    print("new", newSol)
+                    print("solFit", solFit)
+                    print("newFit", newSolFit)'''
+                else:
+                    print("The solution was already present in the population, hence discarted")
 
     return sol, bestFit
 
 
 def terminated(counter):
-    if counter > 100:
+    if counter > 10:
         return True
     return False
 
@@ -73,7 +76,7 @@ def GOMEA():
                     donor = getDonor(population)
                 #  this is used to check if sol have changed
                 a = population[x].copy()
-                population[x], fit = greedyRecomb(population[x], donor, subset, values)
+                population[x], fit = greedyRecomb(population[x], donor, subset, values, population)
                 if bestFit < fit:
                     bestFit = fit
                 '''if sol != a:
@@ -100,7 +103,7 @@ print(bestFit, " : ", round(time, 2))
 #  controlli sulla popolazione:
 
 for x in pop:
-    print(dc.getFitness(x, val[3], val[1], val[4]))
+    print(dc.getFitness(x, val[3], val[1], val[4]), " : ", x)
 
 
 for x in range(0, len(pop)-1):
@@ -109,4 +112,3 @@ for x in range(0, len(pop)-1):
             print("are the same")
         else:
             print(x, " : ", j)
-
