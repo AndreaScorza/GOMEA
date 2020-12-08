@@ -37,6 +37,12 @@ def createDependencyMatrix(population):
 
             # creating the symmetric matrix
             dependencyMatrix[j][i] = dependencyMatrix[i][j]
+    zeroCount = 0
+    for x in range(0, len(dependencyMatrix)):
+        for j in range(0, len(dependencyMatrix)):
+            if dependencyMatrix[x][j] == 0:
+                zeroCount += 1
+    print("Zero count of dependency matrix is : ", zeroCount, " len: ", len(dependencyMatrix))
     return dependencyMatrix
 
 
@@ -154,10 +160,11 @@ def getLinkageTree(population):
     univariate, root = getUnivariateAndRoot(population)
     unaryBranch = univariate.copy()
     tree.append(unaryBranch)
+    dependencyMatrix = createDependencyMatrix(population)
     while not rootSameUni(root, unaryBranch):
 
         #print("unary branch ", unaryBranch)
-        dependencyMatrix = createDependencyMatrix(population)
+        #  dependencyMatrix = createDependencyMatrix(population)
         dependencies = getDependenciesForBranch(dependencyMatrix, unaryBranch)
         #print("dependencies ", dependencies)
         nextBranch = createNextBranch(unaryBranch, dependencies)
