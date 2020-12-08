@@ -16,15 +16,20 @@ tempo = round(endTime-startTime,2)
 print("total amount of time: ", tempo)
 '''
 
-def add(x):
+'''def add(x):
     return x+0.1
 a = [0.1,0.2,0.3,0.4]
 
 print(a)
-'''for sol in a:
-    sol = add(sol)'''
+for sol in a:
+    sol = add(sol)
 
 for x in range(0, len(a)):
     a[x] = add(a[x])
 
-print(a)
+print(a)'''
+
+pop = [[1], [2], [3], [4]]
+
+print(type(pop[0]))
+print(3 in pop)
