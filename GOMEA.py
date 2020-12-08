@@ -59,23 +59,21 @@ def GOMEA():
     counter = 0
     #  values = [goodsNumber, bidsNumber, dummyNumber, bidsValue, bids]
     population, values = pop.population(10, "L3-20-20.txt", -1)
-    x = population.copy()
+    z = population.copy()
     bestFit = 0
     while not terminated(counter):
         lT = lt.getLinkageTree(population)
         #ciccio = False
         for y in range(0, len(population)):
-            if x[y] != population[y]:
-                print("eccone uno")
             print(dc.getFitness(population[y], values[3], values[1], values[4]))
-        for sol in population:
+        for x in range(0, len(population)):
             for subset in lT:
                 donor = getDonor(population)
-                while donor == sol:
+                while donor == population[x]:
                     donor = getDonor(population)
                 #  this is used to check if sol have changed
-                a = sol.copy()
-                sol, fit = greedyRecomb(sol, donor, subset, values)
+                a = population[x].copy()
+                population[x], fit = greedyRecomb(population[x], donor, subset, values)
                 if bestFit < fit:
                     bestFit = fit
                 '''if sol != a:
