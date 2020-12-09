@@ -28,10 +28,11 @@ def createPopulation(size, values):
     population = []
     for elem in range(0, size):
         newElem = createKeysForElement(len(values[4]))
+        #  this check might be avoided in order to speed up the program, it is really rare
         while(checkIfElemInPopulation(newElem, population)):
             newElem = createKeysForElement(len(values[4]))
+            print("the new element was already present in the population! creating a new one ...")
         population.append(newElem)
-        print(elem)
         #population.append(createKeysForElement(len(values[4])))
     return population, values
 

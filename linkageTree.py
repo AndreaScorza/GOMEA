@@ -34,7 +34,6 @@ def createDependencyMatrix(population):
                 averageDistance += (population[k][i] - population[k][j]) * (population[k][i] - population[k][j])
             averageDistance /= len(population)
             dependencyMatrix[i][j] *= 1 - averageDistance
-
             # creating the symmetric matrix
             dependencyMatrix[j][i] = dependencyMatrix[i][j]
     zeroCount = 0
@@ -162,16 +161,10 @@ def getLinkageTree(population):
     tree.append(unaryBranch)
     dependencyMatrix = createDependencyMatrix(population)
     while not rootSameUni(root, unaryBranch):
-
-        #print("unary branch ", unaryBranch)
-        #  dependencyMatrix = createDependencyMatrix(population)
         dependencies = getDependenciesForBranch(dependencyMatrix, unaryBranch)
-        #print("dependencies ", dependencies)
         nextBranch = createNextBranch(unaryBranch, dependencies)
         tree.append(nextBranch)
-        #print("next Branch ", nextBranch)
         unaryBranch = branchWithUnary(unaryBranch, nextBranch)
-    #print("fine")
     return tree
 
 #population = pop.population(10, "L4-5-5.txt", 1)
