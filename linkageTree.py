@@ -167,8 +167,8 @@ def getLinkageTree(population):
         unaryBranch = branchWithUnary(unaryBranch, nextBranch)
     return tree
 
-#population = pop.population(10, "L4-5-5.txt", 1)
-#tree = getLinkageTree(population)
-#print(tree)
-
+'''population, val = pop.population(10, "L3-20-20.txt", -1)
+tree = getLinkageTree(population)
+for x in range(0, len(tree[:-1])):
+    print (x, tree[x])'''
 
