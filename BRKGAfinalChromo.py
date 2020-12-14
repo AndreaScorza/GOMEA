@@ -14,7 +14,7 @@ P = 0.6 # probability of selecting key from elite for crossover
 # 0.7 462 238640
 # 0.6 437 238640
 
-values = auction.getAuction('L2-50-100.txt')
+values = auction.getAuction('L1-250-1000.txt')
 goods = values[0]
 bidsValue = values[3]
 bids = values[4]

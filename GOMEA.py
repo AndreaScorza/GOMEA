@@ -11,15 +11,19 @@ def getDonor(population):
     return population[donorIndex]
 
 
-def greedyRecomb(sol, donor, subset, values, population):
+def greedyRecomb(sol, donor, subset, values, population, forcedImprovement, superiorDonor):
     #print("Another recombination")
     accepted = 0
     discarted = 0
+    bestElem = sol.copy()
     for cluster in subset:
         solFit = dc.getFitness(sol, values[3], values[1], values[4])
         newSol = sol.copy()
         for element in cluster:
-            newSol[element] = donor[element]
+            if not forcedImprovement:
+                newSol[element] = donor[element]
+            else:
+                newSol[element] = superiorDonor[element]
         newSolFit = dc.getFitness(newSol, values[3], values[1], values[4])
         bestFit = solFit
 
@@ -30,12 +34,13 @@ def greedyRecomb(sol, donor, subset, values, population):
             if not pop.checkIfElemInPopulation(newSol, population):
                 sol = newSol
                 bestFit = newSolFit
+                bestElem = newSol.copy()
             else:
                 print("The solution was already present in the population, hence discarted")
         else:
             discarted += 1
     #print("Accepted : ", accepted, " Discarted : ", discarted)
-    return sol, bestFit
+    return sol, bestFit, bestElem
 
 
 
@@ -67,6 +72,7 @@ def howManyOfThePopChanged(pop, newPop):
 
 
 def GOMEA():
+    forcedImprovement = False
     startTime = time.time()
     counter = 0
     #  values = [goodsNumber, bidsNumber, dummyNumber, bidsValue, bids]
@@ -75,7 +81,12 @@ def GOMEA():
     # this is just for checking
     initialPopulation = population.copy()
     bestFit = 0
+    bestElem = []
+    stationaryCounter = 0
     while not terminated(counter):
+        if stationaryCounter > 6:
+            forcedImprovement = True
+            print("Forced improvement !!!!!!!!!!!!!!!!!")
         lastRoundPopulation = population.copy()
         lT = lt.getLinkageTree(population)
         #for li in lT[:-1]:
@@ -87,10 +98,12 @@ def GOMEA():
                 donor = getDonor(population)
                 while donor == population[x]:
                     donor = getDonor(population)
-                population[x], fit = greedyRecomb(population[x], donor, subset, values, population)
+                population[x], fit, elem = greedyRecomb(population[x], donor, subset, values, population, forcedImprovement, bestElem)
                 if bestFit < fit:
                     bestFit = fit
-
+                    bestElem = elem.copy()
+                    stationaryCounter = 0
+        stationaryCounter += 1
         counter += 1
         print(counter, " : ", bestFit, " time: ", round(time.time() - startTime, 2))
         #print(howManyOfThePopChanged(initialPopulation, population),
