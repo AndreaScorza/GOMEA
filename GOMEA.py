@@ -4,10 +4,12 @@ import numpy as np
 import decoder as dc
 from numpy.random import randint
 import time
+import random
 
-
-def getDonor(population):
-    donorIndex = randint(0, len(population))  # excluded the right extremity of the interval
+def getDonor(population, x):
+    numbers = list(range(0, len(population)))
+    numbers.remove(x)
+    donorIndex = random.choice(numbers)  # excluded the right extremity of the interval
     return population[donorIndex]
 
 
@@ -95,9 +97,7 @@ def GOMEA():
         #    print(dc.getFitness(population[y], values[3], values[1], values[4]))
         for x in range(0, len(population)):
             for subset in lT[:-1]:  # avoiding the root of the tree
-                donor = getDonor(population)
-                while donor == population[x]:
-                    donor = getDonor(population)
+                donor = getDonor(population, x)
                 population[x], fit, elem = greedyRecomb(population[x], donor, subset, values, population, forcedImprovement, bestElem)
                 if bestFit < fit:
                     bestFit = fit
