@@ -80,15 +80,21 @@ def greedyRecomb(sol, solByte, donor, donorByte, subset, population):
                 sol = newSol
                 solByte = newSolByte
                 bestFit = newSolFit
-            else:
-                print("The solution was already present in the population, hence discarted")
         else:
             discarted += 1
     #print("Accepted : ", accepted, " Discarted : ", discarted)
     return sol, solByte, bestFit
 
-def terminated(counter):
-    if counter > 10:
+
+# return true if the element of the population are all the same
+def allElem(pop):
+    for x in range(1, len(pop)):
+        if pop[0] != pop[x]:
+            return False
+    return True
+
+def terminated(counter, fit, popByte):
+    if counter >= 9 or fit == (l / k) or allElem(popByte):
         return True
     return False
 
@@ -96,14 +102,19 @@ def generationalPrinting():
     return 0
 
 def GOMEA():
-    startTime = time.time()
+    #startTime = time.time()
     counter = 0
-    population, popByte = createPop(10)
-    for x in popByte:
-        print (x)
+    population, popByte = createPop(100)
+    '''for x in population:
+        print(x)'''
+    '''for x in popByte:
+        print (x)'''
     bestFit = 0
-    while not terminated(counter):
+    while not terminated(counter, bestFit, popByte):
         lT = lt.getLinkageTree(population)
+        for x in lT:
+            print(x)
+        print()
         for x in range(0, len(population)):
             for subset in lT[:-1]:  # avoiding the root of the tree
                 donor, donorByte = getDonor(population, popByte, x)
@@ -111,15 +122,24 @@ def GOMEA():
                 if bestFit < fit:
                     bestFit = fit
         counter += 1
-        print(counter, " : ", bestFit, " time: ", round(time.time() - startTime, 2))
-    return population, popByte, bestFit, time.time() - startTime
+        #print(counter, " : ", bestFit, " time: ", round(time.time() - startTime, 2))
+        #print(counter, " : ", bestFit)
+
+    return population, popByte, bestFit, counter
+    #return population, popByte, bestFit, time.time() - startTime, counter
 
 
 
 
-pop, popByte, bestFit, time = GOMEA()
 
+pop, popByte, bestFit, counter = GOMEA()
+print("best fitness : ", bestFit)
 for x in popByte:
-    print (x)
+    print(x)
 
+'''for i in range(0, 4):
+    T = time.time()
+    pop, popByte, bestFit, counter = GOMEA()
+    print(i, ": gen_count : ", counter, " Fitness : ", bestFit, " time : ", round(time.time() - T, 2))
 
+'''

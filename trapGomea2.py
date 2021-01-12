@@ -84,7 +84,7 @@ def allElem(pop):
     return True
 
 def terminated(counter, fit, pop):
-    if counter >= 5 or fit == (l / k) or allElem(pop):
+    if counter >= 10 or fit == (l / k) or allElem(pop):
         return True
     return False
 
@@ -95,9 +95,15 @@ def GOMEA():
 
     counter = 0
     popByte = createPop(100)
+    for x in popByte:
+        print(x)
+
     bestFit = 0
     while not terminated(counter, bestFit, popByte):
         lT = lt.getLinkageTree(popByte)
+        for x in lT:
+            print(x)
+        print()
         for x in range(0, len(popByte)):
             for subset in lT[:-1]:  # avoiding the root of the tree
                 donorByte = getDonor(popByte, x)
@@ -111,11 +117,14 @@ def GOMEA():
 
 
 
+popByte, bestFit, counter = GOMEA()
+print("best fitness : ", bestFit)
+for x in popByte:
+    print(x)
 
-
-for i in range(0, 4):
+'''for i in range(0, 4):
     popByte, bestFit, counter = GOMEA()
-    print(i, ": gen_count : ", counter, " Fitness : ", bestFit)
+    print(i, ": gen_count : ", counter, " Fitness : ", bestFit)'''
 
 '''for i in range(0, 4):
     popByte, bestFit, time, counter = GOMEA()

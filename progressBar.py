@@ -4,8 +4,9 @@ import numpy as np
 import decoder as dc
 from numpy.random import randint
 import time
+import random
 
-
+'''
 def getDonor(population):
     donorIndex = randint(0, len(population))  # excluded the right extremity of the interval
     return population[donorIndex]
@@ -126,5 +127,15 @@ for x in range(0, len(pop) - 1):
     for j in range(x + 1, len(pop)):
         if pop[x] == pop[j]:
             print("are the same")
-        '''else:
-            print(x, " : ", j)'''
+        else:
+            print(x, " : ", j)
+'''
+
+'''print(random.uniform(0,1))'''
+x = 0
+while x < 5:
+    print (x)
+    x += 1
+    if x == 4:
+        x = 1
+        print("\n")

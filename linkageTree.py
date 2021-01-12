@@ -4,6 +4,8 @@
 import population as pop
 import numpy as np
 import math
+from numpy.random import randint
+import random
 
 
 # we want the probability than integer i before integer j
@@ -34,14 +36,24 @@ def createDependencyMatrix(population):
                 averageDistance += (population[k][i] - population[k][j]) * (population[k][i] - population[k][j])
             averageDistance /= len(population)
             dependencyMatrix[i][j] *= 1 - averageDistance
+            # To just use delta 1 uncomment the following line and comment the one above
+            #dependencyMatrix[i][j] = 1 - averageDistance
+            # ------ end of delta 2
             # creating the symmetric matrix
+            # --- trying a random int, 0 or 1
+            #dependencyMatrix[i][j] = randint(2)
+
+            # --- or a real number between 0 and 1
+            #dependencyMatrix[i][j] = random.uniform(0,1)
+
+
             dependencyMatrix[j][i] = dependencyMatrix[i][j]
     zeroCount = 0
     for x in range(0, len(dependencyMatrix)):
         for j in range(0, len(dependencyMatrix)):
             if dependencyMatrix[x][j] == 0:
                 zeroCount += 1
-    print("Zero count of dependency matrix is : ", zeroCount, " len: ", len(dependencyMatrix))
+    #print("Zero count of dependency matrix is : ", zeroCount, " len: ", len(dependencyMatrix))
     return dependencyMatrix
 
 

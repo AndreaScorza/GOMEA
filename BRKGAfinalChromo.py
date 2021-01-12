@@ -154,7 +154,7 @@ def BRKGAchromo(populationSize):
     startTime = time.time()
     storedPop = []
 
-    while fitNotIncrease < 10000 and generationCount < 1000:
+    while fitNotIncrease < 1000 and generationCount < 10000:
         population, fitness = generation(population)
 
         if bestFitness == 0:

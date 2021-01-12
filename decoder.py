@@ -21,3 +21,16 @@ def getFitness(el, bidsValue, goodsNumber, bids):
     return fitness
 
 
+def getFitnessLocalSearch(vector, bids, bidsValue, goodsNumber):
+    fitness = 0
+    markedGoods = np.zeros(goodsNumber)
+    for x in vector:
+        flag = False
+        for y in bids[x]:
+            if markedGoods[y] == 1:
+                flag = True
+        if not flag:
+            fitness += bidsValue[x]
+            for y in bids[x]:
+                markedGoods[y] = 1
+    return fitness
