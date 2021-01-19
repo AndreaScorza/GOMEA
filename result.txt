@@ -40,3 +40,39 @@ second try
 1  :  48932.9  time:  52.5
 - with population 15
 
+---------------------------------------------------------
+
+L1-250-1000
+
+
+
+BRKGA
+population = 10, gen = stop after 1000 with no better results
+generation 2975: best fitness =  42049.60220000002  time:  880.49
+
+population = 100, gen = stop after 1000 with no better results
+generation 1546: best fitness =  44535.20380000001  time:  4241.83
+
+GOMEA
+population = 6, without accepting same solutions
+generation 10  :  41726.7726  time:  5874.93
+
+---------------------------------------------------------
+
+L6
+
+BRKGA
+
+population = 10, gen = stop after 1000 with no better results
+generation 5118 :  178132.2175  time:  376.68
+
+population = 15, gen = stop after 1000 with no better results
+generation: 3831 :  170175.9595100001  time:  347.65
+
+population = 100, gen = stop after 1000 with no better results
+generation 1271 :  195615.61622000023  time:  836.48
+
+
+GOMEA
+population 15, without accepting same solutions,
+generation 21: 188387.72612000018  :  4308.6

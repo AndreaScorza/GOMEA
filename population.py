@@ -43,3 +43,11 @@ def population(size, filename, sEed):
     values = auction.getAuction(filename)
     return createPopulation(size, values)
 
+pop, val = population(2, "L4-5-5.txt", -1)
+for x in pop:
+    print(x)
+for x in val:
+    print(x)
+#[goodsNumber, bidsNumber, dummyNumber, bidsValue, bids]
+'''print(len(val[3]))
+print(len(val[4]))'''

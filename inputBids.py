@@ -49,6 +49,10 @@ def getAuction(path):
     returnValue = [goodsNumber, bidsNumber, dummyNumber, bidsValue, bids]
 
     return (returnValue)
+'''
+x = getAuction('problemInstances/paths.txt')
+y = getAuction('L3-20-20.txt')
 
-
-    # what happens with multiple lines ??
+for a in range(0, len(x)):
+    print(y[a],  " ", x[a])
+'''

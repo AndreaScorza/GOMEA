@@ -15,10 +15,13 @@ def createDependencyMatrix(population):
     dependencyMatrix = np.zeros((len(population[0]), len(population[0])))
 
     nBids = len(population[0])
+    #print("nbids ", nBids)
     for i in range(0, nBids):
         for j in range(i + 1, nBids):
             p = 0
             for k in range(0, len(population)):
+                # here we have the problem
+                # < OR > doesn't change the result
                 if population[k][i] < population[k][j]:
                     p += 1
             p /= len(population)
@@ -53,7 +56,8 @@ def createDependencyMatrix(population):
         for j in range(0, len(dependencyMatrix)):
             if dependencyMatrix[x][j] == 0:
                 zeroCount += 1
-    #print("Zero count of dependency matrix is : ", zeroCount, " len: ", len(dependencyMatrix))
+    print("Zero count of dependency matrix is : ", zeroCount, " len: ", len(dependencyMatrix))
+    #print("\n", dependencyMatrix)
     return dependencyMatrix
 
 

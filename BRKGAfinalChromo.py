@@ -14,7 +14,8 @@ P = 0.6 # probability of selecting key from elite for crossover
 # 0.7 462 238640
 # 0.6 437 238640
 
-values = auction.getAuction('L1-250-1000.txt')
+#values = auction.getAuction('L1-250-1000.txt')
+values = auction.getAuction('problemInstances/L6.txt')
 goods = values[0]
 bidsValue = values[3]
 bids = values[4]
@@ -178,7 +179,7 @@ def BRKGAchromo(populationSize):
 
 
 
-bestFitness, storedPop, lastPopulation, totalTime = BRKGAchromo(10)
+bestFitness, storedPop, lastPopulation, totalTime = BRKGAchromo(15)
 print("best fitness = ", bestFitness, " time: ", round(totalTime, 2))
 '''for x in range(0, len(storedPop)):
     a,b = decoder(storedPop[x], False)

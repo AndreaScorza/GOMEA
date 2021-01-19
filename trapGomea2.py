@@ -6,7 +6,7 @@ import random
 
 # global variable
 k = 5
-l = 20
+l = 50
 #byteArray = np.random.randint(2, size=l)
 def createPop(size):
     popByte = []
@@ -73,7 +73,7 @@ def greedyRecomb(solByte, donorByte, subset):
             bestFit = newSolByteFit
         else:
             discarted += 1
-    #print("Accepted : ", accepted, " Discarted : ", discarted)
+    # print("Accepted : ", accepted, " Discarted : ", discarted)
     return solByte, bestFit
 
 # return true if the element of the population are all the same
@@ -84,7 +84,7 @@ def allElem(pop):
     return True
 
 def terminated(counter, fit, pop):
-    if counter >= 10 or fit == (l / k) or allElem(pop):
+    if counter >= 30 or fit == (l / k) or allElem(pop):
         return True
     return False
 
@@ -113,14 +113,17 @@ def GOMEA():
         counter += 1
         #print(counter, " : ", bestFit, " time: ", round(time.time() - startTime, 2))
     #return popByte, bestFit, time() - start_t, counter
+    print(counter, " : ", bestFit)
+    for z in popByte:
+        print(z)
     return popByte, bestFit, counter
 
 
 
 popByte, bestFit, counter = GOMEA()
 print("best fitness : ", bestFit)
-for x in popByte:
-    print(x)
+'''for x in popByte:
+    print(x)'''
 
 '''for i in range(0, 4):
     popByte, bestFit, counter = GOMEA()

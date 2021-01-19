@@ -6,7 +6,7 @@ import random
 
 # global variable
 k = 5
-l = 20
+l = 50
 #byteArray = np.random.randint(2, size=l)
 def createPop(size):
     pop = []
@@ -94,12 +94,14 @@ def allElem(pop):
     return True
 
 def terminated(counter, fit, popByte):
-    if counter >= 9 or fit == (l / k) or allElem(popByte):
+    if counter >= 30 or fit == (l / k) or allElem(popByte):
         return True
     return False
 
 def generationalPrinting():
     return 0
+
+
 
 def GOMEA():
     #startTime = time.time()
@@ -111,7 +113,9 @@ def GOMEA():
         print (x)'''
     bestFit = 0
     while not terminated(counter, bestFit, popByte):
+        # insert here the ordering of the population
         lT = lt.getLinkageTree(population)
+        # translate the linkage tree
         for x in lT:
             print(x)
         print()
@@ -122,8 +126,11 @@ def GOMEA():
                 if bestFit < fit:
                     bestFit = fit
         counter += 1
+
         #print(counter, " : ", bestFit, " time: ", round(time.time() - startTime, 2))
-        #print(counter, " : ", bestFit)
+        print(counter, " : ", bestFit)
+        for z in popByte:
+            print(z)
 
     return population, popByte, bestFit, counter
     #return population, popByte, bestFit, time.time() - startTime, counter
@@ -134,8 +141,10 @@ def GOMEA():
 
 pop, popByte, bestFit, counter = GOMEA()
 print("best fitness : ", bestFit)
-for x in popByte:
-    print(x)
+
+
+'''for x in popByte:
+    print(x)'''
 
 '''for i in range(0, 4):
     T = time.time()
