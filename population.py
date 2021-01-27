@@ -34,6 +34,8 @@ def createPopulation(size, values):
             print("the new element was already present in the population! creating a new one ...")
         population.append(newElem)
         #population.append(createKeysForElement(len(values[4])))
+    if population == []:
+        print("mortaccu oh")
     return population, values
 
 
@@ -42,12 +44,3 @@ def population(size, filename, sEed):
         seed(sEed)
     values = auction.getAuction(filename)
     return createPopulation(size, values)
-
-pop, val = population(2, "L4-5-5.txt", -1)
-for x in pop:
-    print(x)
-for x in val:
-    print(x)
-#[goodsNumber, bidsNumber, dummyNumber, bidsValue, bids]
-'''print(len(val[3]))
-print(len(val[4]))'''

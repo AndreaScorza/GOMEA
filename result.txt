@@ -76,3 +76,4 @@ generation 1271 :  195615.61622000023  time:  836.48
 GOMEA
 population 15, without accepting same solutions,
 generation 21: 188387.72612000018  :  4308.6
+

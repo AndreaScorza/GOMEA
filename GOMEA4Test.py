@@ -1,4 +1,5 @@
 import population as pop
+import population as pop2
 import linkageTree as lt
 import numpy as np
 import decoder as dc
@@ -91,14 +92,13 @@ def printStat(population, val):
 
 def GOMEA():
     forcedImprovement = False
-    startTime = time.time()
     counter = 0
     #  values = [goodsNumber, bidsNumber, dummyNumber, bidsValue, bids]
-    population, values = pop.population(10, "L3-20-20.txt", -1)
+    population, values = pop.population(100, "L2-50-100.txt", -1)
     bestFit = 0
     bestElem = []
     stationaryCounter = 0
-    printStat(population, values)
+    #printStat(population, values)
     notProgress = 0
 
     # --
@@ -106,10 +106,9 @@ def GOMEA():
     trovato = 0
 
     while not terminated(counter, notProgress):
-        # uncomment for forcer improvmenet
-        #if stationaryCounter > 6:
-        #    forcedImprovement = True
-        #    print("Forced improvement !!!!!!!!!!!!!!!!!")
+        if stationaryCounter > 6:
+            forcedImprovement = True
+            #print("Forced improvement !!!!!!!!!!!!!!!!!")
         lastRoundPopulation = population.copy()
 
         # ----------------
@@ -121,8 +120,8 @@ def GOMEA():
         #lT = lt.getLinkageTree(a)
         # -----------------
 
-        for li in lT[:-1]:
-            print(li)
+        #for li in lT[:-1]:
+        #    print(li)
         for x in range(0, len(population)):
             for subset in lT[:-1]:  # avoiding the root of the tree
                 donor = getDonor(population, x)
@@ -139,36 +138,20 @@ def GOMEA():
             trovato = counter
             flag = True
 
-        print(counter, " : ", bestFit, " time: ", round(time.time() - startTime, 2))
+        #print(counter, " : ", bestFit, " time: ", round(time.time() - startTime, 2))
+        #print(counter, " : ", bestFit,)
         numberOfChange = howManyOfThePopChanged(lastRoundPopulation, population)
         if numberOfChange == 0:
             notProgress += 1
         else:
             notProgress = 0
-        print(numberOfChange, " elements have changed since last generation")
+        #print(numberOfChange, " elements have changed since last generation")
 
-        printStat(population, values)
-    return population, bestFit, time.time() - startTime, values
-    #return population, bestFit, time.time() - startTime, values, trovato, counter
+        #printStat(population, values)
+    #return population, bestFit, time.time() - startTime, values
+    return population, bestFit, values, trovato, counter
 
-
-population, bestFit, time, val = GOMEA()
-
-print(bestFit, " : ", round(time, 2))
-print()
-#  controlli sulla popolazione:
-
-for x in population:
-    print(dc.getFitness(x, val[3], val[1], val[4]))#, " : ", x)
-
-for x in range(0, len(population) - 1):
-    for j in range(x + 1, len(population)):
-        if population[x] == population[j]:
-            print("are the same")
-
-
-
-'''store = []
+store = []
 for x in range(0, 3):
     popol, bestFit, val, trovato, counter = GOMEA()
     Flag = True
@@ -178,5 +161,26 @@ for x in range(0, 3):
             break
     store.append([counter, trovato, Flag])
 for x in store:
-    print (x)'''
+    print (x)
+
+#pop, bestFit, val, trovato, counter = GOMEA()
+
+#pop, bestFit, val, trovato, counter = GOMEA()
+
+
+'''print(bestFit, " : ", round(time, 2))
+print()
+#  controlli sulla popolazione:
+
+for x in pop:
+    print(dc.getFitness(x, val[3], val[1], val[4]))#, " : ", x)
+
+for x in range(0, len(pop) - 1):
+    for j in range(x + 1, len(pop)):
+        if pop[x] == pop[j]:
+            print("are the same")
+'''
+
+
+
 
