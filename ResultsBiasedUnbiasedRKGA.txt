@@ -1,0 +1,39 @@
+Starting with a small instance: L3-20-20, population 10, stop after 100 gen without improvemnt or 1000 total
+For this instance, resuts are averaged over 100 runs
+
+Legend: First number = best fitness , Second number = Generation at which was the best fitness found
+
+
+BRKGA:
+
+3082.7800000000034   28.85
+
+RKGA:
+
+3082.7800000000034   23.25
+
+-------------
+
+L2-50-100, population 10, stop after 100 gen without improvemnt or 1 000 total
+Results Averaged over 100 runs
+
+BRKGA
+
+48590.04   28.64
+
+RKGA
+
+48195.102   31.49
+
+-------------
+
+L1-250-1000, population 15, stop after 500 gen without improvemnt or 10 000 total
+Results Averaged over 20 runs
+
+BRKGA
+
+42317.38373000001   745.75
+
+RKGA
+
+42671.453383   1036.55

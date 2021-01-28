@@ -14,7 +14,7 @@ P = 0.6 # probability of selecting key from elite for crossover
 # 0.7 462 238640
 # 0.6 437 238640
 
-values = auction.getAuction('L3-20-20.txt')
+values = auction.getAuction('L2-50-100.txt')
 #values = auction.getAuction('problemInstances/L6.txt')
 goods = values[0]
 bidsValue = values[3]
@@ -81,9 +81,9 @@ def decoder(element, discourage):
     element.sort(key=lambda x: x[0])
     return element, fitness
 
-def crossOver(sortedPop, nOfElite):
+def crossOver(sortedPop):
     offspring = []
-    parentAindex = randint(0, nOfElite)
+    parentAindex = randint(0, len(sortedPop))
     parentBindex = randint(0, len(sortedPop))
     while parentAindex == parentBindex:
         parentBindex = randint(0, len(sortedPop))
@@ -139,9 +139,9 @@ def generation(population):
         newGeneration.append(createKeysForElement(len(bids)))
 
     for x in range(0, nOfCrossOver):
-        offSpring = crossOver(sortedPopulation, nOfElite)
+        offSpring = crossOver(sortedPopulation)
         while offSpring in newGeneration:  # check that the offspring is not in the population already
-            offSpring = crossOver(sortedPopulation, nOfElite)
+            offSpring = crossOver(sortedPopulation)
         newGeneration.append(offSpring)
 
     return newGeneration, bestFitness
@@ -177,11 +177,9 @@ def BRKGAchromo(populationSize):
 
     return bestFitness, storedPop, population, time.time()-startTime, (generationCount-fitNotIncrease) - 1
 
-
-
 storing = []
-for x in range(0, 2):
-    bestFitness, storedPop, lastPopulation, totalTime, foundAtGen = BRKGAchromo(10)
+for x in range(0, 3):
+    bestFitness, storedPop, lastPopulation, totalTime, foundAtGen = BRKGAchromo(15)
     storing.append([bestFitness, foundAtGen])
     #print(bestFitness, " ", foundAtGen)
 a = 0
@@ -192,8 +190,13 @@ for x in storing:
     print(x)
 
 print(a/len(storing), " ", b/len(storing))
-#print("best fitness = ", bestFitness, " time: ", round(totalTime, 2), " Max found at Gen :", foundAtGen - 1)
 
-
+'''bestFitness, storedPop, lastPopulation, totalTime, foundAtGen = BRKGAchromo(15)
+print("best fitness = ", bestFitness, " time: ", round(totalTime, 2), " Max found at Gen :", foundAtGen - 1)
+for x in range(0, len(storedPop)):
+    a,b = decoder(storedPop[x], False)
+    c,d = decoder(lastPopulation[x], False)
+    print(b, " --- ", d)
+'''
 
 

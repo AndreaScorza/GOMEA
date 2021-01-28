@@ -77,3 +77,16 @@ GOMEA
 population 15, without accepting same solutions,
 generation 21: 188387.72612000018  :  4308.6
 
+
+---------
+
+Biased and Unbiased RKGA
+
+Bean (1994) selects two parents at random from the entire population to implement mating in a RKGA
+and allows a parent to be selected more than once in a given generation. One parent is referred to as
+parent A while the other is parent B. A biased random-key genetic algorithm, or BRKGA (Gonçalves & Resende, 2011),
+differs from a RKGA in the way parents are selected for mating. In a BRKGA, each element is generated combining
+one element selected at random from the elite partition (this is parent A) in the current population and one
+from the non-elite partition (parent B). We say the selection is biased since one parent is always an elite
+individual. Repetition in the selection of a mate is allowed and therefore an individual can produce more than
+one offspring in the same generation
