@@ -43,8 +43,8 @@ def greedyRecomb(sol, donor, subset, values, population, forcedImprovement, supe
         if newSolFit > solFit:
             accepted += 1
             # we add a second check to see if the solution resulting would be the same, we discarted because same element
-            if not pop.checkIfElemInPopulation(newSol, population):
-            #if not pop.checkIfElemInPopulation(newSol, population) and secondCheck(newSol, population, values):
+            #if not pop.checkIfElemInPopulation(newSol, population):
+            if not pop.checkIfElemInPopulation(newSol, population) and secondCheck(newSol, population, values):
                 sol = newSol
                 bestFit = newSolFit
                 bestElem = newSol.copy()
@@ -56,7 +56,7 @@ def greedyRecomb(sol, donor, subset, values, population, forcedImprovement, supe
 
 
 def terminated(counter, notProgress):
-    if counter > 30 or notProgress > 1:
+    if counter > 100 or notProgress > 1:
         return True
     return False
 
@@ -94,7 +94,8 @@ def GOMEA():
     startTime = time.time()
     counter = 0
     #  values = [goodsNumber, bidsNumber, dummyNumber, bidsValue, bids]
-    population, values = pop.population(10, "L3-20-20.txt", -1)
+    #population, values = pop.population(10, "L3-20-20.txt", -1)
+    population, values = pop.population(10, "problemInstances/matching.txt", -1)
     bestFit = 0
     bestElem = []
     stationaryCounter = 0

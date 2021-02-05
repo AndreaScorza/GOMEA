@@ -1,11 +1,11 @@
 import population as pop
-import population as pop2
 import linkageTree as lt
 import numpy as np
 import decoder as dc
 from numpy.random import randint
 import time
 import random
+import statistics as stat
 
 def getDonor(population, x):
     numbers = list(range(0, len(population)))
@@ -24,7 +24,7 @@ def secondCheck(element, population, val):
             return False
     return True
 
-def greedyRecomb(sol, donor, subset, values, population, forcedImprovement, superiorDonor):
+def greedyRecomb(sol, donor, subset, values, population):
     accepted = 0
     discarted = 0
     bestElem = sol.copy()
@@ -32,10 +32,7 @@ def greedyRecomb(sol, donor, subset, values, population, forcedImprovement, supe
         solFit = dc.getFitness(sol, values[3], values[1], values[4])
         newSol = sol.copy()
         for element in cluster:
-            if not forcedImprovement:
-                newSol[element] = donor[element]
-            else:
-                newSol[element] = superiorDonor[element]
+            newSol[element] = donor[element]
         newSolFit = dc.getFitness(newSol, values[3], values[1], values[4])
         bestFit = solFit
 
@@ -44,8 +41,8 @@ def greedyRecomb(sol, donor, subset, values, population, forcedImprovement, supe
         if newSolFit > solFit:
             accepted += 1
             # we add a second check to see if the solution resulting would be the same, we discarted because same element
-            if not pop.checkIfElemInPopulation(newSol, population):
-            #if not pop.checkIfElemInPopulation(newSol, population) and secondCheck(newSol, population, values):
+            #if not pop.checkIfElemInPopulation(newSol, population):
+            if not pop.checkIfElemInPopulation(newSol, population) and secondCheck(newSol, population, values):
                 sol = newSol
                 bestFit = newSolFit
                 bestElem = newSol.copy()
@@ -91,10 +88,9 @@ def printStat(population, val):
 
 
 def GOMEA():
-    forcedImprovement = False
     counter = 0
     #  values = [goodsNumber, bidsNumber, dummyNumber, bidsValue, bids]
-    population, values = pop.population(100, "L2-50-100.txt", -1)
+    population, values = pop.population(20, "L2-50-100.txt", -1)
     bestFit = 0
     bestElem = []
     stationaryCounter = 0
@@ -103,12 +99,9 @@ def GOMEA():
 
     # --
     flag = False
-    trovato = -1
+    foundAtGen = 0
 
     while not terminated(counter, notProgress):
-        if stationaryCounter > 6:
-            forcedImprovement = True
-            #print("Forced improvement !!!!!!!!!!!!!!!!!")
         lastRoundPopulation = population.copy()
 
         # ----------------
@@ -120,78 +113,76 @@ def GOMEA():
         #lT = lt.getLinkageTree(a)
         # -----------------
 
-        #for li in lT[:-1]:
-        #    print(li)
         for x in range(0, len(population)):
             for subset in lT[:-1]:  # avoiding the root of the tree
                 donor = getDonor(population, x)
-                population[x], fit, elem = greedyRecomb(population[x], donor, subset, values, population, forcedImprovement, bestElem)
+                population[x], fit, elem = greedyRecomb(population[x], donor, subset, values, population)
                 if bestFit < fit:
                     bestFit = fit
                     bestElem = elem.copy()
                     stationaryCounter = 0
+                    foundAtGen = counter + 1
         stationaryCounter += 1
+        if counter == 0:
+            print("fit", bestFit)
+            initialFitness = bestFit
         counter += 1
 
         # --
-        if bestFit > 3082.75 and flag == False:
-            trovato = counter
-            flag = True
 
-        #print(counter, " : ", bestFit, " time: ", round(time.time() - startTime, 2))
-        #print(counter, " : ", bestFit,)
-        numberOfChange = howManyOfThePopChanged(lastRoundPopulation, population)
-        if numberOfChange == 0:
-            notProgress += 1
-        else:
-            notProgress = 0
+
+        print(counter, " : ", bestFit)
+        #numberOfChange = howManyOfThePopChanged(lastRoundPopulation, population)
+        #if numberOfChange == 0:
+        #    notProgress += 1
+        #else:
+        #    notProgress = 0
         #print(numberOfChange, " elements have changed since last generation")
 
         #printStat(population, values)
-    #return population, bestFit, time.time() - startTime, values
-    return population, bestFit, values, trovato, counter
 
-store = []
-for x in range(0, 3):
-    popol, bestFit, val, trovato, counter = GOMEA()
-    Flag = True
-    for x in popol:
-        if round(dc.getFitness(x, val[3], val[1], val[4]), 2) != 3082.78:
-            Flag = False
+        if bestFit > 48932.8 and flag == False:
+            foundAtGen = counter
+            print("ora esce")
             break
-    store.append([counter, trovato, Flag])
-for x in store:
-    print (x)
-a = 0
-b = 0
-notFound = 0
-for x in store:
-    if x[1] != -1:
-      a += x[0]
-      b += x[1]
-      print(x)
-    else:
-      notFound += 1
+    return population, bestFit, values, foundAtGen, counter, bestFit - initialFitness
 
-print(a/len(store), " ", b/len(store), "not Found: ", notFound)
-#pop, bestFit, val, trovato, counter = GOMEA()
+fitList = []
+genList = []
+improvementList = []
+for x in range(0, 3):
+    population, bestFit, val, foundAtGen, counter, improvement = GOMEA()
+    print("best fit", bestFit, " found at gen: ", foundAtGen, " Fitness improved of: ", improvement)
+    fitList.append(bestFit)
+    genList.append(foundAtGen)
+    improvementList.append(improvement)
 
-#pop, bestFit, val, trovato, counter = GOMEA()
+print("\n")
+for x in range(0, len(genList)):
+    print(fitList[x], " ", genList[x])
 
+print("\n")
+print("average best fitness: ", stat.mean(fitList))
+print("median best fitness: ", stat.median(fitList))
+try:
+    print("mode best fitness: ", stat.mode(fitList))
+except:
+    print(("mode best fitness:     All values are different"))
 
-'''print(bestFit, " : ", round(time, 2))
-print()
-#  controlli sulla popolazione:
-
-for x in pop:
-    print(dc.getFitness(x, val[3], val[1], val[4]))#, " : ", x)
-
-for x in range(0, len(pop) - 1):
-    for j in range(x + 1, len(pop)):
-        if pop[x] == pop[j]:
-            print("are the same")
-'''
-
+print("\n")
+print("average found at gen: ", stat.mean(genList))
+print("median found at gen: ", stat.median(genList))
+try:
+    print("mode found at gen: ", stat.mode(genList))
+except:
+    print("mode found at gen:     All values are different")
+print("\n")
+print("average improvement: ", stat.mean(improvementList))
+print("median improvement: ", stat.median(improvementList))
+try:
+    print("mode improvement: ", stat.mode(improvementList))
+except:
+    print("mode improvement:     All values are different")
 
 
 

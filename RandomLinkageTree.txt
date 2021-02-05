@@ -1,59 +1,28 @@
 Computations stops after two generations with no changes in the population
-First problem instance, L3-20-20, populaiton of 10
+First problem instance, L3-20-20, populaiton of 10 averaged over 100 runs
+
+Using the linkage tree leads to a fewer number of generations due to premature convergence,
+it happens more frequently to not find the optimum solutions
 
 Legend: Generation it stopped, which generation was the maximum found, all the final element are the same ?
 
 Normal Linkage tree, double allowed:
 
-[6, 1, True]
-[4, 1, True]
-[7, -1, False]
-[6, 1, True]
-[4, 1, True]
-[4, 1, True]
-[5, 1, True]
-[5, 1, False]
-[4, 1, True]
-[6, 1, True]
+    5.38   1.01 not Found:  7
 
 Random Linkage tree, double allowed
 
-[7, 1, True]
-[6, 2, True]
-[7, 1, False]
-[7, 1, True]
-[5, 1, False]
-[9, 1, False]
-[7, 2, True]
-[6, 1, True]
-[6, -1, False]
-[5, 1, True]
+    6.09   1.1 not Found:  6
 
 Normal Linkage tree, double not allowed
 
-[6, 1, False]
-[7, 1, False]
-[6, 1, False]
-[6, 1, False]
-[5, 2, False]
-[7, 1, False]
-[7, 1, False]
-[6, 1, False]
-[5, 1, False]
-[5, 1, False]
+    5.75   1.16 not Found:  2
 
 Random Linkage tree, double not allowed
 
-[4, 1, False]
-[9, 1, False]
-[4, 1, False]
-[7, 1, False]
-[5, 1, False]
-[8, 2, False]
-[5, 2, False]
-[4, 2, False]
-[8, 2, False]
-[6, 1, False]
+    6.43   1.35 not Found:  1
+
+
 
 Now testing with bigger problem instance L2-50-100 and bigger population : 100
 
@@ -65,6 +34,8 @@ Normal Linkage tree, double allowed:
 [4, 1, False]
 [4, 1, False]
 
+4.6   1.0
+
 Random Linkage tree, double allowed:
 
 [8, 1, False]
@@ -73,6 +44,7 @@ Random Linkage tree, double allowed:
 [4, 1, False]
 [5, 1, False]
 
+5.0   1.0
 
 When double is not allowed a major delay in the processing has been recorder, this is due to the increased number of generations
 
@@ -84,6 +56,7 @@ Normal Linkage tree, double not allowed:
 [9, 1, False]
 [10, 1, False]
 
+9.4   1.0
 
 Random Linkage tree, double not allowed:
 
@@ -92,3 +65,5 @@ Random Linkage tree, double not allowed:
 [9, 1, False]
 [9, 1, False]
 [10, 1, False]
+
+9.0   1.0

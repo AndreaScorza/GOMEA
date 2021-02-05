@@ -2,7 +2,7 @@ import inputBids as auction
 import numpy as np
 import decoder as dc
 import random
-goodsNumber, bidsNumber, dummyNumber, bidsValue, bids = auction.getAuction("L1-250-1000.txt")
+goodsNumber, bidsNumber, dummyNumber, bidsValue, bids = auction.getAuction("L2-50-100.txt")
 
 '''vector = []
 for x in range(0, bidsNumber):

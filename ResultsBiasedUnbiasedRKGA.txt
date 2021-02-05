@@ -1,39 +1,156 @@
 Starting with a small instance: L3-20-20, population 10, stop after 100 gen without improvemnt or 1000 total
-For this instance, resuts are averaged over 100 runs
+For this instance, resuts are averaged over 1000 runs
+
+in small problem instances it is purely random, hence it is unclear if there is a correlation,
+with harder instances however the bias allowes the algorithm to perform better
 
 Legend: First number = best fitness , Second number = Generation at which was the best fitness found
 
 
 BRKGA:
 
-3082.7800000000034   28.85
+Fitness:
+Average:  3082.78
+Median:   3082.78
+Mode:     3082.78
+
+Generation:
+Average:  25.978
+Median:   17.0
+Mode:  5
 
 RKGA:
 
-3082.7800000000034   23.25
+Fitness:
+Average:  3082.78
+Median:   3082.78
+Mode:     3082.78
+
+Generation:
+Average:  26.624
+Median:   19.0
+Mode:  4
 
 -------------
 
-L2-50-100, population 10, stop after 100 gen without improvemnt or 1 000 total
-Results Averaged over 100 runs
+L2-50-100, population 20, stop after 250 gen without improvemnt or 1500 total
+Results Averaged over 500 runs
 
 BRKGA
 
-48590.04   28.64
+Fitness:
+Average:  48932.9
+Median:   48932.9
+Mode:     48932.9
+
+Generation:
+Average:  17.168
+Median:   11.0
+Mode:  0
+
+Over 1000 runs:
+
+Fitness:
+Average:  48932.9
+Median:   48932.9
+Mode:     48932.9
+
+Generation:
+Average:  16.83
+Median:   10.0
+Mode:  0
 
 RKGA
 
-48195.102   31.49
+Fitness:
+Average:  48932.9
+Median:   48932.9
+Mode:     48932.9
+
+Generation:
+Average:  16.18
+Median:   9.0
+Mode:  0
+
+Over 1000 runs
+Fitness:
+Average:  48932.9
+Median:   48932.9
+Mode:     48932.9
+
+Generation:
+Average:  15.737
+Median:   9.0
+Mode:  0
 
 -------------
 
-L1-250-1000, population 15, stop after 500 gen without improvemnt or 10 000 total
-Results Averaged over 20 runs
+L1-250-1000
 
 BRKGA
 
-42317.38373000001   745.75
+pop 400, stop if 100 non increasing or 5000
+Best Fitness  46323.758300000045  Total Time:  4029.5494627952576  Found at Gen:  459
+Best Fitness  46477.72390000004  Total Time:  2169.7989690303802  Found at Gen:  170
+
+
+
+
+pop 500, stop after 100 no incrase in fitness
+Best Fitness  46050.659500000045  Total Time:  2212.1504147052765  Found at Gen:  139
+Best Fitness  45690.44060000005  Total Time:  2514.086086034775  Found at Gen:  166
+Best Fitness  46336.730900000046  Total Time:  5425.903518676758  Found at Gen:  335
+Best Fitness  46033.19070000005  Total Time:  2508.9780597686768  Found at Gen:  174
+
+
+
+pop 1000, stop if 100 non increasing or 5000
+Best Fitness  46216.76350000005  Total Time:  4976.451475858688  Found at Gen:  162
+Best Fitness  46477.723900000055  Total Time:  5093.527284383774  Found at Gen:  167   MAX
+Best Fitness  46477.72390000006  Total Time:  5741.702755689621  Found at Gen:  206
+
+
 
 RKGA
 
-42671.453383   1036.55
+pop 400, stop if 100 non increasing or 5000
+Best Fitness  46477.723900000055  Total Time:  3108.3959879875183  Found at Gen:  322
+Best Fitness  46477.72390000005  Total Time:  3492.565238714218  Found at Gen:  376
+
+
+
+pop 500, stop after 100 no incrase in fitness
+Best Fitness  45828.05550000005  Total Time:  5023.714354276657  Found at Gen:  436
+Best Fitness  46477.723900000055  Total Time:  4371.483055591583  Found at Gen:  379   MAX
+Best Fitness  46323.75830000005  Total Time:  4950.453133106232  Found at Gen:  438
+Best Fitness  46477.723900000026  Total Time:  4580.052250623703  Found at Gen:  396
+Best Fitness  46216.76350000005  Total Time:  4695.188915252686  Found at Gen:  382
+
+
+
+
+pop 1000, stop if 100 non increasing or 5000
+Best Fitness  46477.72390000006  Total Time:  9821.029288053513  Found at Gen:  416
+Best Fitness  46396.500900000014  Total Time:  8519.761746883392  Found at Gen:  368
+Best Fitness  46477.723900000055  Total Time:  8227.3816447258  Found at Gen:  349
+
+
+
+-------------
+
+L6 (256-1000)
+
+BRKGA
+
+pop 500, stop after 100 consecutive non increasing fitness
+Best Fitness  198010.00750000015  Total Time:  630.8935024738312  Found at Gen:  214
+Best Fitness  195721.91135000027  Total Time:  599.9757969379425  Found at Gen:  193
+
+
+
+RKGA
+
+pop 500, stop after 100 consecutive non increasing fitness
+Best Fitness  195994.4888000002  Total Time:  1228.5817217826843  Found at Gen:  461
+Best Fitness  192898.02781000023  Total Time:  1020.1231305599213  Found at Gen:  364
+

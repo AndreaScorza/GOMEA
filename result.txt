@@ -53,13 +53,32 @@ generation 2975: best fitness =  42049.60220000002  time:  880.49
 population = 100, gen = stop after 1000 with no better results
 generation 1546: best fitness =  44535.20380000001  time:  4241.83
 
+population = 100, gen = stop after 1000 with no better results
+Best Fitness  44736.697100000034  Total Time:  459.56625723838806  Found at Gen:  153
+Best Fitness  44791.307500000024  Total Time:  1399.8082699775696  Found at Gen:  224
+
+population = 50, gen = stop after 250 with no better results or 5000
+Best Fitness  43412.00824000003  Total Time:  432.7854199409485  Found at Gen:  233
+
+population = 300, gen = stop after 80 with no better results or 5000
+Best Fitness  46033.19070000005  Total Time:  1102.389872789383  Found at Gen:  123
+
+population = 400, gen = stop after 100 with no better results or 5000
+Best Fitness  46130.23550000004  Total Time:  2026.66721367836  Found at Gen:  173
+
+
+
 GOMEA
 population = 6, without accepting same solutions
 generation 10  :  41726.7726  time:  5874.93
 
+30 of population, univariate version, finished!
+31  :  44847.57130000002  time:  31342.26
+
+
 ---------------------------------------------------------
 
-L6
+L6 (256-1000)
 
 BRKGA
 
@@ -90,3 +109,107 @@ one element selected at random from the elite partition (this is parent A) in th
 from the non-elite partition (parent B). We say the selection is biased since one parent is always an elite
 individual. Repetition in the selection of a mate is allowed and therefore an individual can produce more than
 one offspring in the same generation
+
+
+-----------
+
+L1
+
+BRKGA pop 500, stop after 100 with no better results
+
+Best Fitness  58265.41014000008  Total Time:  3027.2130646705627  Found at Gen:  191
+
+
+GOMEA pop 20,
+
+it did not finish
+19  :  57070.827140000045  time:  26548.32
+
+-----------
+
+L2
+
+BRKGA pop 500, stop after 100 with no better results
+
+Best Fitness  250438.0  Total Time:  2746.2065806388855  Found at Gen:  2
+
+
+GOMEA pop 20,
+
+it is still computing
+8  :  250438.0  time:  30907.41
+0  elements have changed since last generation
+------------
+
+Matching
+
+BRKGA 500, stop when 100 no results generations
+
+Best Fitness  917.3269  Total Time:  462.654926776886  Found at Gen:  208
+
+
+
+
+
+
+
+-----------
+Paths
+
+BRKGA 500, stop when 100 no results generations
+
+Best Fitness  62.90720640000006  Total Time:  522.3055007457733  Found at Gen:  182
+
+GOMEA
+
+28  :  59.49796410000004  time:  8730.14
+
+-----------
+Regions-npv
+
+BRKGA 500, stop when 100 no results generations
+
+Best Fitness  18020.987000000012  Total Time:  877.7706215381622  Found at Gen:  136
+
+
+
+GOMEA
+
+
+
+-----------
+Regions-upv
+
+BRKGA 500, stop when 100 no results generations
+
+Best Fitness  16128.034500000002  Total Time:  712.0659251213074  Found at Gen:  103
+
+
+GOMEA
+
+
+
+
+-----------
+Scheduling
+
+
+BRKGA 500, stop when 100 no results generations
+Best Fitness  401.87608  Total Time:  893.1950364112854  Found at Gen:  281
+
+
+GOMEA population 20
+
+16  :  385.0026900000001  time:  5414.97
+
+
+-----------
+
+
+BRKGA 500, stop when 100 no results generations
+
+
+
+GOMEA
+
+

@@ -3,6 +3,7 @@ from numpy.random import randint
 from numpy.random import rand
 import numpy as np
 import time
+import statistics as stat
 
 # importing the file for the auction input
 import inputBids as auction
@@ -14,8 +15,8 @@ P = 0.6 # probability of selecting key from elite for crossover
 # 0.7 462 238640
 # 0.6 437 238640
 
-values = auction.getAuction('L3-20-20.txt')
-#values = auction.getAuction('problemInstances/L6.txt')
+#values = auction.getAuction('L1-250-1000.txt')
+values = auction.getAuction('problemInstances/matching.txt')
 goods = values[0]
 bidsValue = values[3]
 bids = values[4]
@@ -155,7 +156,7 @@ def BRKGAchromo(populationSize):
     startTime = time.time()
     storedPop = []
 
-    while fitNotIncrease < 100 and generationCount < 100:
+    while fitNotIncrease < 100 and generationCount < 5000:
         population, fitness = generation(population)
 
         if bestFitness == 0:
@@ -178,22 +179,41 @@ def BRKGAchromo(populationSize):
     return bestFitness, storedPop, population, time.time()-startTime, (generationCount-fitNotIncrease) - 1
 
 
+def runWithStatistics(popSize, nOfLoops):
+    storing = []
+    fit = []
+    gen = []
+    for x in range(0, nOfLoops):
+        bestFitness, storedPop, lastPopulation, totalTime, foundAtGen = BRKGAchromo(popSize)
+        storing.append([bestFitness, foundAtGen])
+        fit.append(bestFitness)
+        gen.append(foundAtGen)
 
-storing = []
-for x in range(0, 2):
-    bestFitness, storedPop, lastPopulation, totalTime, foundAtGen = BRKGAchromo(10)
-    storing.append([bestFitness, foundAtGen])
-    #print(bestFitness, " ", foundAtGen)
-a = 0
-b = 0
-for x in storing:
-    a += x[0]
-    b += x[1]
-    print(x)
+    print("\n")
 
-print(a/len(storing), " ", b/len(storing))
-#print("best fitness = ", bestFitness, " time: ", round(totalTime, 2), " Max found at Gen :", foundAtGen - 1)
+    for x in range(0, len(storing)):
+        print(x, " ", storing[x])
 
+    print("\nFitness: ")
+    print("Average: ", stat.mean(fit))
+    print("Median:  ",  stat.median(fit))
+    try:
+        print("Mode:    ",   stat.mode(fit))
+    except:
+        print(("Mode:     All values are different"))
+
+    print("\nGeneration: ")
+    print("Average: ", stat.mean(gen))
+    print("Median:  ",  stat.median(gen))
+    try:
+        print("Mode: ",   stat.mode(gen))
+    except:
+        print(("Mode:     All values are different"))
+
+#runWithStatistics(10, 5)
+
+bestFitness, storedPop, lastPopulation, totalTime, foundAtGen = BRKGAchromo(500)
+print("\nBest Fitness ", bestFitness, " Total Time: ", totalTime, " Found at Gen: ", foundAtGen)
 
 
 

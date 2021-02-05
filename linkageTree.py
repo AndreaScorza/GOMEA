@@ -56,7 +56,7 @@ def createDependencyMatrix(population):
         for j in range(0, len(dependencyMatrix)):
             if dependencyMatrix[x][j] == 0:
                 zeroCount += 1
-    print("Zero count of dependency matrix is : ", zeroCount, " len: ", len(dependencyMatrix))
+    #print("Zero count of dependency matrix is : ", zeroCount, " len: ", len(dependencyMatrix))
     #print("\n", dependencyMatrix)
     return dependencyMatrix
 

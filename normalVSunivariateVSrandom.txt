@@ -1,0 +1,124 @@
+The different linkage tree are going to be tested on the L2-50-100 problem instance, with 30 population size
+Results are averaged over 30 runs, no double allowed
+
+-The normal version
+
+
+average best fitness:  46190.02
+median best fitness:  48932.9
+mode best fitness:  48932.9
+
+
+average found at gen:  1.8333333333333333
+median found at gen:  1.0
+mode found at gen:  1
+
+
+average improvement:  1947.2000000000007
+median improvement:  0.0
+mode improvement:  0.0
+
+- The univariate version
+
+
+average best fitness:  46016.426666666666
+median best fitness:  48932.9
+mode best fitness:  48932.9
+
+
+average found at gen:  1.7666666666666666
+median found at gen:  1.0
+mode found at gen:  1
+
+
+average improvement:  2316.9633333333336
+median improvement:  0.0
+mode improvement:  0.0
+
+- The random version
+
+
+average best fitness:  44673.26666666666
+median best fitness:  45504.3
+mode best fitness:  48932.9
+
+
+average found at gen:  1.3
+median found at gen:  1.0
+mode found at gen:  1
+
+
+average improvement:  1214.2659333333331
+median improvement:  0.0
+mode improvement:  0.0
+
+
+
+-------
+I've run the normal version of GOMEA against the univariate version
+on the L1-250-1000 problem instance, with a population of 50
+None of them finished the computation after almost 5 hours...
+
+Univariate - 7  :  42627.35790000001  time:  17036.99 - initial value : 1  :  40577.3284  time:  2741.17
+Normal     - 5  :  46187.35390000001  time:  18874.52 - initial value : 1  :  44368.8628  time:  4340.13
+
+
+--------
+Second run:
+
+-Normal GOMEA
+
+
+
+average best fitness:  47790.03333333333
+median best fitness:  48932.9
+mode best fitness:  48932.9
+
+
+average found at gen:  3
+median found at gen:  1.0
+mode found at gen:  1
+
+
+average improvement:  2426.923333333334
+median improvement:  0.0
+mode improvement:  0.0
+
+- Univariate GOMEA
+
+
+average best fitness:  45642.54
+median best fitness:  48932.9
+mode best fitness:  48932.9
+
+
+average found at gen:  2.6666666666666665
+median found at gen:  1.0
+mode found at gen:  1
+
+
+average improvement:  2340.213333333334
+median improvement:  0.0
+mode improvement:  0.0
+
+
+-Random GOMEA
+
+
+average best fitness:  48018.60666666667
+median best fitness:  48932.9
+mode best fitness:  48932.9
+
+
+average found at gen:  2.7666666666666666
+median found at gen:  1.0
+mode found at gen:  1
+
+
+average improvement:  2861.4933333333347
+median improvement:  0.0
+mode improvement:  0.0
+
+
+
+
