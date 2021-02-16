@@ -54,7 +54,7 @@ def greedyRecomb(sol, donor, subset, values, population):
 
 
 def terminated(counter, notProgress):
-    if counter > 30 or notProgress > 1:
+    if counter > 30 or notProgress > 0:
         return True
     return False
 
@@ -90,7 +90,7 @@ def printStat(population, val):
 def GOMEA():
     counter = 0
     #  values = [goodsNumber, bidsNumber, dummyNumber, bidsValue, bids]
-    population, values = pop.population(10, "L3-20-20.txt", -1)
+    population, values = pop.population(50, "L1-250-1000.txt", -1)
     bestFit = 0
     bestElem = []
     stationaryCounter = 0
@@ -123,25 +123,25 @@ def GOMEA():
 
 
         print(counter, " : ", bestFit)
-        #numberOfChange = howManyOfThePopChanged(lastRoundPopulation, population)
-        #if numberOfChange == 0:
-        #    notProgress += 1
-        #else:
-        #    notProgress = 0
-        #print(numberOfChange, " elements have changed since last generation")
+        numberOfChange = howManyOfThePopChanged(lastRoundPopulation, population)
+        if numberOfChange == 0:
+            notProgress += 1
+        else:
+            notProgress = 0
+        print(numberOfChange, " elements have changed since last generation")
 
         #printStat(population, values)
 
-        if bestFit > 48932.8 and flag == False:
+        '''if bestFit > 48932.8 and flag == False:
             foundAtGen = counter
             print("ora esce")
-            break
+            break'''
     return population, bestFit, values, foundAtGen, counter, bestFit - initialFitness
 
 fitList = []
 genList = []
 improvementList = []
-for x in range(0, 10):
+for x in range(0, 1):
     population, bestFit, val, foundAtGen, counter, improvement = GOMEA()
     print("best fit", bestFit, " found at gen: ", foundAtGen, " Fitness improved of: ", improvement)
     fitList.append(bestFit)

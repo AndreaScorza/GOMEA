@@ -26,9 +26,11 @@ def secondCheck(element, population, val):
 def greedyRecomb(sol, donor, subset, values, population, forcedImprovement, superiorDonor):
     accepted = 0
     discarted = 0
+    nFitEval = 0
     bestElem = sol.copy()
     for cluster in subset:
         solFit = dc.getFitness(sol, values[3], values[1], values[4])
+        nFitEval += 1
         newSol = sol.copy()
         for element in cluster:
             if not forcedImprovement:
@@ -36,6 +38,7 @@ def greedyRecomb(sol, donor, subset, values, population, forcedImprovement, supe
             else:
                 newSol[element] = superiorDonor[element]
         newSolFit = dc.getFitness(newSol, values[3], values[1], values[4])
+        nFitEval += 1
         bestFit = solFit
 
     #    print(howManyOfThePopChanged(sol, newSol))
@@ -51,12 +54,12 @@ def greedyRecomb(sol, donor, subset, values, population, forcedImprovement, supe
         else:
             discarted += 1
     #print("Accepted : ", accepted, " Discarted : ", discarted)
-    return sol, bestFit, bestElem
+    return sol, bestFit, bestElem, nFitEval
 
 
 
 def terminated(counter, notProgress):
-    if counter > 100 or notProgress > 1:
+    if counter > 100 or notProgress > 0:
         return True
     return False
 
@@ -94,19 +97,21 @@ def GOMEA():
     startTime = time.time()
     counter = 0
     #  values = [goodsNumber, bidsNumber, dummyNumber, bidsValue, bids]
-    #population, values = pop.population(10, "L3-20-20.txt", -1)
-    population, values = pop.population(10, "problemInstances/matching.txt", -1)
+    population, values = pop.population(10, "L4-5-5.txt", -1)
+    #population, values = pop.population(10, "problemInstances/matching.txt", -1)
     bestFit = 0
     bestElem = []
     stationaryCounter = 0
     printStat(population, values)
     notProgress = 0
+    totFitEval = 0
 
     # --
     flag = False
     trovato = 0
 
     while not terminated(counter, notProgress):
+        genFitEval = 0
         # uncomment for forcer improvmenet
         #if stationaryCounter > 6:
         #    forcedImprovement = True
@@ -127,7 +132,9 @@ def GOMEA():
         for x in range(0, len(population)):
             for subset in lT[:-1]:  # avoiding the root of the tree
                 donor = getDonor(population, x)
-                population[x], fit, elem = greedyRecomb(population[x], donor, subset, values, population, forcedImprovement, bestElem)
+                population[x], fit, elem, nFitEval = greedyRecomb(population[x], donor, subset, values, population, forcedImprovement, bestElem)
+                #print("len subset: ", len(subset), "nFitEval: ", nFitEval)
+                genFitEval += nFitEval
                 if bestFit < fit:
                     bestFit = fit
                     bestElem = elem.copy()
@@ -136,11 +143,13 @@ def GOMEA():
         counter += 1
 
         # --
-        if bestFit > 3082.75 and flag == False:
+        '''if bestFit > 3082.75 and flag == False:
             trovato = counter
-            flag = True
+            flag = True'''
 
         print(counter, " : ", bestFit, " time: ", round(time.time() - startTime, 2))
+        print("N fit Eval in thig gen: ", genFitEval)
+        totFitEval += genFitEval
         numberOfChange = howManyOfThePopChanged(lastRoundPopulation, population)
         if numberOfChange == 0:
             notProgress += 1
@@ -148,14 +157,14 @@ def GOMEA():
             notProgress = 0
         print(numberOfChange, " elements have changed since last generation")
 
-        printStat(population, values)
-    return population, bestFit, time.time() - startTime, values
+        #printStat(population, values)
+    return population, bestFit, time.time() - startTime, values, totFitEval, counter
     #return population, bestFit, time.time() - startTime, values, trovato, counter
 
 
-population, bestFit, time, val = GOMEA()
+population, bestFit, time, val, totFitEval, counter = GOMEA()
 
-print(bestFit, " : ", round(time, 2))
+print(bestFit, " : ", round(time, 2), "tota number of fitness evaluations: ", totFitEval, " counter: ", counter)
 print()
 #  controlli sulla popolazione:
 

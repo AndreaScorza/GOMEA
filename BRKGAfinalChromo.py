@@ -3,7 +3,7 @@ from numpy.random import randint
 from numpy.random import rand
 import numpy as np
 import time
-import statistics as stat
+
 
 # importing the file for the auction input
 import inputBids as auction
@@ -15,11 +15,6 @@ P = 0.6 # probability of selecting key from elite for crossover
 # 0.7 462 238640
 # 0.6 437 238640
 
-#values = auction.getAuction('L1-250-1000.txt')
-values = auction.getAuction('problemInstances/matching.txt')
-goods = values[0]
-bidsValue = values[3]
-bids = values[4]
 
 
 
@@ -32,36 +27,14 @@ def createKeysForElement(dimension):
 
 
 # create the population from the random keys of defined size
-def createPopulation(size):
+def createPopulation(size, bids):
     population = []
     for elem in range(0, size):
         population.append(createKeysForElement(len(bids)))
     return population
 
 
-def decoder2(element, discourage):
-    element.sort(reverse=True, key=lambda x: x[1])
-    markedGoods = np.zeros(goods)
-    fitness = 0
-    solution = []
-
-    for x in element:
-        flag = False
-        for y in bids[x[0]]:
-            if markedGoods[y] == 1:
-                flag = True  # it means it is present
-                if discourage:
-                    if x[1] > 0.5:
-                        x[1] = 1 - x[1]
-        if not flag:  # it means it is not present
-            for y in bids[x[0]]:
-                markedGoods[y] = 1
-                fitness += bidsValue[x[0]]
-            solution.append(x)
-    element.sort(key=lambda x:x[0])
-    return element, fitness
-
-def decoder(element, discourage):
+def decoder(element, discourage, goods, bids, bidsValue):
 
     element.sort(reverse=True, key=lambda x: x[1])
 
@@ -104,9 +77,10 @@ def crossOver(sortedPop, nOfElite):
     return offspring
 
 
-def generation(population):
+def generation(population, goods, bids, bidsValue):
     newGeneration = []
     fitnessOfPopulation = []
+    nFitEval = 0
 
     '''lista1 = []
     lista2 = []
@@ -114,7 +88,8 @@ def generation(population):
         lista1.append(decoder(x, False)[1])'''
 
     for x in range(0, len(population)):
-        fitnessOfPopulation.append(decoder(population[x], True))  # it returns [population, fitness]
+        fitnessOfPopulation.append(decoder(population[x], True, goods, bids, bidsValue))  # it returns [population, fitness]
+        nFitEval += 1
 
     # here we order the list of [element, fitness] by its fitness
     fitnessOfPopulation.sort(reverse=True, key=lambda x:x[1])
@@ -145,75 +120,78 @@ def generation(population):
             offSpring = crossOver(sortedPopulation, nOfElite)
         newGeneration.append(offSpring)
 
-    return newGeneration, bestFitness
+    return newGeneration, bestFitness, nFitEval
 
 
-def BRKGAchromo(populationSize):
-    population = createPopulation(populationSize)
+def BRKGAchromo(populationSize, problem):
+
+    values = auction.getAuction(problem)
+    goods = values[0]
+    bidsValue = values[3]
+    bids = values[4]
+
+    population = createPopulation(populationSize, bids)
     bestFitness = 0
     fitNotIncrease = 0
     generationCount = 0
     startTime = time.time()
     storedPop = []
+    totFitEval = 0
 
-    while fitNotIncrease < 100 and generationCount < 5000:
-        population, fitness = generation(population)
+    #while fitNotIncrease < 250 and generationCount < 1500 and bestFitness < 48932.88 :
+    while fitNotIncrease < 250 and generationCount < 1500:
+        population, fitness, nFitEval = generation(population, goods, bids, bidsValue)
+        totFitEval += nFitEval
 
         if bestFitness == 0:
             bestFitness = fitness
             storedPop = population
-            print(generationCount, ": ", fitness, " time: ", round(time.time()-startTime, 2))
+            #print(generationCount, ": ", fitness, " time: ", round(time.time()-startTime, 2))
+            #print("Number of fitness evaluation for this generation: ", nFitEval)
         else:
             if fitness <= bestFitness:
                 fitNotIncrease += 1
-                print(generationCount, ": ", bestFitness, " time: ", round(time.time()-startTime, 2))
+                #print(generationCount, ": ", bestFitness, " time: ", round(time.time()-startTime, 2))
+                #print("Number of fitness evaluation for this generation: ", nFitEval)
+
 
             else:
                 bestFitness = fitness
                 fitNotIncrease = 0
                 storedPop = population
-                print(generationCount, ": ", bestFitness, " -> ", fitness, " time: ", round(time.time()-startTime, 2))
+                #print(generationCount, ": ", bestFitness, " -> ", fitness, " time: ", round(time.time()-startTime, 2))
+                #print("Number of fitness evaluation for this generation: ", nFitEval)
 
         generationCount += 1
 
-    return bestFitness, storedPop, population, time.time()-startTime, (generationCount-fitNotIncrease) - 1
+    return bestFitness, storedPop, population, time.time()-startTime, (generationCount-fitNotIncrease) - 1, totFitEval
 
 
-def runWithStatistics(popSize, nOfLoops):
+def runWithStatistics(popSize, nOfLoops, problem):
     storing = []
     fit = []
     gen = []
+    count = 0
     for x in range(0, nOfLoops):
-        bestFitness, storedPop, lastPopulation, totalTime, foundAtGen = BRKGAchromo(popSize)
+        print("BRGKA: ", count)
+        count += 1
+        bestFitness, storedPop, lastPopulation, totalTime, foundAtGen, totFitEval = BRKGAchromo(popSize, problem)
         storing.append([bestFitness, foundAtGen])
         fit.append(bestFitness)
         gen.append(foundAtGen)
 
-    print("\n")
+    #for x in range(0, len(storing)):
+    #    print(x, " ", storing[x])
 
-    for x in range(0, len(storing)):
-        print(x, " ", storing[x])
+    return fit, gen
 
-    print("\nFitness: ")
-    print("Average: ", stat.mean(fit))
-    print("Median:  ",  stat.median(fit))
-    try:
-        print("Mode:    ",   stat.mode(fit))
-    except:
-        print(("Mode:     All values are different"))
 
-    print("\nGeneration: ")
-    print("Average: ", stat.mean(gen))
-    print("Median:  ",  stat.median(gen))
-    try:
-        print("Mode: ",   stat.mode(gen))
-    except:
-        print(("Mode:     All values are different"))
+#runWithStatistics(50, 500)
 
-#runWithStatistics(10, 5)
+#bestFitness, storedPop, lastPopulation, totalTime, foundAtGen, totFitEval = BRKGAchromo(36)
+#print("\nBest Fitness ", bestFitness, " Total Time: ", totalTime, " Found at Gen: ", foundAtGen)
+#print("Total number of fitness evaluations: ", totFitEval)
 
-bestFitness, storedPop, lastPopulation, totalTime, foundAtGen = BRKGAchromo(500)
-print("\nBest Fitness ", bestFitness, " Total Time: ", totalTime, " Found at Gen: ", foundAtGen)
 
 
 

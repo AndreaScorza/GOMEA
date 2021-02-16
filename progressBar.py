@@ -36,9 +36,11 @@ print("\n")
 for x in lT3:
     print(x)
 '''
+from scipy import stats
+import statistics as stat
 
-x = 20
-subset = []
-for y in range(0, x):
-    subset.append([y])
-print(subset)
+arr1 = [2,3,4,2,3,4,2,3,4]
+arr2 = [4,5,6,5,4,6,4,5,6]
+print(stat.variance(arr1))
+print(stat.variance(arr2))
+print(stats.ttest_ind(arr2, arr1))

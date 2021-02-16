@@ -75,6 +75,12 @@ generation 10  :  41726.7726  time:  5874.93
 30 of population, univariate version, finished!
 31  :  44847.57130000002  time:  31342.26
 
+100 of population, no double allowed
+1  :  43545.91020000002  time:  10577.92
+
+population 100
+4  :  45276.589300000014  time:  35449.66
+
 
 ---------------------------------------------------------
 

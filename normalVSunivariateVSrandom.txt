@@ -56,11 +56,37 @@ mode improvement:  0.0
 
 -------
 I've run the normal version of GOMEA against the univariate version
-on the L1-250-1000 problem instance, with a population of 50
+on the L1-250-1000 problem instance, with a population of 50, double not allowed
 None of them finished the computation after almost 5 hours...
 
 Univariate - 7  :  42627.35790000001  time:  17036.99 - initial value : 1  :  40577.3284  time:  2741.17
 Normal     - 5  :  46187.35390000001  time:  18874.52 - initial value : 1  :  44368.8628  time:  4340.13
+
+univariate
+initial: 1  :  39241.87909999999
+18  :  44229.37190000002
+
+normal
+initial: fit 42404.35689999999
+8  :  45662.61350000002
+
+Running it again:
+
+univariate:
+23  :  43870.76330000001
+
+normal:
+6  :  44333.07470000002
+
+Seems that in general the normal scores better then the univariate, for very big problem instances.
+
+Running it again on L6:
+
+univariate:
+193780.55370000013   16
+
+Normale
+18  :  198559.53980000014
 
 
 --------

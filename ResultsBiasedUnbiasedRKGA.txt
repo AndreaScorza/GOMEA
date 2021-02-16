@@ -83,6 +83,170 @@ Average:  15.737
 Median:   9.0
 Mode:  0
 
+
+
+Now testing on the same problem instance, but with a reasonable size population (50),
+and a different stopping criteria (when reached the maximum stop), 500 runs
+
+BRKGA
+Fitness:
+Average:  48932.9
+Median:   48932.9
+Mode:     48932.9
+
+Generation:
+Average:  5.16
+Median:   2.0
+Mode:  0
+
+UnbiasedRKGA
+Fitness:
+Average:  48932.9
+Median:   48932.9
+Mode:     48932.9
+
+Generation:
+Average:  5.626
+Median:   3.0
+Mode:  0
+
+It seems that the tables have turned, now the BRKGA performs better, let's see the results over 1000 runs.
+
+The fact that RKGA performed better then BRKGA for this specific problem instance
+could have been due to the small population size compared to the size of the problem instance (50-100)
+with a small population size and a more aggressive selection bias in the case of the BRKGA compared
+to the RKGA there was a loos of diversity, hence RKGA waws performing better
+
+BRKGA
+
+Fitness:
+Average:  48932.9
+Median:   48932.9
+Mode:     48932.9
+
+Generation:
+Average:  4.76
+Median:   2.0
+Mode:  0
+
+RKGA
+
+Fitness:
+Average:  48932.9
+Median:   48932.9
+Mode:     48932.9
+
+Generation:
+Average:  4.79
+Median:   2.0
+Mode:  0
+
+
+This time there is no difference between the two executions.
+the population was probably too big and both the algorithms were able to find the solution very early,
+let's try again but with a smaller population size 30
+
+BRKGA
+Fitness:
+Average:  48932.9
+Median:   48932.9
+Mode:     48932.9
+
+Generation:
+Average:  11.065
+Median:   5.0
+Mode:  0
+
+Unbiased
+Fitness:
+Average:  48932.9
+Median:   48932.9
+Mode:     48932.9
+
+Generation:
+Average:  9.386
+Median:   5.0
+Mode:  0
+
+Same median again, there is no significant difference.
+Having tried with a smaller problem instance like L3-20-20 with a population of 20, there is the same result
+maybe is the stopping criteria. now repeating the experiment withouth the stopping criteria:
+pop 20, problem L3-20-20 there was a difference of 2 point in the median of the generation,
+and that was the only difference, one algorithm converge faster then the other
+
+BRKGA
+Generation:
+Average:  14.09
+Median:   9.0
+Mode:  2
+
+RKGA
+
+Generation:
+Average:  13.709
+Median:   10.0
+Mode:  2
+
+testing again for consistency
+
+BRKGA
+Generation:
+Average:  14.031
+Median:   8.0
+Mode:  2
+
+RKGA
+Generation:
+Average:  13.893
+Median:   10.0
+Mode:  3
+
+again
+
+BRKGA
+
+Generation:
+Average:  13.695
+Median:   8.0
+Mode:  2
+
+RKGA
+Generation:
+Average:  13.082
+Median:   9.0
+Mode:  0
+
+pop 30, 250-1000 but without the aforementioned stopping criteria, stop after 200 no improv (instead of 250)
+and for 500 runs, instead of 1000 (to speed things up a little)
+
+BRKA
+Generation:
+Average:  10.43
+Median:   6.0
+Mode:  0
+
+Unbiased
+Generation:
+Average:  10.988
+Median:   6.0
+Mode:  0
+
+testing again for consistency
+
+BRKGA
+Generation:
+Average:  10.154
+Median:   5.0
+Mode:  0
+
+Unbiased
+Generation:
+Average:  10.192
+Median:   6.0
+Mode:  0
+
+So it seems that with the right population size, the BRKGA is able to converge faster to the solution
+
 -------------
 
 L1-250-1000
@@ -146,6 +310,9 @@ pop 500, stop after 100 consecutive non increasing fitness
 Best Fitness  198010.00750000015  Total Time:  630.8935024738312  Found at Gen:  214
 Best Fitness  195721.91135000027  Total Time:  599.9757969379425  Found at Gen:  193
 
+Testing again
+Best Fitness  198252.07770000026  Total Time:  873.909569978714  Found at Gen:  321
+Best Fitness  194736.7637000002  Total Time:  595.3004040718079  Found at Gen:  172
 
 
 RKGA
@@ -153,4 +320,53 @@ RKGA
 pop 500, stop after 100 consecutive non increasing fitness
 Best Fitness  195994.4888000002  Total Time:  1228.5817217826843  Found at Gen:  461
 Best Fitness  192898.02781000023  Total Time:  1020.1231305599213  Found at Gen:  364
+
+Testing again
+Best Fitness  196215.37960000013  Total Time:  1417.0844902992249  Found at Gen:  524
+Best Fitness  198609.18700000018  Total Time:  1015.4261720180511  Found at Gen:  365
+Best Fitness  201380.74225000018  Total Time:  1314.9376859664917  Found at Gen:  467
+
+
+
+------- results with ttest:
+
+pop 20, 500 runs, L3-20-20
+
+BRKGA
+
+Fitness:
+Average:  3082.78
+Median:   3082.78
+Mode:     3082.78
+Variance:     0.0
+
+Generation:
+Average:  13.4
+Median:   9.0
+Mode:     3
+Variance:     204.77755511022045
+
+
+RKGA
+
+Fitness:
+Average:  3082.78
+Median:   3082.78
+Mode:     3082.78
+Variance:     0.0
+
+Generation:
+Average:  13.282
+Median:   9.0
+Mode:     4
+Variance:     180.75197995991985
+
+Fitness   Ttest_indResult(statistic=0.0, pvalue=1.0)
+Generation   Ttest_indResult(statistic=-0.13438109703798037, pvalue=0.8931283231012126)
+
+-------------------------
+
+pop 50, 500 runs, L2-50-100
+
+
 
