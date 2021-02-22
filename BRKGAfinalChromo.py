@@ -53,7 +53,7 @@ def decoder(element, discourage, goods, bids, bidsValue):
             for y in bids[x[0]]:
                 markedGoods[y] = 1
     element.sort(key=lambda x: x[0])
-    return element, fitness
+    return element, round(fitness, 5)
 
 def crossOver(sortedPop, nOfElite):
     offspring = []
@@ -138,8 +138,7 @@ def BRKGAchromo(populationSize, problem):
     storedPop = []
     totFitEval = 0
 
-    #while fitNotIncrease < 250 and generationCount < 1500 and bestFitness < 48932.88 :
-    while fitNotIncrease < 250 and generationCount < 1500:
+    while fitNotIncrease < 100 and generationCount < 5000:
         population, fitness, nFitEval = generation(population, goods, bids, bidsValue)
         totFitEval += nFitEval
 
@@ -188,7 +187,8 @@ def runWithStatistics(popSize, nOfLoops, problem):
 
 #runWithStatistics(50, 500)
 
-#bestFitness, storedPop, lastPopulation, totalTime, foundAtGen, totFitEval = BRKGAchromo(36)
+
+#bestFitness, storedPop, lastPopulation, totalTime, foundAtGen, totFitEval = BRKGAchromo(300, "L1-250-1000.txt")
 #print("\nBest Fitness ", bestFitness, " Total Time: ", totalTime, " Found at Gen: ", foundAtGen)
 #print("Total number of fitness evaluations: ", totFitEval)
 

@@ -5,6 +5,7 @@ import decoder as dc
 from numpy.random import randint
 import time
 import random
+fitnessList = []
 
 def getDonor(population, x):
     numbers = list(range(0, len(population)))
@@ -24,13 +25,18 @@ def secondCheck(element, population, val):
     return True
 
 def greedyRecomb(sol, donor, subset, values, population, forcedImprovement, superiorDonor):
+    # Finding the index of the element in the population
+    index = population.index(sol)
+    #print("new Generation")
     accepted = 0
     discarted = 0
     nFitEval = 0
     bestElem = sol.copy()
     for cluster in subset:
-        solFit = dc.getFitness(sol, values[3], values[1], values[4])
-        nFitEval += 1
+        #solFit = dc.getFitness(sol, values[3], values[1], values[4])
+        #nFitEval += 1
+
+        solFit = fitnessList[index]
         newSol = sol.copy()
         for element in cluster:
             if not forcedImprovement:
@@ -51,6 +57,7 @@ def greedyRecomb(sol, donor, subset, values, population, forcedImprovement, supe
                 sol = newSol
                 bestFit = newSolFit
                 bestElem = newSol.copy()
+                fitnessList[index] = newSolFit
         else:
             discarted += 1
     #print("Accepted : ", accepted, " Discarted : ", discarted)
@@ -99,12 +106,18 @@ def GOMEA():
     #  values = [goodsNumber, bidsNumber, dummyNumber, bidsValue, bids]
     population, values = pop.population(10, "L4-5-5.txt", -1)
     #population, values = pop.population(10, "problemInstances/matching.txt", -1)
+
+
+    # Populatiog the list of fitness
+    for x in population:
+        fitnessList.append(dc.getFitness(x, values[3], values[1], values[4]))
+
     bestFit = 0
     bestElem = []
     stationaryCounter = 0
     printStat(population, values)
     notProgress = 0
-    totFitEval = 0
+    totFitEval = len(population)
 
     # --
     flag = False
@@ -121,6 +134,7 @@ def GOMEA():
         # ----------------
 
         lT = lt.getLinkageTree(population)
+
 
         # to create the random linkage tree comment up and uncomment down:
         #a, b = pop.population(10, "L3-20-20.txt", -1)

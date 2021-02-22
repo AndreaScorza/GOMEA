@@ -36,11 +36,23 @@ print("\n")
 for x in lT3:
     print(x)
 '''
-from scipy import stats
-import statistics as stat
+file_object = open('sample.txt', 'a')
+x = 1
+y = 3.44
+z = [x, y]
+file_object.write(str(z)+"\n")
+file_object.close()
 
-arr1 = [2,3,4,2,3,4,2,3,4]
-arr2 = [4,5,6,5,4,6,4,5,6]
-print(stat.variance(arr1))
-print(stat.variance(arr2))
-print(stats.ttest_ind(arr2, arr1))
+
+
+
+# To read
+
+import ast
+
+a = []
+lines = filter(None, (line.rstrip() for line in open("sample.txt")))
+for line in lines:
+    a.append(ast.literal_eval(line))
+
+print(a)

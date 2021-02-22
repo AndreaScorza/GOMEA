@@ -368,5 +368,276 @@ Generation   Ttest_indResult(statistic=-0.13438109703798037, pvalue=0.8931283231
 
 pop 50, 500 runs, L2-50-100
 
+BRKGA
+
+Fitness:
+Average:  48932.9
+Median:   48932.9
+Mode:     48932.9
+Variance:     0.0
+
+Generation:
+Average:  5.048
+Median:   2.0
+Mode:     0
+Variance:     62.12995591182364
 
 
+RKGA
+
+Fitness:
+Average:  48932.9
+Median:   48932.9
+Mode:     48932.9
+Variance:     0.0
+
+Generation:
+Average:  4.678
+Median:   2.0
+Mode:     0
+Variance:     37.41314228456913
+
+
+Fitness   Ttest_indResult(statistic=0.0, pvalue=1.0)
+Generation   Ttest_indResult(statistic=-0.8292417307431513, pvalue=0.4071659239448199)
+
+
+-------------------------
+
+pop 50, 50 runs, L6
+
+BRKGA
+
+Fitness:
+Average:  176027.09847000008
+Median:   176291.07941000006
+Mode:     All values are different
+Variance:     16833795.509281214
+
+Generation:
+Average:  379.62
+Median:   257.0
+Mode:     All values are different
+Variance:     118935.38326530613
+
+
+RKGA
+
+Fitness:
+Average:  178224.05803120008
+Median:   178375.7977600001
+Mode:     All values are different
+Variance:     13725776.340128884
+
+Generation:
+Average:  595.64
+Median:   534.0
+Mode:     All values are different
+Variance:     148568.84734693877
+
+
+Fitness   Ttest_indResult(statistic=2.810175431558088, pvalue=0.005978987296277863)
+Generation   Ttest_indResult(statistic=2.953341285112862, pvalue=0.0039352522503753595)
+
+
+If the population is big enough then there is no statistical difference, but
+if the problem instance is hard (I assume having a small population and a 250 generation of not increasing
+as a stopping criteria similar to having an hard problem instance) then there is significance difference in
+both fitness and generation.
+
+-------
+L6, population = 100, run = 30
+stop after 100 not difference in fitness.
+
+BRKGA
+
+Fitness:
+Average:  184593.10982200011
+Median:   184523.7329500001
+Mode:     All values are different
+Variance:     22435644.238583777
+
+Generation:
+Average:  365.6333333333333
+Median:   345.0
+Mode:     All values are different
+Variance:     72449.68850574712
+
+
+RKGA
+
+Fitness:
+Average:  185620.61311800012
+Median:   184790.16425500013
+Mode:     All values are different
+Variance:     18384452.166206528
+
+Generation:
+Average:  602.4666666666667
+Median:   531.5
+Mode:     All values are different
+Variance:     133056.32643678162
+
+
+Fitness   Ttest_indResult(statistic=0.8808598964646217, pvalue=0.3820292795445479)
+Generation   Ttest_indResult(statistic=2.8614831048708265, pvalue=0.005855256342818514)
+
+Following the idea had precedently, I'm now trying with
+L2-50-100 but with population 10, for 100 runs
+
+BRKGA
+
+Fitness:
+Average:  48864.328
+Median:   48932.9
+Mode:     48932.9
+Variance:     470211.9184000006
+
+Generation:
+Average:  34.69
+Median:   22.5
+Mode:     0
+Variance:     1550.3978787878789
+
+
+RKGA
+
+Fitness:
+Average:  48932.9
+Median:   48932.9
+Mode:     48932.9
+Variance:     0.0
+
+Generation:
+Average:  38.75
+Median:   28.5
+Mode:     0
+Variance:     1606.391414141414
+
+
+Fitness   Ttest_indResult(statistic=1.0000000000001072, pvalue=0.3185310379086833)
+Generation   Ttest_indResult(statistic=0.722608783342431, pvalue=0.4707729110090001)
+
+again but for 1000 runs
+
+BRKGA
+
+Fitness:
+Average:  48932.9
+Median:   48932.9
+Mode:     48932.9
+Variance:     0.0
+
+Generation:
+Average:  40.943
+Median:   26.0
+Mode:     0
+Variance:     1947.9196706706707
+
+
+RKGA
+
+Fitness:
+Average:  48926.0428
+Median:   48932.9
+Mode:     48932.9
+Variance:     47021.19184000006
+
+Generation:
+Average:  37.119
+Median:   24.0
+Mode:     0
+Variance:     1711.127966966967
+
+
+Fitness   Ttest_indResult(statistic=-1.0000000000008498, pvalue=0.31743159917650554)
+Generation   Ttest_indResult(statistic=-1.9990969279471014, pvalue=0.04573309728847231)
+
+####################################################################################################################
+
+L3-20-20.txt, pop = 10, runs = 1000
+
+BRKGA
+
+Fitness:
+Average:  3082.78
+Median:   3082.78
+Mode:     3082.78
+Variance:     0.0
+St Dev:   0.0
+
+Generation:
+Average:  13.284
+Median:   8.0
+Mode:     0
+Variance:     254.13147547547547
+St Dev:   15.941501669399765
+
+
+RKGA
+
+Fitness:
+Average:  3082.78
+Median:   3082.78
+Mode:     3082.78
+Variance:     0.0
+St Dev:   0.0
+
+Generation:
+Average:  12.378
+Median:   8.0
+Mode:     0
+Variance:     190.9680840840841
+St Dev:   13.819120235531786
+
+
+Fitness   Ttest_indResult(statistic=0.0, pvalue=1.0)
+Generation   Ttest_indResult(statistic=1.3579995167835754, pvalue=0.1746171681368499)
+
+
+All elements are the same
+Generation   WilcoxonResult(statistic=223366.5, pvalue=0.42837563690246805)
+
+-------------
+L2-50-100.txt, pop = 30, runs = 500
+
+BRKGA
+
+Fitness:
+Average:  48932.9
+Median:   48932.9
+Mode:     48932.9
+Variance:     0.0
+St Dev:   0.0
+
+Generation:
+Average:  10.37
+Median:   5.0
+Mode:     0
+Variance:     175.76462925851703
+St Dev:   13.25762532501643
+
+
+RKGA
+
+Fitness:
+Average:  48932.9
+Median:   48932.9
+Mode:     48932.9
+Variance:     0.0
+St Dev:   0.0
+
+Generation:
+Average:  9.694
+Median:   5.0
+Mode:     0
+Variance:     160.0444529058116
+St Dev:   12.650867674029778
+
+
+Fitness   Ttest_indResult(statistic=0.0, pvalue=1.0)
+Generation   Ttest_indResult(statistic=0.8248699437269342, pvalue=0.4096425412622997)
+
+
+All elements are the same
+Generation   WilcoxonResult(statistic=50794.5, pvalue=0.6433037015828632)
