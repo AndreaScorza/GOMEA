@@ -25,9 +25,8 @@ def secondCheck(element, population, val):
     return True
 
 def greedyRecomb(sol, donor, subset, values, population, forcedImprovement, superiorDonor):
-    # Finding the index of the element in the population
+    # Finding the index of the element in the population, to not do a second fitness evaluation
     index = population.index(sol)
-    #print("new Generation")
     accepted = 0
     discarted = 0
     nFitEval = 0
@@ -61,6 +60,7 @@ def greedyRecomb(sol, donor, subset, values, population, forcedImprovement, supe
         else:
             discarted += 1
     #print("Accepted : ", accepted, " Discarted : ", discarted)
+
     return sol, bestFit, bestElem, nFitEval
 
 
@@ -104,7 +104,7 @@ def GOMEA():
     startTime = time.time()
     counter = 0
     #  values = [goodsNumber, bidsNumber, dummyNumber, bidsValue, bids]
-    population, values = pop.population(10, "L4-5-5.txt", -1)
+    population, values = pop.population(10, "L3-20-20.txt", -1)
     #population, values = pop.population(10, "problemInstances/matching.txt", -1)
 
 

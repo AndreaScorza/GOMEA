@@ -641,3 +641,7 @@ Generation   Ttest_indResult(statistic=0.8248699437269342, pvalue=0.409642541262
 
 All elements are the same
 Generation   WilcoxonResult(statistic=50794.5, pvalue=0.6433037015828632)
+
+---------
+L1-250-1000 was running with 100 generations not increasing fitness as stopping criteria, instead of 250
+stopping criteria for L6 : 200
