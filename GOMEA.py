@@ -95,16 +95,16 @@ def printStat(population, val):
     # [goodsNumber, bidsNumber, dummyNumber, bidsValue, bids]
     for x in population:
         fit, stat = dc.getFitnessAndStats(x, val[3], val[1], val[4])
-        print(round(fit, 2), " ", x, " ", stat)
+        print(fit, " ", x, " ", stat)
 
 
 
-def GOMEA():
+def GOMEA(popSize, problem):
     forcedImprovement = False
     startTime = time.time()
     counter = 0
     #  values = [goodsNumber, bidsNumber, dummyNumber, bidsValue, bids]
-    population, values = pop.population(10, "L3-20-20.txt", -1)
+    population, values = pop.population(popSize, problem, -1)
     #population, values = pop.population(10, "problemInstances/matching.txt", -1)
 
 
@@ -176,7 +176,7 @@ def GOMEA():
     #return population, bestFit, time.time() - startTime, values, trovato, counter
 
 
-population, bestFit, time, val, totFitEval, counter = GOMEA()
+population, bestFit, time, val, totFitEval, counter = GOMEA(10, "L3-20-20.txt")
 
 print(bestFit, " : ", round(time, 2), "tota number of fitness evaluations: ", totFitEval, " counter: ", counter)
 print()

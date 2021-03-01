@@ -5,7 +5,7 @@ import decoder as dc
 from numpy.random import randint
 import time
 import random
-import statistics as stat
+fitnessList = []
 
 def getDonor(population, x):
     numbers = list(range(0, len(population)))
@@ -24,16 +24,26 @@ def secondCheck(element, population, val):
             return False
     return True
 
-def greedyRecomb(sol, donor, subset, values, population):
+def greedyRecomb(sol, donor, subset, values, population, forcedImprovement, superiorDonor):
+    # Finding the index of the element in the population, to not do a second fitness evaluation
+    index = population.index(sol)
     accepted = 0
     discarted = 0
+    nFitEval = 0
     bestElem = sol.copy()
     for cluster in subset:
-        solFit = dc.getFitness(sol, values[3], values[1], values[4])
+        #solFit = dc.getFitness(sol, values[3], values[1], values[4])
+        #nFitEval += 1
+
+        solFit = fitnessList[index]
         newSol = sol.copy()
         for element in cluster:
-            newSol[element] = donor[element]
+            if not forcedImprovement:
+                newSol[element] = donor[element]
+            else:
+                newSol[element] = superiorDonor[element]
         newSolFit = dc.getFitness(newSol, values[3], values[1], values[4])
+        nFitEval += 1
         bestFit = solFit
 
     #    print(howManyOfThePopChanged(sol, newSol))
@@ -46,15 +56,17 @@ def greedyRecomb(sol, donor, subset, values, population):
                 sol = newSol
                 bestFit = newSolFit
                 bestElem = newSol.copy()
+                fitnessList[index] = newSolFit
         else:
             discarted += 1
     #print("Accepted : ", accepted, " Discarted : ", discarted)
-    return sol, bestFit, bestElem
+
+    return sol, bestFit, bestElem, nFitEval
 
 
 
 def terminated(counter, notProgress):
-    if counter > 30 or notProgress > 0:
+    if counter > 100 or notProgress > 0:
         return True
     return False
 
@@ -83,106 +95,116 @@ def printStat(population, val):
     # [goodsNumber, bidsNumber, dummyNumber, bidsValue, bids]
     for x in population:
         fit, stat = dc.getFitnessAndStats(x, val[3], val[1], val[4])
-        print(round(fit, 2), " ", x, " ", stat)
+        print(fit, " ", x, " ", stat)
 
 
 
-def GOMEA():
+def GOMEA(popSize, problem):
+    forcedImprovement = False
+    startTime = time.time()
     counter = 0
     #  values = [goodsNumber, bidsNumber, dummyNumber, bidsValue, bids]
-    population, values = pop.population(50, "L1-250-1000.txt", -1)
+    population, values = pop.population(popSize, problem, -1)
+    #population, values = pop.population(10, "problemInstances/matching.txt", -1)
+
+
+    # Populatiog the list of fitness
+    for x in population:
+        fitnessList.append(dc.getFitness(x, values[3], values[1], values[4]))
+
     bestFit = 0
     bestElem = []
     stationaryCounter = 0
     #printStat(population, values)
     notProgress = 0
+    totFitEval = len(population)
 
     # --
     flag = False
     foundAtGen = 0
 
     while not terminated(counter, notProgress):
+        genFitEval = 0
+        # uncomment for forcer improvmenet
+        #if stationaryCounter > 6:
+        #    forcedImprovement = True
+        #    print("Forced improvement !!!!!!!!!!!!!!!!!")
         lastRoundPopulation = population.copy()
 
         # ----------------
 
         lT = lt.getLinkageTree(population)
 
+
         # to create the random linkage tree comment up and uncomment down:
         #a, b = pop.population(10, "L3-20-20.txt", -1)
         #lT = lt.getLinkageTree(a)
         # -----------------
 
+        '''for li in lT[:-1]:
+            print(li)'''
         for x in range(0, len(population)):
             for subset in lT[:-1]:  # avoiding the root of the tree
                 donor = getDonor(population, x)
-                population[x], fit, elem = greedyRecomb(population[x], donor, subset, values, population)
+                population[x], fit, elem, nFitEval = greedyRecomb(population[x], donor, subset, values, population, forcedImprovement, bestElem)
+                #print("len subset: ", len(subset), "nFitEval: ", nFitEval)
+                genFitEval += nFitEval
                 if bestFit < fit:
                     bestFit = fit
                     bestElem = elem.copy()
                     stationaryCounter = 0
                     foundAtGen = counter + 1
         stationaryCounter += 1
+
         if counter == 0:
-            print("fit", bestFit)
             initialFitness = bestFit
         counter += 1
 
         # --
+        '''if bestFit > 3082.75 and flag == False:
+            trovato = counter
+            flag = True'''
 
-
-        print(counter, " : ", bestFit)
+        #print(counter, " : ", bestFit, " time: ", round(time.time() - startTime, 2))
+        #print("N fit Eval in thig gen: ", genFitEval)
+        totFitEval += genFitEval
         numberOfChange = howManyOfThePopChanged(lastRoundPopulation, population)
         if numberOfChange == 0:
             notProgress += 1
         else:
             notProgress = 0
-        print(numberOfChange, " elements have changed since last generation")
+        #print(numberOfChange, " elements have changed since last generation")
 
         #printStat(population, values)
-
-        '''if bestFit > 48932.8 and flag == False:
-            foundAtGen = counter
-            print("ora esce")
-            break'''
-    return population, bestFit, values, foundAtGen, counter, bestFit - initialFitness
-
-fitList = []
-genList = []
-improvementList = []
-for x in range(0, 1):
-    population, bestFit, val, foundAtGen, counter, improvement = GOMEA()
-    print("best fit", bestFit, " found at gen: ", foundAtGen, " Fitness improved of: ", improvement)
-    fitList.append(bestFit)
-    genList.append(foundAtGen)
-    improvementList.append(improvement)
-
-print("\n")
-for x in range(0, len(genList)):
-    print(fitList[x], " ", genList[x])
-
-print("\n")
-print("average best fitness: ", stat.mean(fitList))
-print("median best fitness: ", stat.median(fitList))
-try:
-    print("mode best fitness: ", stat.mode(fitList))
-except:
-    print(("mode best fitness:     All values are different"))
-
-print("\n")
-print("average found at gen: ", stat.mean(genList))
-print("median found at gen: ", stat.median(genList))
-try:
-    print("mode found at gen: ", stat.mode(genList))
-except:
-    print("mode found at gen:     All values are different")
-print("\n")
-print("average improvement: ", stat.mean(improvementList))
-print("median improvement: ", stat.median(improvementList))
-try:
-    print("mode improvement: ", stat.mode(improvementList))
-except:
-    print("mode improvement:     All values are different")
+    return population, bestFit, time.time() - startTime, values, foundAtGen, totFitEval, counter, round(bestFit - initialFitness, 5)
+    #return population, bestFit, time.time() - startTime, values, trovato, counter
 
 
+#population, bestFit, time, val, foundAtGen, totFitEval, counter, improvement = GOMEA(10, "L3-20-20.txt")
+'''
+print(bestFit, " : ", round(time, 2), "tota number of fitness evaluations: ", totFitEval, " counter: ", counter)
+print()
+#  controlli sulla popolazione:
+
+for x in population:
+    print(dc.getFitness(x, val[3], val[1], val[4]))#, " : ", x)
+
+for x in range(0, len(population) - 1):
+    for j in range(x + 1, len(population)):
+        if population[x] == population[j]:
+            print("are the same")
+'''
+
+
+'''store = []
+for x in range(0, 3):
+    popol, bestFit, val, trovato, counter = GOMEA()
+    Flag = True
+    for x in popol:
+        if round(dc.getFitness(x, val[3], val[1], val[4]), 2) != 3082.78:
+            Flag = False
+            break
+    store.append([counter, trovato, Flag])
+for x in store:
+    print (x)'''
 

@@ -18,7 +18,7 @@ def getFitness(el, bidsValue, goodsNumber, bids):
             fitness += bidsValue[x[0]]
             for y in bids[x[0]]:
                 markedGoods[y] = 1
-    return fitness
+    return round(fitness, 5)
 
 
 def getFitnessLocalSearch(vector, bids, bidsValue, goodsNumber):
@@ -33,7 +33,7 @@ def getFitnessLocalSearch(vector, bids, bidsValue, goodsNumber):
             fitness += bidsValue[x]
             for y in bids[x]:
                 markedGoods[y] = 1
-    return fitness
+    return round(fitness, 5)
 
 def getFitnessAndStats(el, bidsValue, goodsNumber, bids):
     element = el.copy()
@@ -56,4 +56,4 @@ def getFitnessAndStats(el, bidsValue, goodsNumber, bids):
             list.append(bids.index(bids[x[0]]))
             for y in bids[x[0]]:
                 markedGoods[y] = 1
-    return fitness, list
+    return round(fitness, 5), list

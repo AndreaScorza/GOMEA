@@ -2,6 +2,7 @@ import BRKGAfinalChromo as BRKGA
 import UnbiasedRKGAChromo as RKGA
 import statistics as stat
 from scipy import stats
+import ast
 
 
 def performStat(fit, gen):
@@ -13,7 +14,7 @@ def performStat(fit, gen):
     except:
         print(("Mode:     All values are different"))
     try:
-        print("Variance:    ", stat.variance(fit))
+        print("Variance:", stat.variance(fit))
     except:
         print(("Variance: Requires at least two data points"))
     print("St Dev:  ", stat.stdev(fit))
@@ -26,7 +27,7 @@ def performStat(fit, gen):
     except:
         print(("Mode:     All values are different"))
     try:
-        print("Variance:    ", stat.variance(gen))
+        print("Variance:", stat.variance(gen))
     except:
         print(("Variance: Requires at least two data points"))
     print("St Dev:  ", stat.stdev(gen))
@@ -42,11 +43,40 @@ def performWilcoxon(arr1, arr2, name):
     except:
         print("All elements are the same")
 
+def readFromDataset(name):
+    fit = []
+    gen = []
+    lines = filter(None, (line.rstrip() for line in open(name)))
+    for line in lines:
+        fit.append(ast.literal_eval(line)[0])
+        gen.append(ast.literal_eval(line)[1])
 
-problem = 'L3-20-20.txt'
+
+    return fit, gen
+
+'''problem = 'L3-20-20.txt'
 Bfit, Bgen = BRKGA.runWithStatistics(10, 10, problem)
-print(Bfit)
-Ufit, Ugen = RKGA.runWithStatistics(10, 10, problem)
+Ufit, Ugen = RKGA.runWithStatistics(10, 10, problem)'''
+
+
+Bfit, Bgen = readFromDataset("300L1-250-1000biased.txt")
+Ufit, Ugen = readFromDataset("300L1-250-1000unbiased.txt")
+
+#Bfit, Bgen = readFromDataset("1000L6biased.txt")
+#Ufit, Ugen = readFromDataset("1000L6unbiased.txt")
+print("\n")
+print("BRKGA best individual: ",max(Bfit))
+print("RKGA best individual: ",max(Ufit))
+# To make the datasets the same length
+if len(Bfit) != len(Ufit):
+    while (len(Bfit) < len(Ufit)):
+        Ufit.pop()
+        Ugen.pop()
+    while (len(Bfit) > len(Ufit)):
+        Bfit.pop()
+        Bgen.pop()
+
+
 
 print("\n")
 print("BRKGA")

@@ -644,4 +644,94 @@ Generation   WilcoxonResult(statistic=50794.5, pvalue=0.6433037015828632)
 
 ---------
 L1-250-1000 was running with 100 generations not increasing fitness as stopping criteria, instead of 250
+
+BRKGA best individual:  46477.7239
+RKGA best individual:  46477.7239
+
+BRKGA
+
+Fitness:
+Average:  45825.214649514564
+Median:   45893.957
+Mode:     46216.7635
+Variance: 182226.44464976116
+St Dev:   426.8798948764877
+
+Generation:
+Average:  137.1359223300971
+Median:   120
+Mode:     All values are different
+Variance: 3027.47154007234
+St Dev:   55.02246395857186
+
+
+RKGA
+
+Fitness:
+Average:  45894.331146019416
+Median:   45906.6529
+Mode:     46477.7239
+Variance: 164951.61779241
+St Dev:   406.1423614847508
+
+Generation:
+Average:  225.01941747572815
+Median:   226
+Mode:     98
+Variance: 7764.2545212259665
+St Dev:   88.11500735530791
+
+
+Fitness   Ttest_indResult(statistic=-1.190485720585469, pvalue=0.23523901042303894)
+Generation   Ttest_indResult(statistic=-8.585794245862417, pvalue=2.311891959960026e-15)
+
+
+Fitness   WilcoxonResult(statistic=2349.0, pvalue=0.3542664756346978)
+Generation   WilcoxonResult(statistic=466.5, pvalue=3.445294388711596e-13)
+
+----------------
 stopping criteria for L6 : 200
+
+BRKGA best individual:  205466.1257
+RKGA best individual:  205420.546
+
+BRKGA
+
+Fitness:
+Average:  199058.0379241905
+Median:   199127.54023
+Mode:     All values are different
+Variance: 6711039.543630952
+St Dev:   2590.5674173105303
+
+Generation:
+Average:  182.94285714285715
+Median:   162
+Mode:     All values are different
+Variance: 4355.765934065934
+St Dev:   65.99822674940542
+
+
+RKGA
+
+Fitness:
+Average:  198851.8958577143
+Median:   198978.06312
+Mode:     All values are different
+Variance: 6308820.5218684
+St Dev:   2511.736555028891
+
+Generation:
+Average:  388.3047619047619
+Median:   365
+Mode:     305
+Variance: 7867.656227106227
+St Dev:   88.69980962271693
+
+
+Fitness   Ttest_indResult(statistic=0.5854072768434968, pvalue=0.5589084757126955)
+Generation   Ttest_indResult(statistic=-19.033476828397497, pvalue=1.9305714329807837e-47)
+
+
+Fitness   WilcoxonResult(statistic=2677.0, pvalue=0.7359183143612051)
+Generation   WilcoxonResult(statistic=37.0, pvalue=1.6797885718235087e-18)

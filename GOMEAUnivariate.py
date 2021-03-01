@@ -7,6 +7,8 @@ import time
 import random
 import statistics as stat
 
+fitnessList = []
+
 def getDonor(population, x):
     numbers = list(range(0, len(population)))
     numbers.remove(x)
@@ -25,11 +27,12 @@ def secondCheck(element, population, val):
     return True
 
 def greedyRecomb(sol, donor, subset, values, population):
+    index = population.index(sol)
     accepted = 0
     discarted = 0
     bestElem = sol.copy()
     for cluster in subset:
-        solFit = dc.getFitness(sol, values[3], values[1], values[4])
+        solFit = fitnessList[index]
         newSol = sol.copy()
         for element in cluster:
             newSol[element] = donor[element]
@@ -46,6 +49,7 @@ def greedyRecomb(sol, donor, subset, values, population):
                 sol = newSol
                 bestFit = newSolFit
                 bestElem = newSol.copy()
+                fitnessList[index] = newSolFit
         else:
             discarted += 1
     #print("Accepted : ", accepted, " Discarted : ", discarted)
@@ -87,10 +91,16 @@ def printStat(population, val):
 
 
 
-def GOMEA():
+def GOMEA(popSize, problem):
     counter = 0
+    startTime = time.time()
     #  values = [goodsNumber, bidsNumber, dummyNumber, bidsValue, bids]
-    population, values = pop.population(50, "L1-250-1000.txt", -1)
+    population, values = pop.population(popSize, problem, -1)
+
+    for x in population:
+        fitnessList.append(dc.getFitness(x, values[3], values[1], values[4]))
+
+
     bestFit = 0
     bestElem = []
     stationaryCounter = 0
@@ -115,20 +125,20 @@ def GOMEA():
         stationaryCounter += 1
 
         if counter == 0:
-            print("fit", bestFit)
+            #print("fit", bestFit)
             initialFitness = bestFit
         counter += 1
 
         # --
 
 
-        print(counter, " : ", bestFit)
+        #print(counter, " : ", bestFit)
         numberOfChange = howManyOfThePopChanged(lastRoundPopulation, population)
         if numberOfChange == 0:
             notProgress += 1
         else:
             notProgress = 0
-        print(numberOfChange, " elements have changed since last generation")
+        #print(numberOfChange, " elements have changed since last generation")
 
         #printStat(population, values)
 
@@ -136,23 +146,21 @@ def GOMEA():
             foundAtGen = counter
             print("ora esce")
             break'''
-    return population, bestFit, values, foundAtGen, counter, bestFit - initialFitness
-
+    return population, bestFit, time.time() - startTime, values, foundAtGen, counter,  round(bestFit - initialFitness, 5)
+'''
 fitList = []
 genList = []
 improvementList = []
 for x in range(0, 1):
-    population, bestFit, val, foundAtGen, counter, improvement = GOMEA()
+    population, bestFit, val, foundAtGen, counter, improvement = GOMEA(10, "L3-20-20.txt")
     print("best fit", bestFit, " found at gen: ", foundAtGen, " Fitness improved of: ", improvement)
     fitList.append(bestFit)
     genList.append(foundAtGen)
     improvementList.append(improvement)
 
-print("\n")
 for x in range(0, len(genList)):
     print(fitList[x], " ", genList[x])
 
-print("\n")
 print("average best fitness: ", stat.mean(fitList))
 print("median best fitness: ", stat.median(fitList))
 try:
@@ -160,19 +168,17 @@ try:
 except:
     print(("mode best fitness:     All values are different"))
 
-print("\n")
 print("average found at gen: ", stat.mean(genList))
 print("median found at gen: ", stat.median(genList))
 try:
     print("mode found at gen: ", stat.mode(genList))
 except:
     print("mode found at gen:     All values are different")
-print("\n")
 print("average improvement: ", stat.mean(improvementList))
 print("median improvement: ", stat.median(improvementList))
 try:
     print("mode improvement: ", stat.mode(improvementList))
 except:
-    print("mode improvement:     All values are different")
+    print("mode improvement:     All values are different")'''
 
 

@@ -1,7 +1,9 @@
 import BRKGAfinalChromo as BRKGA
 import UnbiasedRKGAChromo as RKGA
+import GOMEANormal as normal
+import GOMEAUnivariate as univariate
 
-def creatingDataSet(popSize, problem, type):
+def creatingDataSetBRKGA(popSize, problem, type):
     if type == "biased":
         bestFitness, storedPop, lastPopulation, totalTime, foundAtGen, totFitEval = BRKGA.BRKGAchromo(popSize, problem)
     elif type == "unbiased":
@@ -14,8 +16,22 @@ def creatingDataSet(popSize, problem, type):
     file_object.write(str(x) + "\n")
     file_object.close()
 
+def creatingDataSetGOMEA(popSize, problem, type):
+    if type == "normal":
+        population, bestFit, totTime, val, foundAtGen, totFitEval, totNumbOfGen, improvement = normal.GOMEA(popSize, problem)
+    elif type == "univariate":
+        population, bestFit, totTime, val, foundAtGen, totNumbOfGen, improvement = univariate.GOMEA(popSize, problem)
+    fileName = str(popSize)+str(problem).replace(".txt", "")+type+".txt"
+    fileName = "/content/drive/MyDrive/" + fileName
+    #fileName = "sample.txt"
+    file_object = open(fileName, 'a')
+    x = [bestFit, foundAtGen, improvement, totNumbOfGen, round(totTime, 3)]
+    file_object.write(str(x) + "\n")
+    file_object.close()
+
 counter = 0
 while counter < 1000:
     print(counter)
-    creatingDataSet(1000, "L6.txt", "unbiased")
+    #creatingDataSetBRKGA(10, "L6.txt", "unbiased")
+    creatingDataSetGOMEA(50, "L2-50-100.txt", "univariate")
     counter += 1
