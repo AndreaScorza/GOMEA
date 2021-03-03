@@ -176,7 +176,7 @@ def GOMEA(popSize, problem):
     #return population, bestFit, time.time() - startTime, values, trovato, counter
 
 
-population, bestFit, time, val, totFitEval, counter = GOMEA(10, "L3-20-20.txt")
+population, bestFit, time, val, totFitEval, counter = GOMEA(30, "L6.txt")
 
 print(bestFit, " : ", round(time, 2), "tota number of fitness evaluations: ", totFitEval, " counter: ", counter)
 print()

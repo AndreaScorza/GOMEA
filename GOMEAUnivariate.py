@@ -30,6 +30,7 @@ def greedyRecomb(sol, donor, subset, values, population):
     index = population.index(sol)
     accepted = 0
     discarted = 0
+    nFitEval = 0
     bestElem = sol.copy()
     for cluster in subset:
         solFit = fitnessList[index]
@@ -37,6 +38,7 @@ def greedyRecomb(sol, donor, subset, values, population):
         for element in cluster:
             newSol[element] = donor[element]
         newSolFit = dc.getFitness(newSol, values[3], values[1], values[4])
+        nFitEval += 1
         bestFit = solFit
 
     #    print(howManyOfThePopChanged(sol, newSol))
@@ -53,7 +55,7 @@ def greedyRecomb(sol, donor, subset, values, population):
         else:
             discarted += 1
     #print("Accepted : ", accepted, " Discarted : ", discarted)
-    return sol, bestFit, bestElem
+    return sol, bestFit, bestElem, nFitEval
 
 
 
@@ -106,7 +108,7 @@ def GOMEA(popSize, problem):
     stationaryCounter = 0
     #printStat(population, values)
     notProgress = 0
-
+    totFitEval = len(population)
     # --
     flag = False
     foundAtGen = 0
@@ -114,10 +116,12 @@ def GOMEA(popSize, problem):
     for y in range(0, len(population[0])):
         subset.append([y])
     while not terminated(counter, notProgress):
+        genFitEval = 0
         lastRoundPopulation = population.copy()
         for x in range(0, len(population)):
             donor = getDonor(population, x)
-            population[x], fit, elem = greedyRecomb(population[x], donor, subset, values, population)
+            population[x], fit, elem, nFitEval = greedyRecomb(population[x], donor, subset, values, population)
+            genFitEval += nFitEval
             if bestFit < fit:
                 bestFit = fit
                 stationaryCounter = 0
@@ -131,8 +135,9 @@ def GOMEA(popSize, problem):
 
         # --
 
-
-        #print(counter, " : ", bestFit)
+        #print(counter, " : ", bestFit, " time: ", round(time.time() - startTime, 2))
+        #print("N fit Eval in thig gen: ", genFitEval)
+        totFitEval += genFitEval
         numberOfChange = howManyOfThePopChanged(lastRoundPopulation, population)
         if numberOfChange == 0:
             notProgress += 1
@@ -146,7 +151,13 @@ def GOMEA(popSize, problem):
             foundAtGen = counter
             print("ora esce")
             break'''
-    return population, bestFit, time.time() - startTime, values, foundAtGen, counter,  round(bestFit - initialFitness, 5)
+    return population, bestFit, time.time() - startTime, values, foundAtGen, totFitEval, counter,  round(bestFit - initialFitness, 5)
+
+
+#population, bestFit, totTime, val, foundAtGen, totFitEval, totNumbOfGen, improvement = GOMEA(30, "L6.txt")
+
+#print(bestFit, " : ", round(totTime, 2), "tota number of fitness evaluations: ", totFitEval, " counter: ", totNumbOfGen, " improvement: ", improvement)
+
 '''
 fitList = []
 genList = []

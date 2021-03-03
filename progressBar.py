@@ -16,9 +16,11 @@ print(unbiased)'''
 import GOMEANormal as normal
 import GOMEAUnivariate as univariate
 
+tipe = "univariate"
 #population, bestFit, time, val, foundAtGen, totFitEval, counter, improvement = normal.GOMEA(10, "L3-20-20.txt")
-population, bestFit, time, val, foundAtGen, counter, improvement = univariate.GOMEA(10, "L3-20-20.txt")
+population, bestFit, time, val, totFotEval, foundAtGen, counter, improvement = univariate.GOMEA(10, "L3-20-20.txt")
 x = [bestFit, foundAtGen, improvement, counter, round(time, 3)]
 
 print(x)
+print(type(univariate))
 
