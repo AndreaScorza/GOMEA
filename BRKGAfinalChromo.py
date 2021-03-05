@@ -31,6 +31,7 @@ def createPopulation(size, bids):
     population = []
     for elem in range(0, size):
         population.append(createKeysForElement(len(bids)))
+    print(population[0])
     return population
 
 
@@ -184,14 +185,24 @@ def runWithStatistics(popSize, nOfLoops, problem):
 
     return fit, gen
 
+'''
+bestFitness, storedPop, lastPopulation, totalTime, foundAtGen, totFitEval, values = BRKGAchromo(5, "L4-5-5.txt")
+goods = values[0]
+bidsValue = values[3]
+bids = values[4]
 
 #runWithStatistics(50, 500)
 
+print(goods)
+print(bidsValue)
+print(bids)
+for x in storedPop:
+    print(decoder(x, False, goods, bids, bidsValue))
 
 #bestFitness, storedPop, lastPopulation, totalTime, foundAtGen, totFitEval = BRKGAchromo(300, "L1-250-1000.txt")
-#print("\nBest Fitness ", bestFitness, " Total Time: ", totalTime, " Found at Gen: ", foundAtGen)
+print("\nBest Fitness ", bestFitness, " Total Time: ", totalTime, " Found at Gen: ", foundAtGen)
 #print("Total number of fitness evaluations: ", totFitEval)
-
+'''
 
 
 

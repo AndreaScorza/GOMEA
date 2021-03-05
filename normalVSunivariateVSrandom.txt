@@ -146,5 +146,197 @@ median improvement:  0.0
 mode improvement:  0.0
 
 
+############################ TTEST + Wilcoxontest #####################
 
+Population 10, L1-250-1000 problem, GOMEA vs Univariate
+
+GOMEA best individual:  45512.3934
+UNIVARIATE best individual:  42160.7566
+
+
+GOMEA
+
+Fitness:
+Average:  42315.176532926445
+Median:   42114.1054
+Mode:     41226.64902
+Variance: 1491515.6341522352
+St Dev:   1221.2762317151003
+
+Generation:
+Average:  1.15962441314554
+Median:   1
+Mode:     1
+Variance: 1.5700913947635657
+St Dev:   1.2530328785644715
+
+Improvement:
+Average:  54.29593799687011
+Median:   0.0
+Mode:     0.0
+Variance: 135750.0958674339
+St Dev:   368.4427986369579
+
+Total Gen:
+Average:  1.245696400625978
+Median:   1
+Mode:     1
+Variance: 2.6433004155199398
+St Dev:   1.6258229963682824
+
+Time:
+Average:  459.0465758998435
+Median:   369.628
+Mode:     379.027
+Variance: 341163.93456897815
+St Dev:   584.0924024236047
+
+
+UNIVARIATE
+
+Fitness:
+Average:  41636.67005868545
+Median:   41641.9363
+Mode:     42083.1826
+Variance: 178644.929961311
+St Dev:   422.664086434264
+
+Generation:
+Average:  1.0453834115805947
+Median:   1
+Mode:     1
+Variance: 0.28790576969304504
+St Dev:   0.536568513512529
+
+Improvement:
+Average:  40.23870802030457
+Median:   0.0
+Mode:     0.0
+Variance: 151158.9006494927
+St Dev:   388.79159025047426
+
+Total Gen:
+Average:  1.1751269035532994
+Median:   1.0
+Mode:     1
+Variance: 1.2958481414353809
+St Dev:   1.1383532586308087
+
+Time:
+Average:  190.89894923857867
+Median:   162.107
+Mode:     All values are different
+Variance: 35111.946849946595
+St Dev:   187.38182102313607
+
+
+Fitness   Ttest_indResult(statistic=13.271662000276967, pvalue=9.472506366411733e-38)
+Generation   Ttest_indResult(statistic=2.118604583908488, pvalue=0.03431671252001703)
+Improvement   Ttest_indResult(statistic=0.6952295367592739, pvalue=0.4870248145871455)
+Tot Gen   Ttest_indResult(statistic=0.9619254049054978, pvalue=0.336250270176482)
+Time   Ttest_indResult(statistic=12.140539323956263, pvalue=2.3959105835508046e-32)
+
+
+Fitness   WilcoxonResult(statistic=50601.0, pvalue=1.9244427560265285e-28)
+Generation   WilcoxonResult(statistic=70.5, pvalue=0.03974965953745693)
+All elements are the same
+All elements are the same
+All elements are the same
+
+-------------------------
+
+Population 30, L6 problem, GOMEA vs Univariate
+
+GOMEA best individual:  195823.05747
+UNIVARIATE best individual:  190738.322
+
+
+GOMEA
+
+Fitness:
+Average:  192250.60399934044
+Median:   191946.27633
+Mode:     191483.03051
+Variance: 6473511.712595433
+St Dev:   2544.309673093162
+
+Generation:
+Average:  1.2822502424830262
+Median:   1
+Mode:     1
+Variance: 4.995014737317902
+St Dev:   2.2349529608736516
+
+Improvement:
+Average:  223.04827896217265
+Median:   0.0
+Mode:     0.0
+Variance: 2674995.125868574
+St Dev:   1635.5412333134784
+
+Total Gen:
+Average:  1.5383123181377303
+Median:   1
+Mode:     1
+Variance: 16.351686081003457
+St Dev:   4.043721810535866
+
+Time:
+Average:  372.552509214355
+Median:   259.472
+Mode:     All values are different
+Variance: 732625.4109892987
+St Dev:   855.93540117774
+
+
+UNIVARIATE
+
+Fitness:
+Average:  188213.46500200775
+Median:   187794.27022
+Mode:     186687.7971
+Variance: 1742671.8697257664
+St Dev:   1320.1029769399684
+
+Generation:
+Average:  1.0824442289039766
+Median:   1
+Mode:     1
+Variance: 1.7029050879059824
+St Dev:   1.3049540558601986
+
+Improvement:
+Average:  99.59995261538462
+Median:   0.0
+Mode:     0.0
+Variance: 2097923.5736432774
+St Dev:   1448.4210622754963
+
+Total Gen:
+Average:  1.1423076923076922
+Median:   1.0
+Mode:     1
+Variance: 4.199170800325757
+St Dev:   2.0491878392001444
+
+Time:
+Average:  99.06469711538462
+Median:   83.02199999999999
+Mode:     82.695
+Variance: 34731.837600459665
+St Dev:   186.36479710626594
+
+
+Fitness   Ttest_indResult(statistic=45.22389536664545, pvalue=8.8074590931247e-311)
+Generation   Ttest_indResult(statistic=2.478950845776313, pvalue=0.013256447097854434)
+Improvement   Ttest_indResult(statistic=1.8187724741854505, pvalue=0.06909065470073768)
+Tot Gen   Ttest_indResult(statistic=2.8145924962712052, pvalue=0.004930124239728762)
+Time   Ttest_indResult(statistic=10.06632389541329, pvalue=2.650645031381808e-23)
+
+
+Fitness   WilcoxonResult(statistic=20639.0, pvalue=3.595229254460216e-145)
+Generation   WilcoxonResult(statistic=66.5, pvalue=0.016978348509826227)
+All elements are the same
+All elements are the same
+All elements are the same
 

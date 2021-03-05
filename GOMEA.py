@@ -176,7 +176,7 @@ def GOMEA(popSize, problem):
     #return population, bestFit, time.time() - startTime, values, trovato, counter
 
 
-population, bestFit, time, val, totFitEval, counter = GOMEA(30, "L6.txt")
+'''population, bestFit, time, val, totFitEval, counter = GOMEA(30, "L6.txt")
 
 print(bestFit, " : ", round(time, 2), "tota number of fitness evaluations: ", totFitEval, " counter: ", counter)
 print()
@@ -190,17 +190,4 @@ for x in range(0, len(population) - 1):
         if population[x] == population[j]:
             print("are the same")
 
-
-
-'''store = []
-for x in range(0, 3):
-    popol, bestFit, val, trovato, counter = GOMEA()
-    Flag = True
-    for x in popol:
-        if round(dc.getFitness(x, val[3], val[1], val[4]), 2) != 3082.78:
-            Flag = False
-            break
-    store.append([counter, trovato, Flag])
-for x in store:
-    print (x)'''
-
+'''
