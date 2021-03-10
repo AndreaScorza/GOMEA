@@ -120,7 +120,17 @@ if len(Bfit) != len(Ufit):
         Bfit.pop()
         Bgen.pop()
 
-
+'''
+Bfit = Bfit[:100]
+Bgen = Bgen[:100]
+Bimprov = Bimprov[:100]
+Bcounter = Bcounter[:100]
+Btime = Btime[:100]
+Ufit = Ufit[:100]
+Ugen = Ugen[:100]
+Uimprov = Uimprov[:100]
+Ucounter = Ucounter[:100]
+Utime = Utime[:100]'''
 
 print("\n")
 print("GOMEA")

@@ -16,12 +16,15 @@ def creatingDataSetBRKGA(popSize, problem, type):
     file_object.write(str(x) + "\n")
     file_object.close()
 
-def creatingDataSetGOMEA(popSize, problem, type):
+def creatingDataSetGOMEA(popSize, problem, type, randomLt):
     if type == "normal":
-        population, bestFit, totTime, val, foundAtGen, totFitEval, totNumbOfGen, improvement = normal.GOMEA(popSize, problem)
+        population, bestFit, totTime, val, foundAtGen, totFitEval, totNumbOfGen, improvement = normal.GOMEA(popSize, problem, randomLt)
     elif type == "univariate":
         population, bestFit, totTime, val, foundAtGen, totFitEval, totNumbOfGen, improvement = univariate.GOMEA(popSize, problem)
-    fileName = str(popSize)+str(problem).replace(".txt", "")+type+".txt"
+    if randomLt:
+        fileName = str(popSize) + str(problem).replace(".txt", "") + type + "_random.txt"
+    else:
+        fileName = str(popSize) + str(problem).replace(".txt", "") + type + ".txt"
     fileName = "/content/drive/MyDrive/" + fileName
     #fileName = "sample.txt"
     file_object = open(fileName, 'a')
@@ -33,5 +36,5 @@ counter = 0
 while counter < 1000:
     print(counter)
     #creatingDataSetBRKGA(10, "L6.txt", "unbiased")
-    creatingDataSetGOMEA(10, "L1-250-1000.txt", "univariate")
+    creatingDataSetGOMEA(30, "L6.txt", "normal", True)
     counter += 1

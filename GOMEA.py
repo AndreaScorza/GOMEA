@@ -133,12 +133,11 @@ def GOMEA(popSize, problem):
 
         # ----------------
 
-        lT = lt.getLinkageTree(population)
-
+        #lT = lt.getLinkageTree(population)
 
         # to create the random linkage tree comment up and uncomment down:
-        #a, b = pop.population(10, "L3-20-20.txt", -1)
-        #lT = lt.getLinkageTree(a)
+        a, b = pop.population(popSize, problem, -1)
+        lT = lt.getLinkageTree(a)
         # -----------------
 
         for li in lT[:-1]:
@@ -176,7 +175,7 @@ def GOMEA(popSize, problem):
     #return population, bestFit, time.time() - startTime, values, trovato, counter
 
 
-'''population, bestFit, time, val, totFitEval, counter = GOMEA(30, "L6.txt")
+population, bestFit, time, val, totFitEval, counter = GOMEA(10, "L3-20-20.txt")
 
 print(bestFit, " : ", round(time, 2), "tota number of fitness evaluations: ", totFitEval, " counter: ", counter)
 print()
@@ -190,4 +189,4 @@ for x in range(0, len(population) - 1):
         if population[x] == population[j]:
             print("are the same")
 
-'''
+

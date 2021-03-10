@@ -99,7 +99,7 @@ def printStat(population, val):
 
 
 
-def GOMEA(popSize, problem):
+def GOMEA(popSize, problem, randomLT):
     forcedImprovement = False
     startTime = time.time()
     counter = 0
@@ -131,18 +131,15 @@ def GOMEA(popSize, problem):
         #    print("Forced improvement !!!!!!!!!!!!!!!!!")
         lastRoundPopulation = population.copy()
 
-        # ----------------
-
-        lT = lt.getLinkageTree(population)
-
-
-        # to create the random linkage tree comment up and uncomment down:
-        #a, b = pop.population(10, "L3-20-20.txt", -1)
-        #lT = lt.getLinkageTree(a)
-        # -----------------
+        if randomLT:
+            a, b = pop.population(popSize, problem, -1)
+            lT = lt.getLinkageTree(a)
+        else:
+            lT = lt.getLinkageTree(population)
 
         '''for li in lT[:-1]:
             print(li)'''
+       # print('\n')
         for x in range(0, len(population)):
             for subset in lT[:-1]:  # avoiding the root of the tree
                 donor = getDonor(population, x)
@@ -180,7 +177,8 @@ def GOMEA(popSize, problem):
     #return population, bestFit, time.time() - startTime, values, trovato, counter
 
 
-#population, bestFit, time, val, foundAtGen, totFitEval, counter, improvement = GOMEA(10, "L3-20-20.txt")
+#population, bestFit, time, val, foundAtGen, totFitEval, counter, improvement = GOMEA(10, "L3-20-20.txt", True)
+
 '''
 print(bestFit, " : ", round(time, 2), "tota number of fitness evaluations: ", totFitEval, " counter: ", counter)
 print()
@@ -193,8 +191,8 @@ for x in range(0, len(population) - 1):
     for j in range(x + 1, len(population)):
         if population[x] == population[j]:
             print("are the same")
-'''
 
+'''
 
 '''store = []
 for x in range(0, 3):
