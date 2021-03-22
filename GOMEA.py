@@ -133,11 +133,11 @@ def GOMEA(popSize, problem):
 
         # ----------------
 
-        #lT = lt.getLinkageTree(population)
+        lT = lt.getLinkageTree(population)
 
         # to create the random linkage tree comment up and uncomment down:
-        a, b = pop.population(popSize, problem, -1)
-        lT = lt.getLinkageTree(a)
+        #a, b = pop.population(popSize, problem, -1)
+        #lT = lt.getLinkageTree(a)
         # -----------------
 
         for li in lT[:-1]:

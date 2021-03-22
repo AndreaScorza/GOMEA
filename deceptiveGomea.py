@@ -3,46 +3,33 @@ import linkageTree as lt
 import time
 from numpy.random import randint
 import random
+import orderingProblemValues as order
 
 # global variable
-k = 5
-l = 50
-#byteArray = np.random.randint(2, size=l)
+k = 4
+l = 32
+
 def createPop(size):
     pop = []
     popByte = []
+    block = [1, 2, 3, 4]
     for x in range(0, size):
         temp = []
         for y in range(0, l):
             temp.append(np.random.rand())
         pop.append(temp)
-        popByte.append(list(randint(2, size=l)))
-        print(popByte)
+        individual = []
+        for x in range(0, int(l / k)):
+            individual = individual + random.sample(block, len(block))
+        popByte.append(individual)
     return pop, popByte
 
-def switch(i):
-    switcher = {
-        0: 0.8,
-        1: 0.6,
-        2: 0.4,
-        3: 0.2,
-        4: 0,
-        5: 1
-    }
-    return switcher.get(i,"Invalid")
 
 def getFitness(elemByte):
-    #print(elemByte)
     fitness = 0
-    for x in range(0, int(len(elemByte)/5)):
-        sumU = 0 # count how many 1 in the substring
-        for y in range(0, 5):
-            sumU += elemByte[x*k+y]
-        #print(sumU)
-        #print(switch(sumU))
-        fitness += switch(sumU)
-
-    return round(fitness, 2) # 2 decimal point for safety
+    for x in range(0, int(len(elemByte)/k)):
+        fitness += order.getValue(elemByte[x:x+k], 'absolute')
+    return round(fitness, 2)
 
 def getDonor(population, popByte, x):
     numbers = list(range(0, len(popByte)))
@@ -95,7 +82,7 @@ def allElem(pop):
     return True
 
 def terminated(counter, fit, popByte):
-    if counter >= 30 or fit == (l / k) or allElem(popByte):
+    if counter >= 30 or fit == l or allElem(popByte):
         return True
     return False
 

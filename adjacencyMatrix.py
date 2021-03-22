@@ -104,7 +104,7 @@ def neighbourList(matrix, structure, branch):
         print(branch)
         #for x in branch:
 
-        return 0, 0, 0
+        return int(0), 0, 0
 
 
 

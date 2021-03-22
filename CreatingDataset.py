@@ -36,5 +36,5 @@ counter = 0
 while counter < 1000:
     print(counter)
     #creatingDataSetBRKGA(10, "L6.txt", "unbiased")
-    creatingDataSetGOMEA(30, "L6.txt", "normal", True)
+    creatingDataSetGOMEA(30, "L6.txt", "normal", False)
     counter += 1

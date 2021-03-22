@@ -387,7 +387,7 @@ def BRKGAGreedyApproach(populationSize):  # continua until the stopping criteria
     #decoding the fitness of the best solution found so far
     print(decoderForSolution(bestSolutionSoFar[0])[0])
 
-    return 0
+    return int(0)
 
 
 

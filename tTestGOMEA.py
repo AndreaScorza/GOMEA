@@ -106,19 +106,26 @@ Ufit, Ugen = RKGA.runWithStatistics(10, 10, problem)'''
 #Bfit, Bgen, Bimprov, Bcounter, Btime = readFromDataset('Datasets/10L1-250-1000normal.txt')
 #Ufit, Ugen, Uimprov, Ucounter, Utime = readFromDataset('Datasets/10L1-250-1000univariate.txt')
 Bfit, Bgen, Bimprov, Bcounter, Btime = readFromDataset("Datasets/30L6normal.txt")
-Ufit, Ugen, Uimprov, Ucounter, Utime = readFromDataset("Datasets/30L6univariate.txt")
+Ufit, Ugen, Uimprov, Ucounter, Utime = readFromDataset("Datasets/30L6normal_random.txt")
+#Ufit, Ugen, Uimprov, Ucounter, Utime = readFromDataset("Datasets/30L6univariate.txt")
 
 print("\n")
 print("GOMEA best individual: ",max(Bfit))
-print("UNIVARIATE best individual: ",max(Ufit))
+print("RANDOM best individual: ",max(Ufit))
 # To make the datasets the same length
 if len(Bfit) != len(Ufit):
     while (len(Bfit) < len(Ufit)):
         Ufit.pop()
         Ugen.pop()
+        Uimprov.pop() 
+        Ucounter.pop()
+        Utime.pop()
     while (len(Bfit) > len(Ufit)):
         Bfit.pop()
         Bgen.pop()
+        Bimprov.pop()
+        Bcounter.pop()
+        Btime.pop()
 
 '''
 Bfit = Bfit[:100]
@@ -136,7 +143,7 @@ print("\n")
 print("GOMEA")
 performStat(Bfit, Bgen, Bimprov, Bcounter, Btime)
 print("\n")
-print("UNIVARIATE")
+print("RANDOM")
 performStat(Ufit, Ugen, Uimprov, Ucounter, Utime)
 print("\n")
 

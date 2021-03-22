@@ -146,21 +146,21 @@ def BRKGAchromo(populationSize, problem):
         if bestFitness == 0:
             bestFitness = fitness
             storedPop = population
-            #print(generationCount, ": ", fitness, " time: ", round(time.time()-startTime, 2))
-            #print("Number of fitness evaluation for this generation: ", nFitEval)
+            print(generationCount, ": ", fitness, " time: ", round(time.time()-startTime, 2))
+            print("Number of fitness evaluation for this generation: ", nFitEval)
         else:
             if fitness <= bestFitness:
                 fitNotIncrease += 1
-                #print(generationCount, ": ", bestFitness, " time: ", round(time.time()-startTime, 2))
-                #print("Number of fitness evaluation for this generation: ", nFitEval)
+                print(generationCount, ": ", bestFitness, " time: ", round(time.time()-startTime, 2))
+                print("Number of fitness evaluation for this generation: ", nFitEval)
 
 
             else:
                 bestFitness = fitness
                 fitNotIncrease = 0
                 storedPop = population
-                #print(generationCount, ": ", bestFitness, " -> ", fitness, " time: ", round(time.time()-startTime, 2))
-                #print("Number of fitness evaluation for this generation: ", nFitEval)
+                print(generationCount, ": ", bestFitness, " -> ", fitness, " time: ", round(time.time()-startTime, 2))
+                print("Number of fitness evaluation for this generation: ", nFitEval)
 
         generationCount += 1
 

@@ -51,8 +51,8 @@ def greedyRecomb(sol, donor, subset, values, population, forcedImprovement, supe
         if newSolFit > solFit:
             accepted += 1
             # we add a second check to see if the solution resulting would be the same, we discarted because same element
-            #if not pop.checkIfElemInPopulation(newSol, population):
-            if not pop.checkIfElemInPopulation(newSol, population) and secondCheck(newSol, population, values):
+            if not pop.checkIfElemInPopulation(newSol, population):
+            #if not pop.checkIfElemInPopulation(newSol, population) and secondCheck(newSol, population, values):
                 sol = newSol
                 bestFit = newSolFit
                 bestElem = newSol.copy()
