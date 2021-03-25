@@ -23,13 +23,13 @@ x = [bestFit, foundAtGen, improvement, counter, round(time, 3)]
 
 print(x)
 print(type(univariate))'''
-from numpy.random import randint
+'''from numpy.random import randint
 import random
 import numpy as np
-import linkageTree as lt
+import linkageTree2 as lt
 import orderingProblemValues as order
 
-l = 32
+l = 8
 k = 4
 
 
@@ -89,14 +89,18 @@ for x in pop:
 lT = lt.getLinkageTree(popbyte)
 for x in lT:
     print(x)
+'''
 
-'''dependency = [[1,2],[3],[],[1,4,3]]
-a = [[0],[1],[2],[3]]
-v = []
-for x in range(0, len(dependency)):
-    #print("deppo", dependency)
-    #print(len(dependency))
-    #newDep.append(branch[dependency[x][0]])
-    v.append(a[dependency[x][0]])'''
+def test(input, type):
+    if type == 'a':
+        if input > 1:
+            return 1
+        return 0
+    elif type == 'b':
+        if input > 1:
+            return 2
+        return 0
+    else:
+        return 0
 
-
+print(test(1, 'b'))

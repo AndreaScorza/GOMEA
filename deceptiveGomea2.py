@@ -1,32 +1,37 @@
 import numpy as np
-import linkageTree as lt
-from time import time
+import linkageTree2 as lt
+import time
 from numpy.random import randint
 import random
 import orderingProblemValues as order
+
 # global variable
 k = 4
-l = 32
-
-# without biased random key
+l = 8
+fitnessList = []
 
 def createPop(size):
+    #pop = []
     popByte = []
     block = [1, 2, 3, 4]
     for x in range(0, size):
+        #temp = []
+        #for y in range(0, l):
+        #    temp.append(np.random.rand())
+        #pop.append(temp)
         individual = []
         for x in range(0, int(l / k)):
-            #tail = random.sample(block, len(block))
-            #individual = np.concatenate((individual, tail))
             individual = individual + random.sample(block, len(block))
         popByte.append(individual)
-    return popByte
+    return popByte # , pop
+
 
 def getFitness(elemByte):
     fitness = 0
     for x in range(0, int(len(elemByte)/k)):
-        fitness += order.getValue(elemByte[x:x+k], 'absolute')
+        fitness += order.getValue(elemByte[(x*k):(x*k+k)], 'relative')
     return round(fitness, 2)
+
 
 def getDonor(popByte, x):
     numbers = list(range(0, len(popByte)))
@@ -44,12 +49,13 @@ def checkIfElemInPopulation(elem, pop):
                 return True
         return False
 
-def greedyRecomb(solByte, donorByte, subset):
+def greedyRecomb(solByte, donorByte, subset, popByte):
     #print("Another recombination")
+    index = popByte.index(solByte)
     accepted = 0
     discarted = 0
     for cluster in subset:
-        solByteFit = getFitness(solByte)
+        solByteFit = fitnessList[index]
         newSolByte = solByte.copy()
         for element in cluster:
             newSolByte[element] = donorByte[element]
@@ -61,10 +67,20 @@ def greedyRecomb(solByte, donorByte, subset):
             accepted += 1
             solByte = newSolByte
             bestFit = newSolByteFit
+            fitnessList[index] = newSolByteFit
         else:
             discarted += 1
     # print("Accepted : ", accepted, " Discarted : ", discarted)
     return solByte, bestFit
+
+
+#  count how many elements changed from two populations
+def howManyOfThePopChanged(pop, newPop):
+    number = 0
+    for x in range(0, len(pop)):
+        if pop[x] != newPop[x]:
+            number += 1
+    return number
 
 # return true if the element of the population are all the same
 def allElem(pop):
@@ -73,55 +89,70 @@ def allElem(pop):
             return False
     return True
 
-def terminated(counter, fit, pop):
-    if counter >= 30 or fit == l or allElem(pop):
+def terminated(counter, fit, popByte, notProgress):
+    if counter >= 1000 or fit == l or allElem(popByte) or notProgress > 100:
         return True
     return False
 
 def generationalPrinting():
     return int(0)
 
-def GOMEA():
 
+
+def GOMEA():
+    startTime = time.time()
     counter = 0
-    popByte = createPop(100)
-    for x in popByte:
-        print(x)
+    popByte = createPop(50)
 
     bestFit = 0
-    while not terminated(counter, bestFit, popByte):
+    notProgress = 0
+
+    for x in popByte:
+        fitnessList.append(getFitness(x))
+    print("Initial max value: ", max(fitnessList))
+    print()
+
+    while not terminated(counter, bestFit, popByte, notProgress):
+        print("\nNew Generation")
+        lastRoundPopulation = popByte.copy()
         lT = lt.getLinkageTree(popByte)
-        for x in lT:
+        for x in lT[:-1]:
             print(x)
-        print()
         for x in range(0, len(popByte)):
             for subset in lT[:-1]:  # avoiding the root of the tree
                 donorByte = getDonor(popByte, x)
-                popByte[x], fit = greedyRecomb(popByte[x], donorByte, subset)
+                popByte[x], fit = greedyRecomb(popByte[x], donorByte, subset, popByte)
                 if bestFit < fit:
                     bestFit = fit
         counter += 1
-        #print(counter, " : ", bestFit, " time: ", round(time.time() - startTime, 2))
-    #return popByte, bestFit, time() - start_t, counter
-    print(counter, " : ", bestFit)
-    for z in popByte:
-        print(z)
-    return popByte, bestFit, counter
+
+        print(counter, " : ", bestFit, " time: ", round(time.time() - startTime, 2))
+        #for z in popByte:
+        #    print(z)
+
+        numberOfChange = howManyOfThePopChanged(lastRoundPopulation, popByte)
+        print("this generation ", numberOfChange," individuals changed")
+        if numberOfChange == 0:
+            notProgress += 1
+        else:
+            notProgress = 0
+
+    return popByte, bestFit, time.time() - startTime, counter
 
 
 
-popByte, bestFit, counter = GOMEA()
-print("best fitness : ", bestFit)
+
+
+popByte, bestFit, time, counter, listCorrect = GOMEA()
+print("best fitness : ", bestFit, " counter:", counter)
+
+
+for x in popByte:
+    if getFitness(x) == bestFit:
+        print(x)
 '''for x in popByte:
-    print(x)'''
+    print(getFitness(x), " : ", x)'''
 
-'''for i in range(0, 4):
-    popByte, bestFit, counter = GOMEA()
-    print(i, ": gen_count : ", counter, " Fitness : ", bestFit)'''
-
-'''for i in range(0, 4):
-    popByte, bestFit, time, counter = GOMEA()
-    print(counter, " : ", bestFit, " time: ", time)'''
 
 
 
