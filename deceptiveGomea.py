@@ -30,7 +30,7 @@ def getFitness(elemByte):
     fitness = 0
     correctSub = 0
     for x in range(0, int(len(elemByte)/k)):
-        fitness += order.getValue(elemByte[(x*k):(x*k+k)], 'absolute')
+        fitness += order.getValue(elemByte[(x*k):(x*k+k)], 'relative')
         if elemByte[(x*k):(x*k+k)] == [1,2,3,4]:
             correctSub += 1
     return round(fitness, 2), correctSub
@@ -110,7 +110,7 @@ def generationalPrinting():
 def GOMEA():
     startTime = time.time()
     counter = 0
-    population, popByte = createPop(3000)
+    population, popByte = createPop(2500)
 
     bestFit = 0
     notProgress = 0
@@ -120,10 +120,18 @@ def GOMEA():
         fitnessList.append(a)
     print("Initial max value: ", max(fitnessList))
     print()
+
     while not terminated(counter, bestFit, popByte, notProgress):
         listCorrectTemp = []
         lastRoundPopulation = population.copy()
+
+
         lT = lt.getLinkageTree(population)
+
+        # to create the random linkage tree comment up and uncomment down:
+        #a, b = createPop(2500)
+        #lT = lt.getLinkageTree(a)
+
         for x in lT[:-1]:
             print(x)
         print()

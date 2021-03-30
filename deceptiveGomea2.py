@@ -7,7 +7,7 @@ import orderingProblemValues as order
 
 # global variable
 k = 4
-l = 8
+l = 20
 fitnessList = []
 
 def createPop(size):
@@ -28,9 +28,12 @@ def createPop(size):
 
 def getFitness(elemByte):
     fitness = 0
+    correctSub = 0
     for x in range(0, int(len(elemByte)/k)):
         fitness += order.getValue(elemByte[(x*k):(x*k+k)], 'relative')
-    return round(fitness, 2)
+        if elemByte[(x*k):(x*k+k)] == [1,2,3,4]:
+            correctSub += 1
+    return round(fitness, 2), correctSub
 
 
 def getDonor(popByte, x):
@@ -45,7 +48,7 @@ def checkIfElemInPopulation(elem, pop):
     else:
         for x in range(0, len(pop)):
             if elem == pop[x]:
-                print("Element already present in population, discarted!")
+                #print("Element already present in population, discarted!")
                 return True
         return False
 
@@ -54,13 +57,14 @@ def greedyRecomb(solByte, donorByte, subset, popByte):
     index = popByte.index(solByte)
     accepted = 0
     discarted = 0
+    correctSub = 0
     for cluster in subset:
         solByteFit = fitnessList[index]
         newSolByte = solByte.copy()
         for element in cluster:
             newSolByte[element] = donorByte[element]
 
-        newSolByteFit = getFitness(newSolByte)
+        newSolByteFit, correctSub = getFitness(newSolByte)
         bestFit = solByteFit
 
         if newSolByteFit > solByteFit:
@@ -70,8 +74,8 @@ def greedyRecomb(solByte, donorByte, subset, popByte):
             fitnessList[index] = newSolByteFit
         else:
             discarted += 1
-    # print("Accepted : ", accepted, " Discarted : ", discarted)
-    return solByte, bestFit
+    #print("Accepted : ", accepted, " Discarted : ", discarted)
+    return solByte, bestFit, correctSub
 
 
 #  count how many elements changed from two populations
@@ -90,7 +94,7 @@ def allElem(pop):
     return True
 
 def terminated(counter, fit, popByte, notProgress):
-    if counter >= 1000 or fit == l or allElem(popByte) or notProgress > 100:
+    if counter >= 100 or fit == l or allElem(popByte): #  or notProgress > 100:
         return True
     return False
 
@@ -102,28 +106,36 @@ def generationalPrinting():
 def GOMEA():
     startTime = time.time()
     counter = 0
-    popByte = createPop(50)
+    popByte = createPop(2000)
 
     bestFit = 0
     notProgress = 0
-
+    listCorrect = []
     for x in popByte:
-        fitnessList.append(getFitness(x))
+        a, b = getFitness(x)
+        fitnessList.append(a)
     print("Initial max value: ", max(fitnessList))
     print()
 
     while not terminated(counter, bestFit, popByte, notProgress):
-        print("\nNew Generation")
+        listCorrectTemp = []
         lastRoundPopulation = popByte.copy()
-        lT = lt.getLinkageTree(popByte)
+
+        #lT = lt.getLinkageTree(popByte)
+
+        a = createPop(2500)
+        lT = lt.getLinkageTree(a)
         for x in lT[:-1]:
             print(x)
+        print()
         for x in range(0, len(popByte)):
             for subset in lT[:-1]:  # avoiding the root of the tree
                 donorByte = getDonor(popByte, x)
-                popByte[x], fit = greedyRecomb(popByte[x], donorByte, subset, popByte)
+                popByte[x], fit, correctSub= greedyRecomb(popByte[x], donorByte, subset, popByte)
+                listCorrectTemp.append(correctSub)
                 if bestFit < fit:
                     bestFit = fit
+        listCorrect.append([counter, max(listCorrectTemp)])
         counter += 1
 
         print(counter, " : ", bestFit, " time: ", round(time.time() - startTime, 2))
@@ -136,8 +148,8 @@ def GOMEA():
             notProgress += 1
         else:
             notProgress = 0
-
-    return popByte, bestFit, time.time() - startTime, counter
+        print(listCorrect)
+    return popByte, bestFit, time.time() - startTime, counter, listCorrect
 
 
 
@@ -146,10 +158,13 @@ def GOMEA():
 popByte, bestFit, time, counter, listCorrect = GOMEA()
 print("best fitness : ", bestFit, " counter:", counter)
 
-
+print(listCorrect)
 for x in popByte:
-    if getFitness(x) == bestFit:
-        print(x)
+    a, b = getFitness(x)
+    if a == bestFit:
+        print(counter , " ", b , " : ", x)
+
+
 '''for x in popByte:
     print(getFitness(x), " : ", x)'''
 
