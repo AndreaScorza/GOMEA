@@ -91,7 +91,7 @@ for x in lT:
     print(x)
 '''
 
-def test(input, type):
+'''def test(input, type):
     if type == 'a':
         if input > 1:
             return 1
@@ -104,3 +104,53 @@ def test(input, type):
         return 0
 
 print(test(1, 'b'))
+'''
+
+import numpy as np
+import linkageTree as lt
+import time
+from numpy.random import randint
+import random
+import orderingProblemValues as order
+
+k = 4
+l = 8
+fitnessList = []
+
+def createPop(size):
+    pop = []
+    popByte = []
+    block = [1, 2, 3, 4]
+    for x in range(0, size):
+        temp = []
+        for y in range(0, l):
+            temp.append(np.random.rand())
+        pop.append(temp)
+        individual = []
+        for x in range(0, int(l / k)):
+            individual = individual + random.sample(block, len(block))
+        popByte.append(individual)
+    return pop, popByte
+
+def getFitness(elem, elemByte):
+    element = elem.copy()
+    for x in range(0, len(element)):
+        saving = [x, element[x]]
+        element[x] = saving
+    element.sort(reverse=True, key=lambda x: x[1])
+    fitness = 0
+    correctSub = 0
+    for x in range(0, int(len(elemByte)/k)):
+        stringToAnalyze = []
+        for y in range(0, 4):
+            stringToAnalyze.append(elemByte[element[x*k+y][0]])
+        # fitness += order.getValue(elemByte[(x*k):(x*k+k)], 'absolute')
+        fitness += order.getValue(stringToAnalyze, 'absolute')
+        if stringToAnalyze == [1,2,3,4]:
+            correctSub += 1
+    return round(fitness, 2), correctSub
+
+population, popByte = createPop(10)
+a, b = getFitness(population[0], popByte[0])
+print(b)
+

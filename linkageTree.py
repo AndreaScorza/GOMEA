@@ -38,8 +38,9 @@ def createDependencyMatrix(population):
             for k in range(0, len(population)):
                 averageDistance += (population[k][i] - population[k][j]) * (population[k][i] - population[k][j])
             averageDistance /= len(population)
-            dependencyMatrix[i][j] *= 1 - averageDistance
-            # To just use delta 1 uncomment the following line and comment the one above
+            # To just use delta 1 comment the following line
+            #dependencyMatrix[i][j] *= 1 - averageDistance
+            # To just use delta 2 uncomment the following line and comment the one above
             #dependencyMatrix[i][j] = 1 - averageDistance
             # ------ end of delta 2
             # creating the symmetric matrix

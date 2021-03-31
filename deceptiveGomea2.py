@@ -30,7 +30,7 @@ def getFitness(elemByte):
     fitness = 0
     correctSub = 0
     for x in range(0, int(len(elemByte)/k)):
-        fitness += order.getValue(elemByte[(x*k):(x*k+k)], 'relative')
+        fitness += order.getValue(elemByte[(x*k):(x*k+k)], 'absolute')
         if elemByte[(x*k):(x*k+k)] == [1,2,3,4]:
             correctSub += 1
     return round(fitness, 2), correctSub
@@ -106,7 +106,7 @@ def generationalPrinting():
 def GOMEA():
     startTime = time.time()
     counter = 0
-    popByte = createPop(2000)
+    popByte = createPop(3000)
 
     bestFit = 0
     notProgress = 0
@@ -121,10 +121,10 @@ def GOMEA():
         listCorrectTemp = []
         lastRoundPopulation = popByte.copy()
 
-        #lT = lt.getLinkageTree(popByte)
+        lT = lt.getLinkageTree(popByte)
 
-        a = createPop(2500)
-        lT = lt.getLinkageTree(a)
+        #a = createPop(2500)
+        #lT = lt.getLinkageTree(a)
         for x in lT[:-1]:
             print(x)
         print()

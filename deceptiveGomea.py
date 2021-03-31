@@ -26,12 +26,21 @@ def createPop(size):
     return pop, popByte
 
 # if flag = true it will return the maximum number of correct subproblems
-def getFitness(elemByte):
+def getFitness(elem, elemByte):
+    element = elem.copy()
+    for x in range(0, len(element)):
+        saving = [x, element[x]]
+        element[x] = saving
+    element.sort(reverse=True, key=lambda x: x[1])
     fitness = 0
     correctSub = 0
     for x in range(0, int(len(elemByte)/k)):
-        fitness += order.getValue(elemByte[(x*k):(x*k+k)], 'relative')
-        if elemByte[(x*k):(x*k+k)] == [1,2,3,4]:
+        stringToAnalyze = []
+        for y in range(0, 4):
+            stringToAnalyze.append(elemByte[element[x*k+y][0]])
+        # fitness += order.getValue(elemByte[(x*k):(x*k+k)], 'absolute')
+        fitness += order.getValue(stringToAnalyze, 'absolute')
+        if stringToAnalyze == [1,2,3,4]:
             correctSub += 1
     return round(fitness, 2), correctSub
 
@@ -66,7 +75,7 @@ def greedyRecomb(sol, solByte, donor, donorByte, subset, population):
             newSol[element] = donor[element]
             newSolByte[element] = donorByte[element]
 
-        newSolFit, correctSub = getFitness(newSolByte)
+        newSolFit, correctSub = getFitness(newSol, newSolByte)
         bestFit = solFit
 
         if newSolFit > solFit:
@@ -110,13 +119,13 @@ def generationalPrinting():
 def GOMEA():
     startTime = time.time()
     counter = 0
-    population, popByte = createPop(2500)
+    population, popByte = createPop(3000)
 
     bestFit = 0
     notProgress = 0
     listCorrect = []
-    for x in popByte:
-        a, b = getFitness(x)
+    for x in range(0, len(popByte)):
+        a, b = getFitness(population[x], popByte[x])
         fitnessList.append(a)
     print("Initial max value: ", max(fitnessList))
     print()
@@ -165,8 +174,8 @@ pop, popByte, bestFit, time, counter, listCorrect = GOMEA()
 print("best fitness : ", bestFit, " counter:", counter)
 
 print(listCorrect)
-for x in popByte:
-    a, b = getFitness(x)
+for x in range(0, len(popByte)):
+    a, b = getFitness(pop[x], popByte[x])
     if a == bestFit:
         print(counter , " ", b , " : ", x)
 
