@@ -1,120 +1,10 @@
-'''import ast
-
-biased = []
-unbiased = []
-lines = filter(None, (line.rstrip() for line in open("300L1-250-1000biased.txt")))
-for line in lines:
-    biased.append(ast.literal_eval(line))
-
-lines = filter(None, (line.rstrip() for line in open("300L1-250-1000unbiased.txt")))
-for line in lines:
-    unbiased.append(ast.literal_eval(line))
-
-print(biased)
-print(unbiased)
-
-import GOMEANormal as normal
-import GOMEAUnivariate as univariate
-
-tipe = "univariate"
-#population, bestFit, time, val, foundAtGen, totFitEval, counter, improvement = normal.GOMEA(10, "L3-20-20.txt")
-population, bestFit, time, val, totFotEval, foundAtGen, counter, improvement = univariate.GOMEA(10, "L3-20-20.txt")
-x = [bestFit, foundAtGen, improvement, counter, round(time, 3)]
-
-print(x)
-print(type(univariate))'''
-'''from numpy.random import randint
-import random
 import numpy as np
-import linkageTree2 as lt
-import orderingProblemValues as order
-
-l = 8
-k = 4
-
-
-def createPop2(size):
-    pop = []
-    popByte = []
-    block = [1, 2, 3, 4]
-    for x in range(0, size):
-        temp = []
-        for y in range(0, l):
-            temp.append(np.random.rand())
-        pop.append(temp)
-        individual = []
-        for x in range(0, int(l / k)):
-            #tail = random.sample(block, len(block))
-            #individual = np.concatenate((individual, tail))
-            individual = individual + random.sample(block, len(block))
-            #individual.append(random.sample(block, len(block)))
-        #popByte.append(list(np.hstack(individual)))
-        popByte.append(individual)
-    return pop, popByte
-
-
-def createPop(size):
-    pop = []
-    popByte = []
-    block = [1, 2, 3, 4]
-    for x in range(0, size):
-        temp = []
-        for y in range(0, l):
-            temp.append(np.random.rand())
-        pop.append(temp)
-        individual = []
-        for x in range(0, int(l / k)):
-            #tail = random.sample(block, len(block))
-            #individual = np.concatenate((individual, tail))
-            individual = individual + random.sample(block, len(block))
-            #individual.append(random.sample(block, len(block)))
-        #popByte.append(list(np.hstack(individual)))
-        popByte.append(list(randint(2, size=l)))
-        #popByte.append(individual)
-    return pop, popByte
-
-
-pop, popbyte = createPop(3)
-
-for x in popbyte:
-    print(len(x), type(x), x)
-for x in pop:
-
-    for y in range(0, len(x)):
-        x[y] += 3
-    print(len(x), type(x), x)
-
-
-
-lT = lt.getLinkageTree(popbyte)
-for x in lT:
-    print(x)
-'''
-
-'''def test(input, type):
-    if type == 'a':
-        if input > 1:
-            return 1
-        return 0
-    elif type == 'b':
-        if input > 1:
-            return 2
-        return 0
-    else:
-        return 0
-
-print(test(1, 'b'))
-'''
-
-import numpy as np
-import linkageTree as lt
-import time
 from numpy.random import randint
 import random
-import orderingProblemValues as order
+import orderingProblemValues as ord
 
 k = 4
-l = 8
+l = 32
 fitnessList = []
 
 def createPop(size):
@@ -132,25 +22,71 @@ def createPop(size):
         popByte.append(individual)
     return pop, popByte
 
-def getFitness(elem, elemByte):
+def orderString(elem, elemByte):
     element = elem.copy()
     for x in range(0, len(element)):
         saving = [x, element[x]]
         element[x] = saving
     element.sort(reverse=True, key=lambda x: x[1])
+    #print(element)
+    #print(elemByte)
+    stringToAnalyze = []
+    for x in range(0, len(element)):
+        stringToAnalyze.append(elemByte[element[x][0]])
+    return stringToAnalyze[0]
+
+def getSub(string, type):
+    subs = []
+    if type == 'deflen6':
+        sub1 = [string[0], string[2],string[4], string[6]]
+        sub2 = [string[1], string[3], string[5], string[7]]
+        sub3 = [string[8], string[10], string[12], string[14]]
+        sub4 = [string[9], string[11], string[10], string[15]]
+        sub5 = [string[16], string[18], string[20], string[22]]
+        sub6 = [string[17], string[19], string[21], string[23]]
+        sub7 = [string[24], string[26], string[28], string[30]]
+        sub8 = [string[25], string[27], string[29], string[31]]
+    if type == 'loose':
+        sub1 = [string[0], string[8], string[16], string[24]]
+        sub2 = [string[1], string[9], string[17], string[25]]
+        sub3 = [string[2], string[10], string[18], string[26]]
+        sub4 = [string[3], string[11], string[19], string[27]]
+        sub5 = [string[4], string[12], string[20], string[28]]
+        sub6 = [string[5], string[13], string[21], string[29]]
+        sub7 = [string[6], string[14], string[22], string[30]]
+        sub8 = [string[7], string[15], string[23], string[31]]
+    subs.append(sub1)
+    subs.append(sub2)
+    subs.append(sub3)
+    subs.append(sub4)
+    subs.append(sub5)
+    subs.append(sub6)
+    subs.append(sub7)
+    subs.append(sub8)
+    return subs
+
+def getFitness(subs, order):
     fitness = 0
     correctSub = 0
-    for x in range(0, int(len(elemByte)/k)):
-        stringToAnalyze = []
-        for y in range(0, 4):
-            stringToAnalyze.append(elemByte[element[x*k+y][0]])
-        # fitness += order.getValue(elemByte[(x*k):(x*k+k)], 'absolute')
-        fitness += order.getValue(stringToAnalyze, 'absolute')
-        if stringToAnalyze == [1,2,3,4]:
+    for x in subs:
+        fitness += ord.getValue(x, order)
+        if x == [1, 2, 3, 4]:
             correctSub += 1
-    return round(fitness, 2), correctSub
+    print("cc : ", fitness)
+    return round(fitness, 2), int(correctSub)
 
-population, popByte = createPop(10)
-a, b = getFitness(population[0], popByte[0])
-print(b)
 
+
+newSol, newSolByte = createPop(1)
+type = 'deflen6'
+order = 'absolute'
+
+string = orderString(newSol, newSolByte)
+subs = getSub(string, type)
+newSolFit, correctSub = getFitness(subs, order)
+
+
+#newSolFit, correctSub = getFitness(getSub(orderString(newSol, newSolByte), type), order)
+print(newSolFit, correctSub)
+#print(order.get)
+print(getFitness(getSub(orderString(newSol, newSolByte), type), order))
