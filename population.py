@@ -18,7 +18,7 @@ def checkIfElemInPopulation(elem, pop):
     else:
         for x in range(0, len(pop)):
             if elem == pop[x]:
-                print("The element created initially was already present, discarted")
+                #print("The element created initially was already present, discarted")
                 return True
         return False
 

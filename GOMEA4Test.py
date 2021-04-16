@@ -94,7 +94,7 @@ def GOMEA():
     forcedImprovement = False
     counter = 0
     #  values = [goodsNumber, bidsNumber, dummyNumber, bidsValue, bids]
-    population, values = pop.population(100, "L2-50-100.txt", -1)
+    population, values = pop.population(100, "problemInstances/L2-50-100.txt", -1)
     bestFit = 0
     bestElem = []
     stationaryCounter = 0

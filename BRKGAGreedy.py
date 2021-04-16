@@ -23,7 +23,7 @@ bids = [[1, 2], [1, 4], [3, 5, 9], [7, 13, 18], [20, 15, 4], [5, 6, 7, 8], [9, 3
 bidsValue = randint(1, 1000, len(bids))  # tha values of every bid (correspond to the index)
 
 '''
-values = auction.getAuction('L1-250-1000.txt')
+values = auction.getAuction('problemInstances/L1-250-1000.txt')
 goods = values[0]
 bidsValue = values[3]
 bids = values[4]

@@ -5,6 +5,7 @@ import decoder as dc
 from numpy.random import randint
 import time
 import random
+
 fitnessList = []
 
 def getDonor(population, x):
@@ -75,7 +76,7 @@ def terminated(counter, notProgress):
 def solInPop(sol, pop):
     for x in pop:
         if sol == x:
-            print("trovato")
+            print("found")
             print(x)
             print(sol)
 
@@ -106,12 +107,13 @@ def GOMEA(popSize, problem):
     #  values = [goodsNumber, bidsNumber, dummyNumber, bidsValue, bids]
     population, values = pop.population(popSize, problem, -1)
     #population, values = pop.population(10, "problemInstances/matching.txt", -1)
-
+    global fitnessList
+    fitnessList = []
 
     # Populatiog the list of fitness
     for x in population:
         fitnessList.append(dc.getFitness(x, values[3], values[1], values[4]))
-
+    print("MAX INITIAL: ", max(fitnessList))
     bestFit = 0
     bestElem = []
     stationaryCounter = 0
@@ -175,7 +177,7 @@ def GOMEA(popSize, problem):
     #return population, bestFit, time.time() - startTime, values, trovato, counter
 
 
-population, bestFit, time, val, totFitEval, counter = GOMEA(10, "L3-20-20.txt")
+population, bestFit, time, val, totFitEval, counter = GOMEA(50, "problemInstances/L2-50-100.txt")
 
 print(bestFit, " : ", round(time, 2), "tota number of fitness evaluations: ", totFitEval, " counter: ", counter)
 print()

@@ -7,7 +7,7 @@ import math
 
 seed(1)
 
-values = auction.getAuction('L4-5-5.txt')
+values = auction.getAuction('problemInstances/L4-5-5.txt')
 goods = values[0]
 bidsValue = values[3]
 bids = values[4]

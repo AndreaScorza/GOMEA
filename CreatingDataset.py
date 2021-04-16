@@ -1,8 +1,9 @@
-import BRKGAfinalChromo as BRKGA
+#import BRKGAfinalChromo as BRKGA
 import UnbiasedRKGAChromo as RKGA
 import GOMEANormal as normal
 import GOMEAUnivariate as univariate
 import GOMEA4testFinal as GOMEA
+import BRKGA4testFinal as BRKGA
 
 def creatingDataSetBRKGA(popSize, problem, type):
     if type == "biased":
@@ -34,15 +35,20 @@ def creatingDataSetGOMEA(popSize, problem, type, randomLt):
     file_object.close()
 
 
-def writeToFile(times, fileName):
+def writeToFile(times, name, popsize, type):
     for x in range(0, times):
-        fileName = "/content/drive/MyDrive/" + fileName
+        fileName = "/content/drive/MyDrive/" + name
+        #fileName = name
         file_object = open(fileName, 'a')
-        x = GOMEA.GOMEA(10, "L1-L6-L7/L1-25-30.txt")
+        if type == 'gomea':
+            #x = GOMEA.GOMEA(popsize, "L1-L6-L7/L1-25-30.txt")
+            x = GOMEA.GOMEA(popsize, "L3-100-300.txt")
+        elif type == 'brkga':
+            x = BRKGA.BRKGAchromo(popsize, "L3-100-300.txt")
         file_object.write(str(x) + "\n")
         file_object.close()
 
-writeToFile(25, 'L1-25-30.txt')
+writeToFile(25, 'GOMEA-L3-100-300.txt', 50, 'gomea')
 
 
 

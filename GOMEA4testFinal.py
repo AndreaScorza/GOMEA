@@ -67,8 +67,8 @@ def greedyRecomb(sol, donor, subset, values, population, forcedImprovement, supe
 
 
 
-def terminated(counter, notProgress):
-    if counter > 100 or notProgress > 20:
+def terminated(counter, notProgress, totFotEval):
+    if counter > 300 or notProgress > 5 or totFotEval > 1000000:
         return True
     return False
 
@@ -102,6 +102,7 @@ def printStat(population, val):
 
 
 def GOMEA(popSize, problem):
+    global fitnessList
     storingList = []
     forcedImprovement = False
     startTime = time.time()
@@ -110,7 +111,7 @@ def GOMEA(popSize, problem):
     population, values = pop.population(popSize, problem, -1)
     #population, values = pop.population(10, "problemInstances/matching.txt", -1)
 
-
+    fitnessList = []
     # Populatiog the list of fitness
     for x in population:
         fitnessList.append(dc.getFitness(x, values[3], values[1], values[4]))
@@ -123,12 +124,14 @@ def GOMEA(popSize, problem):
     totFitEval = len(population)
 
     #storingList.append([0, max(fitnessList,key=itemgetter(1))[0]])
+    print(max(fitnessList))
+    print(fitnessList)
     storingList.append([0, totFitEval, max(fitnessList)])
     # --
     flag = False
     trovato = 0
 
-    while not terminated(counter, notProgress):
+    while not terminated(counter, notProgress, totFitEval):
         genFitEval = 0
         # uncomment for forcer improvmenet
         #if stationaryCounter > 6:
@@ -184,5 +187,5 @@ def GOMEA(popSize, problem):
     print(storingList)
     return storingList
 
-
+#print(GOMEA(10, "L1-L6-L7/L6-25-30.txt"))
 
