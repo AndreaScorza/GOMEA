@@ -68,7 +68,8 @@ def greedyRecomb(sol, donor, subset, values, population, forcedImprovement, supe
 
 
 def terminated(counter, notProgress, totFotEval):
-    if counter > 300 or notProgress > 5 or totFotEval > 1000000:
+    #if counter > 300 or notProgress > 5 or totFotEval > 1000000:
+    if totFotEval > 1000000:
         return True
     return False
 

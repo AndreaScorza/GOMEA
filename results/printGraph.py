@@ -11,10 +11,6 @@ def readTxt(name):
 
 def makeSameLength(name):
     arr = readTxt(name)
-
-    for x in arr:
-        print(max(x))
-
     listLen = []
     for x in arr:
         listLen.append(max(x)[0])
@@ -43,28 +39,38 @@ def printGraph(problemName, file1, file2):
     x1, y1 = getXY(file1)
     plt.plot(x1, y1, label = 'BRKGA')
     x2, y2 = getXY(file2)
+    print(x2)
     plt.plot(x2, y2, label = 'GOMEA')
     plt.xlabel("Fitness Evaluations")
     plt.ylabel("Fitness")
     plt.title(problemName)
+    plt.grid()
     plt.legend()
     plt.show()
 
 def printGraphFit4Gen(problemName, file1, file2):
     x1, y1 = getXY(file1)
+    x1 = list(range(0, len(y1)))
     plt.plot(x1, y1, label = 'BRKGA')
     x2, y2 = getXY(file2)
+    x2 = list(range(0, len(y2)))
     plt.plot(x2, y2, label = 'GOMEA')
-    plt.xlabel("Fitness Evaluations")
+    plt.xlabel("Number of Generations")
     plt.ylabel("Fitness")
     plt.title(problemName)
+    plt.grid()
     plt.legend()
     plt.show()
 
-printGraph('L3-100-300', 'brkga-L3-100-300.txt', 'gomea-L3-100-300.txt')
+#printGraph('L3-100-300', 'brkga-L3-100-300.txt', 'gomea-L3-100-300.txt')
+#printGraphFit4Gen('L3-100-300', 'brkga-L3-100-300.txt', 'gomea-L3-100-300.txt')
 
 
+printGraph('L6-100-300', 'BRKGA/brkga-L6-100-300.txt', 'GOMEA/gomea-L6-100-300.txt')
+#printGraphFit4Gen('L6-100-300', 'brkga-L6-100-300.txt', 'gomea-L6-100-300.txt')
 
+#printGraph('L7-100-300', 'brkga-L7-100-300.txt', 'gomea-L7-100-300.txt')
+#printGraphFit4Gen('L7-100-300', 'brkga-L7-100-300.txt', 'gomea-L7-100-300.txt')
 
 
 

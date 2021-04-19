@@ -42,13 +42,13 @@ def writeToFile(times, name, popsize, type):
         file_object = open(fileName, 'a')
         if type == 'gomea':
             #x = GOMEA.GOMEA(popsize, "L1-L6-L7/L1-25-30.txt")
-            x = GOMEA.GOMEA(popsize, "L3-100-300.txt")
+            x = GOMEA.GOMEA(popsize, "L3.txt")
         elif type == 'brkga':
-            x = BRKGA.BRKGAchromo(popsize, "L3-100-300.txt")
+            x = BRKGA.BRKGAchromo(popsize, "L7.txt")
         file_object.write(str(x) + "\n")
         file_object.close()
 
-writeToFile(25, 'GOMEA-L3-100-300.txt', 50, 'gomea')
+writeToFile(25, 'BRKGA-L7.txt', 10000, 'brkga')
 
 
 
