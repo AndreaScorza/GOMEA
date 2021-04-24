@@ -6,7 +6,7 @@ import random
 
 # global variable
 k = 5
-l = 50
+l = 20
 #byteArray = np.random.randint(2, size=l)
 def createPop(size):
     popByte = []
@@ -94,7 +94,7 @@ def generationalPrinting():
 def GOMEA():
 
     counter = 0
-    popByte = createPop(100)
+    popByte = createPop(1000)
     for x in popByte:
         print(x)
 

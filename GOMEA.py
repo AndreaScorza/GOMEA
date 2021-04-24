@@ -144,6 +144,8 @@ def GOMEA(popSize, problem):
 
         for li in lT[:-1]:
             print(li)
+        #for li in lT2[:-1]:
+        #    print(li)
         for x in range(0, len(population)):
             for subset in lT[:-1]:  # avoiding the root of the tree
                 donor = getDonor(population, x)
@@ -177,7 +179,7 @@ def GOMEA(popSize, problem):
     #return population, bestFit, time.time() - startTime, values, trovato, counter
 
 
-population, bestFit, time, val, totFitEval, counter = GOMEA(10, "problemInstances/L3-20-20.txt")
+population, bestFit, time, val, totFitEval, counter = GOMEA(10, "problemInstances/L4-5-5.txt")
 
 print(bestFit, " : ", round(time, 2), "tota number of fitness evaluations: ", totFitEval, " counter: ", counter)
 print()

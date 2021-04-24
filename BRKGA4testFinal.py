@@ -149,7 +149,7 @@ def BRKGAchromo(populationSize, problem):
     storedPop = []
     totFitEval = 0
 
-    while generationCount < 100:
+    while generationCount < 500:
     #while fitNotIncrease < 200 and generationCount < 10000:
     #while (generationCount * len(population)) < 12200:
         population, fitness, nFitEval = generation(population, goods, bids, bidsValue)

@@ -35,39 +35,51 @@ def getXY(name):
     return x, y
 
 
-def printGraph(problemName, file1, file2):
+def printGraph(problemName, file1, file2, file3):
     x1, y1 = getXY(file1)
-    plt.plot(x1, y1, label = 'BRKGA')
+    plt.plot(x1, y1, label = 'GOMEA')
     x2, y2 = getXY(file2)
-    print(x2)
-    plt.plot(x2, y2, label = 'GOMEA')
+    plt.plot(x2, y2, label = 'GOMEA UNIVARIATE')
+    '''x3, y3 = getXY(file3)
+    plt.plot(x3, y3, label='pop 1000')'''
     plt.xlabel("Fitness Evaluations")
     plt.ylabel("Fitness")
     plt.title(problemName)
     plt.grid()
     plt.legend()
-    plt.show()
+    #plt.show()
+    plt.savefig("COMPARISON-NORMAL-UNIVARIATE.png")
 
-def printGraphFit4Gen(problemName, file1, file2):
+def printGraphFit4Gen(problemName, file1, file2, file3):
     x1, y1 = getXY(file1)
     x1 = list(range(0, len(y1)))
-    plt.plot(x1, y1, label = 'BRKGA')
+    plt.plot(x1, y1, label = 'GOMEA')
     x2, y2 = getXY(file2)
     x2 = list(range(0, len(y2)))
-    plt.plot(x2, y2, label = 'GOMEA')
+    plt.plot(x2, y2, label = 'GOMEA UNIVARIATE')
+    '''x3, y3 = getXY(file3)
+    for x in range(0, len(x3)):
+        x3[x] /= 1000
+    print(type(x3[0]))
+    print(x3)
+    plt.plot(x3, y3, label='pop 1000')'''
     plt.xlabel("Number of Generations")
     plt.ylabel("Fitness")
     plt.title(problemName)
     plt.grid()
     plt.legend()
-    plt.show()
+    #plt.show()
+    plt.savefig("COMPARISON-NORMAL-UNIVARIATE-Generations.png")
 
 #printGraph('L3-100-300', 'brkga-L3-100-300.txt', 'gomea-L3-100-300.txt')
 #printGraphFit4Gen('L3-100-300', 'brkga-L3-100-300.txt', 'gomea-L3-100-300.txt')
 
 
-printGraph('L6-100-300', 'BRKGA/brkga-L6-100-300.txt', 'GOMEA/gomea-L6-100-300.txt')
-#printGraphFit4Gen('L6-100-300', 'brkga-L6-100-300.txt', 'gomea-L6-100-300.txt')
+#printGraph('L7-256-1000', 'BRKGA/brkga-L7.txt', 'GOMEA/gomea-L7.txt')
+#printGraphFit4Gen('COMPARISON GOMEA', 'GOMEA/gomea-L7.txt',  'GOMEA/gomea-L7-256-1000-UNIVARIATE.txt', 'GOMEA/gomea-L7-256-1000-RANDOM-TOTAL.txt')
+printGraph('COMPARISON GOMEA', 'GOMEA/gomea-L7.txt',  'GOMEA/gomea-L7-256-1000-UNIVARIATE.txt','GOMEA/gomea-L7-256-1000-RANDOM-TOTAL.txt')
+#printGraphFit4Gen('L3-256-100', 'BRKGA/brkga-L3-100-300.txt', 'GOMEA/gomea-L3-100-300.txt', 'BRKGA/brkga-L3-100-300-pop1000.txt')
+#printGraphFit4Gen('L6-100-300', 'BRKGA/brkga-L3-100-300.txt', 'GOMEA/gomea-L3-100-300.txt')
 
 #printGraph('L7-100-300', 'brkga-L7-100-300.txt', 'gomea-L7-100-300.txt')
 #printGraphFit4Gen('L7-100-300', 'brkga-L7-100-300.txt', 'gomea-L7-100-300.txt')
