@@ -34,8 +34,6 @@ def createPopulation(size, values):
             print("the new element was already present in the population! creating a new one ...")
         population.append(newElem)
         #population.append(createKeysForElement(len(values[4])))
-    if population == []:
-        print("mortaccu oh")
     return population, values
 
 

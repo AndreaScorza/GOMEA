@@ -3,7 +3,8 @@ import UnbiasedRKGAChromo as RKGA
 import GOMEANormal as normal
 import GOMEAUnivariate as univariate
 import GOMEA4testFinal as GOMEA
-import BRKGA4testFinal as BRKGA
+import BRKGA as BRKGA
+import deceptiveGomeaForDeflen6AndLoose as deceptive
 
 def creatingDataSetBRKGA(popSize, problem, type):
     if type == "biased":
@@ -48,8 +49,18 @@ def writeToFile(times, name, popsize, type):
         file_object.write(str(x) + "\n")
         file_object.close()
 
-writeToFile(25, 'GOMEA-L7-256-1000-UNIVARIATE.txt', 30, 'gomea')
+writeToFile(8, 'GOMEA-L7-256-1000-UNIVARIATE.txt', 60, 'gomea')
 
+def writeToFileDeceptive(times, name, popsize, type, order):
+    for x in range(0, times):
+        fileName = "/content/drive/MyDrive/" + name
+        #fileName = name
+        file_object = open(fileName, 'a')
+        x = deceptive.GOMEA(popsize, type, order)
+        file_object.write(str(x) + "\n")
+        file_object.close()
+
+#writeToFileDeceptive(10, 'relativeLoose100.txt', 100, 'relative', 'loose')
 
 
 '''counter = 0

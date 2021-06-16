@@ -67,9 +67,10 @@ def greedyRecomb(sol, donor, subset, values, population, forcedImprovement, supe
 
 
 
-def terminated(counter, notProgress, totFotEval):
-    #if counter > 300 or notProgress > 5 or totFotEval > 1000000:
-    if totFotEval > 1000000:
+def terminated(counter, notProgress, totFitEval):
+    #if counter > 300 or notProgress > 5 or totFitEval > 1000000:
+    if totFitEval > 1000000:
+    #if counter > 16:
         return True
     return False
 
@@ -132,6 +133,10 @@ def GOMEA(popSize, problem):
     flag = False
     trovato = 0
 
+    # making the univariate version:
+    subset = []
+    for y in range(0, len(population[0])):
+        subset.append([y])
     while not terminated(counter, notProgress, totFitEval):
         genFitEval = 0
         # uncomment for forcer improvmenet
@@ -142,25 +147,25 @@ def GOMEA(popSize, problem):
 
         # ----------------
 
-        lT = lt.getLinkageTree(population)
+        #lT = lt.getLinkageTree(population)
 
         # to create the random linkage tree comment up and uncomment down:
         #a, b = pop.population(popSize, problem, -1)
         #lT = lt.getLinkageTree(a)
         # -----------------
 
-        '''for li in lT[:-1]:
-            print(li)'''
+
+        #for li in lT[:-1]:
+        #    print(li)
         for x in range(0, len(population)):
-            for subset in lT[:-1]:  # avoiding the root of the tree
-                donor = getDonor(population, x)
-                population[x], fit, elem, nFitEval = greedyRecomb(population[x], donor, subset, values, population, forcedImprovement, bestElem)
-                #print("len subset: ", len(subset), "nFitEval: ", nFitEval)
-                genFitEval += nFitEval
-                if bestFit < fit:
-                    bestFit = fit
-                    bestElem = elem.copy()
-                    stationaryCounter = 0
+            #for subset in lT[:-1]:  # avoiding the root of the tree
+            donor = getDonor(population, x)
+            population[x], fit, elem, nFitEval = greedyRecomb(population[x], donor, subset, values, population, forcedImprovement, bestElem)
+            genFitEval += nFitEval
+            if bestFit < fit:
+                bestFit = fit
+                bestElem = elem.copy()
+                stationaryCounter = 0
         stationaryCounter += 1
         counter += 1
 
@@ -188,5 +193,5 @@ def GOMEA(popSize, problem):
     print(storingList)
     return storingList
 
-#print(GOMEA(10, "L1-L6-L7/L6-25-30.txt"))
+#print(GOMEA(10, "problemInstances/L4-5-5.txt"))
 

@@ -28,7 +28,6 @@ def createDependencyMatrix(population):
             # is this condition true ? yes : no
             # (p==0)||(p==1)?0:-(p*log2(p) + (1.0-p)*log2(1.0-p));
             if p == 0 or p == 1:
-                #print("this case")
                 entropy = 0
             else:
                 entropy = -(p*(math.log(p, 2)) + (1.0-p)*(math.log((1.0-p), 2)))
@@ -57,8 +56,6 @@ def createDependencyMatrix(population):
         for j in range(0, len(dependencyMatrix)):
             if dependencyMatrix[x][j] == 0:
                 zeroCount += 1
-    #print("Zero count of dependency matrix is : ", zeroCount, " len: ", len(dependencyMatrix))
-    #print("\n", dependencyMatrix)
     return dependencyMatrix
 
 
@@ -86,7 +83,6 @@ def getDependenciesForBranch(dependencyMatrix, branch):
                 if x > dep:
                     dep = x
                     stored = [j]
-
         dependency.append(stored)
     return dependency
 
@@ -183,9 +179,4 @@ def getLinkageTree(population):
         tree.append(nextBranch)
         unaryBranch = branchWithUnary(unaryBranch, nextBranch)
     return tree
-
-'''population, val = pop.population(10, "L3-20-20.txt", -1)
-tree = getLinkageTree(population)
-for x in range(0, len(tree[:-1])):
-    print (x, tree[x])'''
 

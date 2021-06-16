@@ -9,9 +9,9 @@ import orderingProblemValues as ord
 k = 4
 l = 32
 fitnessList = []
-type = 'loose'
-order = 'absolute'
-popSize = 3000
+#type = 'loose'
+#order = 'absolute'
+#popSize = 0
 # fitEval = [31-1] * 2 * popSize ... for each generation
 fitnessEvaluation = 0
 
@@ -28,6 +28,7 @@ def createPop(size):
         for x in range(0, int(l / k)):
             individual = individual + random.sample(block, len(block))
         popByte.append(individual)
+
     return pop, popByte
 
 def orderString(elem, elemByte):
@@ -102,7 +103,7 @@ def checkIfElemInPopulation(elem, pop):
                 return True
         return False
 
-def greedyRecomb(sol, solByte, donor, donorByte, subset, population):
+def greedyRecomb(sol, solByte, donor, donorByte, subset, population, type, order):
     #print("Another recombination")
     index = population.index(sol)
     accepted = 0
@@ -150,11 +151,15 @@ def allElem(pop):
     return True
 
 def terminated(counter, fit, popByte, notProgress):
-    if counter >= 100 or fit == l or allElem(popByte) or fitnessEvaluation > 2000000: #  or notProgress > 100:
+    #if counter >= 100 or fit == l or allElem(popByte) or fitnessEvaluation > 2000000: #  or notProgress > 100:
+    if fitnessEvaluation > 2000000: #  or notProgress > 100:
         return True
     return False
 
-def GOMEA():
+def GOMEA(popSize, order, type):
+    global fitnessEvaluation
+    global fitnessList
+    fitnessList = []
     startTime = time.time()
     counter = 0
     population, popByte = createPop(popSize)
@@ -170,8 +175,9 @@ def GOMEA():
 
     print("Initial max value: ", max(fitnessList))
     bestCorrect = max(tmpList)
-    listCorrect.append([0, bestCorrect])
-    print()
+    fitnessEvaluation = len(population)
+    listCorrect.append([counter, fitnessEvaluation, bestCorrect])
+    #print()
 
     while not terminated(counter, bestFit, popByte, notProgress):
         listCorrectTemp = []
@@ -184,13 +190,13 @@ def GOMEA():
         #a, b = createPop(popSize)
         #lT = lt.getLinkageTree(a)
 
-        for x in lT[:-1]:
-            print(x)
-        print()
+        #for x in lT[:-1]:
+        #    print(x)
+        #print()
         for x in range(0, len(population)):
             for subset in lT[:-1]:  # avoiding the root of the tree
                 donor, donorByte = getDonor(population, popByte, x)
-                population[x], popByte[x], fit, correctSub = greedyRecomb(population[x], popByte[x], donor, donorByte, subset, population)
+                population[x], popByte[x], fit, correctSub = greedyRecomb(population[x], popByte[x], donor, donorByte, subset, population, type, order)
                 #listCorrectTemp.append(correctSub)
                 #listFit.append(fit)
                 if bestCorrect < correctSub:
@@ -204,31 +210,31 @@ def GOMEA():
 
         #listCorrect.append([counter, max(listCorrectTemp)])
         #listCorrect.append([counter, bestCorrect])
-        listCorrect.append([fitnessEvaluation, bestCorrect])
-        print("counter :" , counter, " bestFit: ", bestFit, " bestCorrect: ", bestCorrect, " time: ", round(time.time() - startTime, 2), " Fit Eval: ", fitnessEvaluation)
+        listCorrect.append([counter, fitnessEvaluation, bestCorrect])
+        #print("counter :" , counter, " bestFit: ", bestFit, " bestCorrect: ", bestCorrect, " time: ", round(time.time() - startTime, 2), " Fit Eval: ", fitnessEvaluation)
         #for z in popByte:
         #    print(z)
 
         numberOfChange = howManyOfThePopChanged(lastRoundPopulation, population)
-        print("this generation ", numberOfChange," individuals changed")
+        #print("this generation ", numberOfChange," individuals changed")
         if numberOfChange == 0:
             notProgress += 1
         else:
             notProgress = 0
-        print(listCorrect)
-    return population, popByte, bestFit, time.time() - startTime, counter, listCorrect
+    print(listCorrect)
+    #return population, popByte, bestFit, time.time() - startTime, counter, listCorrect
+    return listCorrect
 
+##### popsize, type,    order
+#GOMEA(10,     'absolute', 'loose')
 
-
-
-
-pop, popByte, bestFit, time, counter, listCorrect = GOMEA()
-print()
+#pop, popByte, bestFit, time, counter, listCorrect = GOMEA()
+'''print()
 print("finished")
 
 print("best fitness : ", bestFit, " counter:", counter, "N fit eval: ", fitnessEvaluation)
 
 print(listCorrect)
-
+'''
 
 

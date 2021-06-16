@@ -6,6 +6,7 @@ from numpy.random import randint
 import time
 import random
 
+
 fitnessList = []
 
 def getDonor(population, x):
@@ -72,15 +73,6 @@ def terminated(counter, notProgress):
     return False
 
 
-#  those are all checking functions --------------
-def solInPop(sol, pop):
-    for x in pop:
-        if sol == x:
-            print("found")
-            print(x)
-            print(sol)
-
-
 #  count how many elements changed from two populations
 def howManyOfThePopChanged(pop, newPop):
     number = 0
@@ -90,7 +82,6 @@ def howManyOfThePopChanged(pop, newPop):
     return number
 
 
-#  ----------------------------------------------
 
 def printStat(population, val):
     # [goodsNumber, bidsNumber, dummyNumber, bidsValue, bids]
@@ -134,23 +125,16 @@ def GOMEA(popSize, problem):
         lastRoundPopulation = population.copy()
 
         # ----------------
-
         lT = lt.getLinkageTree(population)
-
         # to create the random linkage tree comment up and uncomment down:
         #a, b = pop.population(popSize, problem, -1)
         #lT = lt.getLinkageTree(a)
         # -----------------
 
-        for li in lT[:-1]:
-            print(li)
-        #for li in lT2[:-1]:
-        #    print(li)
         for x in range(0, len(population)):
             for subset in lT[:-1]:  # avoiding the root of the tree
                 donor = getDonor(population, x)
                 population[x], fit, elem, nFitEval = greedyRecomb(population[x], donor, subset, values, population, forcedImprovement, bestElem)
-                #print("len subset: ", len(subset), "nFitEval: ", nFitEval)
                 genFitEval += nFitEval
                 if bestFit < fit:
                     bestFit = fit
@@ -159,10 +143,6 @@ def GOMEA(popSize, problem):
         stationaryCounter += 1
         counter += 1
 
-        # --
-        '''if bestFit > 3082.75 and flag == False:
-            trovato = counter
-            flag = True'''
 
         print(counter, " : ", bestFit, " time: ", round(time.time() - startTime, 2))
         print("N fit Eval in thig gen: ", genFitEval)
@@ -187,10 +167,4 @@ print()
 
 for x in population:
     print(dc.getFitness(x, val[3], val[1], val[4]))#, " : ", x)
-
-for x in range(0, len(population) - 1):
-    for j in range(x + 1, len(population)):
-        if population[x] == population[j]:
-            print("are the same")
-
 

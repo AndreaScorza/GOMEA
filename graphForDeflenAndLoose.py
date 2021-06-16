@@ -61,10 +61,11 @@ def printAbsolute():
     plt.ylabel("Maximum number of correct subproblems")
     plt.ylim(0,8.3)
     plt.xlim(0, 2100000)
-    plt.plot( 'x_values', 'y_values', data=df, color='skyblue')
+    plt.plot( 'x_values', 'y_values', data=df, color='skyblue', label = "GOMEA")
     plt.grid()
-    plt.savefig("AbsoluteDeflen6.png")
-    #plt.show()
+    plt.legend()
+    #plt.savefig("AbsoluteDeflen6.png")
+    plt.show()
 
 
 def printRelative():
@@ -74,10 +75,11 @@ def printRelative():
     plt.ylabel("Maximum number of correct subproblems")
     plt.ylim(0,8.3)
     plt.xlim(0, 2000000)
-    plt.plot('x_values', 'y_values', data=df, color='skyblue')
+    plt.plot('x_values', 'y_values', data=df, color='skyblue', label = "GOMEA")
     plt.grid()
-    plt.savefig("RelativeRandom.png")
-    #plt.show()
+    plt.legend()
+    #plt.savefig("RelativeRandom.png")
+    plt.show()
 
 
 print(printAbsolute())

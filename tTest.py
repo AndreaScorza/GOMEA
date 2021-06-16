@@ -59,8 +59,8 @@ Bfit, Bgen = BRKGA.runWithStatistics(10, 10, problem)
 Ufit, Ugen = RKGA.runWithStatistics(10, 10, problem)'''
 
 
-Bfit, Bgen = readFromDataset("300L1-250-1000biased.txt")
-Ufit, Ugen = readFromDataset("300L1-250-1000unbiased.txt")
+Bfit, Bgen = readFromDataset("Datasets/300L1-250-1000biased.txt")
+Ufit, Ugen = readFromDataset("Datasets/300L1-250-1000unbiased.txt")
 
 #Bfit, Bgen = readFromDataset("1000L6biased.txt")
 #Ufit, Ugen = readFromDataset("1000L6unbiased.txt")
@@ -97,4 +97,5 @@ performWilcoxon(Bgen, Ugen, "Generation")
 #print(Bgen)
 #print(Ugen)
 
-
+print(len(Bfit))
+print(len(Ufit))

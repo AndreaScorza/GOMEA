@@ -1,22 +1,16 @@
 
 def deleteDummy(goodsNumber, bids):
-    counter = 0
     for a in range(0, len(bids)):
         bids[a] = [x for x in bids[a] if x < goodsNumber]
-
     return bids
 
 def getAuction(path):
-    #path = 'L1-250-1000.txt'
-
     file = open(path, 'r')
     text2 = file.readlines()
-
     text = []
     for x in text2:
         if (x[0] != '\n' and x[0] != '%'):
             text.append(x)
-
 
     goodsNumber = 0
     bidsNumber = 0
@@ -49,14 +43,8 @@ def getAuction(path):
                     bidsValue.append(float(value))
                     bids.append(listBid)
 
-    '''print(goodsNumber)
-    print(bidsNumber)
-    print(dummyNumber)
-    print(bidsValue)
-    print(bids)'''
     bids = deleteDummy(goodsNumber, bids)
     returnValue = [goodsNumber, bidsNumber, dummyNumber, bidsValue, bids]
     return (returnValue)
 
 
-#x = getAuction('problemInstances/paths.txt')

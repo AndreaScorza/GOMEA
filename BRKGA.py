@@ -31,7 +31,6 @@ def createPopulation(size, bids):
     population = []
     for elem in range(0, size):
         population.append(createKeysForElement(len(bids)))
-    #print(population[0])
     return population
 
 
@@ -74,7 +73,6 @@ def crossOver(sortedPop, nOfElite):
                 offspring.append(parentA[x])
             else:
                 offspring.append(parentB[x])
-
     return offspring
 
 
@@ -82,11 +80,6 @@ def generation(population, goods, bids, bidsValue):
     newGeneration = []
     fitnessOfPopulation = []
     nFitEval = 0
-
-    '''lista1 = []
-    lista2 = []
-    for x in population:
-        lista1.append(decoder(x, False)[1])'''
 
     for x in range(0, len(population)):
         fitnessOfPopulation.append(decoder(population[x], True, goods, bids, bidsValue))  # it returns [population, fitness]
@@ -100,11 +93,6 @@ def generation(population, goods, bids, bidsValue):
 
     for x in fitnessOfPopulation:
         sortedPopulation.append(x[0])  # now we have the population sorted
-
-    '''for x in sortedPopulation:
-        lista2.append(decoder(x, False)[1])
-    for x in range(0, len(lista1)):
-        print(lista1[x], " --- ", lista2[x])'''
 
     nOfElite = int(len(population) * E)
     nOfRandom = int(len(population) * R)
@@ -133,7 +121,6 @@ def BRKGAchromo(populationSize, problem):
     # -----
     storingList = []
     population = createPopulation(populationSize, bids)
-    # i am creating a copy of the population just to be sure to not mess with the original population
     popCopy = population.copy()
     fitlist = []
     for x in popCopy:
@@ -177,47 +164,12 @@ def BRKGAchromo(populationSize, problem):
         generationCount += 1
         storingList.append([generationCount, len(population) * (generationCount + 1), bestFitness])
 
-    #return bestFitness, storedPop, population, time.time()-startTime, (generationCount-fitNotIncrease) - 1, totFitEval, values, storingList
-    return storingList
-
-#print(BRKGAchromo(5, "L4-5-5.txt"))
-'''
-def runWithStatistics(popSize, nOfLoops, problem):
-    storing = []
-    fit = []
-    gen = []
-    count = 0
-    for x in range(0, nOfLoops):
-        print("BRGKA: ", count)
-        count += 1
-        bestFitness, storedPop, lastPopulation, totalTime, foundAtGen, totFitEval, values = BRKGAchromo(popSize, problem)
-        storing.append([bestFitness, foundAtGen])
-        fit.append(bestFitness)
-        gen.append(foundAtGen)
-
-    #for x in range(0, len(storing)):
-    #    print(x, " ", storing[x])
-
-    return fit, gen
+    return bestFitness, storedPop, population, time.time()-startTime, (generationCount-fitNotIncrease) - 1, totFitEval, values, storingList
+    #return storingList
 
 
-bestFitness, storedPop, lastPopulation, totalTime, foundAtGen, totFitEval, values, storingList = BRKGAchromo(5, "L4-5-5.txt")
-print("finished ", storingList)
-goods = values[0]
-bidsValue = values[3]
-bids = values[4]
+#print(BRKGAchromo(5, "problemInstances/L4-5-5.txt"))
 
-#runWithStatistics(50, 500)
-
-print(goods)
-print(bidsValue)
-print(bids)
-for x in storedPop:
-    print(decoder(x, False, goods, bids, bidsValue))
-
-#bestFitness, storedPop, lastPopulation, totalTime, foundAtGen, totFitEval = BRKGAchromo(300, "L1-250-1000.txt")
-print("\nBest Fitness ", bestFitness, " Total Time: ", totalTime, " Found at Gen: ", foundAtGen)
-#print("Total number of fitness evaluations: ", totFitEval)'''
 
 
 
